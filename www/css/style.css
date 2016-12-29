@@ -1,0 +1,54 @@
+/* Empty. Add your own CSS if you like */
+
+.scroll {
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+ng-map{
+  height: 100%
+}
+.ng-map-info-window img{
+/*display: none;*/
+}
+
+/*the first of mainy*/
+
+
+.playimage{
+  float: left;
+  height: 35px;
+       width: 35px;
+       border-radius: 50%;
+       display: flex;
+       margin: 0;
+      /*margin-bottom: 100px*/
+}
+
+.itemimg{
+  width: 100%;
+  height: 40%;
+}
+
+.priceandfavorite button{
+  float: right;
+}
+
+
+.priceandfavorite h4{
+  float: left;
+}
+
+
+
+.priceandfavorite {
+  margin: 0;
+  padding: 8px;
+  margin-top: -6px;
+  height: 60px;
+  border-bottom:1px solid blue;
+}

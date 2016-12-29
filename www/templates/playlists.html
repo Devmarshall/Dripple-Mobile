@@ -1,0 +1,19 @@
+<ion-view  ng-controller="PlaylistCtrl"  cache-view="false">
+    <ion-content >
+      <ng-map zoom="10" center="-33.9, 151.2">
+        <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
+         <div  style="padding-left:10px"  ng-non-bindable class="m">
+           <img  ng-repeat="d in d.images" style="height: 35px;
+                width: 40px;
+                border-radius: 40%;
+                display: flex;
+                float: right;
+                margin-left: -10px;
+                border:1px solid green;
+                "
+                 ng-src="{{d.image}}" alt="">
+         </div>
+       </info-window>
+   </ng-map>
+    </ion-content>
+</ion-view>
