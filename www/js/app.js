@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','ngCordova','ngMap'])
+angular.module('starter', ['ionic', 'angularGrid' ,'starter.controllers','ngCordova','ngMap'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -36,6 +36,13 @@ angular.module('starter', ['ionic', 'starter.controllers','ngCordova','ngMap'])
 url: '/item',
 templateUrl: 'templates/item.html',
 controller: 'itemctrl'
+})
+
+
+.state('grid', {
+url: '/grid',
+templateUrl: 'templates/grid.html',
+controller: 'grid'
 })
 
   .state('app.search', {

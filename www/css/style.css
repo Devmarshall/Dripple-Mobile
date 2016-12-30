@@ -29,9 +29,9 @@ ng-map{
       /*margin-bottom: 100px*/
 }
 
-.itemimg{
+.img{
   width: 100%;
-  height: 40%;
+  height: 80%;
 }
 
 .priceandfavorite button{
@@ -44,6 +44,48 @@ ng-map{
 }
 
 
+.bar.bar-stable{
+/*opacity: ;*/
+/*background: brown;*/
+color: brown;
+}
+
+.bar{
+/*background-color: green;*/
+/*opacity: 0.13*/
+
+
+
+
+}
+
+.grid {
+    border: 1px solid #cccccc;
+    border-radius: 15px;
+    list-style: none;
+    background: #ffffff;
+    box-sizing: border-box;
+    -moz-box-sizing : border-box;
+    -webkit-transition: all 0.6s ease-out;
+    transition: all 0.6s ease-out;
+}
+.grid-img {
+    border-radius: 15px;
+
+    width: 100%;
+    vertical-align: middle;
+    -webkit-transition: opacity 0.6s ease-out;
+    transition: opacity 0.6s ease-out;
+    background-color: #fff;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.grid-img.img-loaded{
+    visibility: visible;
+    opacity: 1;
+}
+
 
 .priceandfavorite {
   margin: 0;
@@ -51,4 +93,100 @@ ng-map{
   margin-top: -6px;
   height: 60px;
   border-bottom:1px solid blue;
+}
+
+.arrow_box {
+	position: relative;
+	background: #fff;
+  margin-top: 0;
+  margin-top: -5%;
+  box-shadow: 0px -10px 60px #888888
+}
+.arrow_box:after {
+	bottom: 100%;
+	left: 45%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #fff;
+	border-width: 10px;
+  border-left-style:outset;
+}
+
+.a{
+height: 100%;
+}
+
+.ap {
+  text-align: center;
+}
+.ap{
+  font-size: 10px;
+  margin-left:13%;
+  margin-right: 13%;
+  padding-top: 5px;
+  border-bottom: 0.5px solid grey;
+}
+
+.ap h4{
+  font-size: 15px;
+}
+
+.ap span h4{
+  /*float: left;*/
+  margin-right: 10px
+}
+
+.ap span p{
+          padding-top: 5%;
+}
+.ap span{
+display: -webkit-inline-box;
+/*text-align:inherit;*/
+}
+.co{
+  /*margin-top: 1-0px;*/
+height: 30px;
+width: 30px;
+float: right;
+vertical-align: middle;
+border:1px solid #673AB7;
+color: white;
+color: #673AB7;
+border-radius: 30%;
+/*margin-left: 60%;*/
+}
+
+.dt{
+  /*margin-top: 1-0px;*/
+height: 30px;
+width: 30px;
+vertical-align: middle;
+background: #673AB7;
+color: white;
+border-radius: 30%;
+/*margin-left: 20%;*/
+}
+
+.colordetails{
+  padding-top: 10px;
+  padding-left: 16%;
+  padding-right: 16%;
+  padding-bottom: 10px;
+  text-align: center;
+  margin-left:13%;
+  margin-right: 13%;
+  border-bottom: 0.5px solid grey;
+}
+
+.local i{
+font-size: 28px
+}
+
+.local{
+
 }
