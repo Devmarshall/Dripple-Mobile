@@ -18,8 +18,11 @@ ng-map{
 
 /*the first of mainy*/
 
-.itemimg{
-  width: 100%
+
+
+.swiper-slide img {
+    height: 100%;
+    width: 100%;
 }
 
 .playimage{
@@ -40,6 +43,15 @@ ng-map{
 .priceandfavorite button{
   float: right;
 }
+
+.swiper-container-horizontal > .swiper-pagination {
+    bottom: 19%;
+    left: 0;
+    width: 100%;
+}
+
+
+
 
 
 .priceandfavorite h4{
@@ -103,11 +115,12 @@ color: brown;
 	background: #fff;
   margin-top: 0;
   margin-top: -5%;
-  box-shadow: 0px -10px 60px #888888
+  box-shadow: 0px -10px 100px #000;
+  z-index:1;
 }
 .arrow_box:after {
 	bottom: 100%;
-	left: 48.5%;
+	left: 49.5%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -192,6 +205,13 @@ color: #E040FB;
 }
 
 
+.itemsly{
+  height: 65%;
+    z-index: 122;
+    position: inherit;
+}
+
+
 .local{
 text-align: center;
 padding-left: 13%;
@@ -232,7 +252,18 @@ background-color:  #E040FB;
 .selector p{
   padding: 10%;;
   margin-top: 15px;
+}
 
+.localbutton{
+width: 76%;
+height:40px;
+border-radius: 100px;
+background-color: #E040FB;
+color: white;
+margin-left: 12%;
+margin-right: 12%;
+margin-top: 10%;
+margin-bottom: 3%;;
 }
 
 .selector h3{
@@ -249,4 +280,9 @@ background-color:  #E040FB;
 .item-avatar p{
 margin: 0;
 padding: 0;
+}
+
+.co h5{
+  padding: 15%;
+  margin: 0;
 }

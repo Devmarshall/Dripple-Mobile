@@ -1,17 +1,30 @@
     <ion-view  ng-controller="PlaylistCtrl"  cache-view="false">
-        <ion-content >
-          <div class="itema">
-            <div class="bar bar-header bar-light mydiv">
-              <h1 class="title">Dripple</h1>
-            </div>
-            <img class='itemimg' src="img/ben.png" alt="">
+
+      <div class="itema">
+        <div class="bar bar-header bar-light mydiv">
+          <h1 class="title">Dripple</h1>
+        </div>
+        <ion-content class='has-header' >
+
+            <!-- <img class='itemimg' src="img/ben.png" alt=""> -->
+            <ion-slides class='itemsly'  options="options" slider="data.slider">
+               <ion-slide-page>
+                <img class='itemimg' src="img/perry.png" alt="">
+               </ion-slide-page>
+               <ion-slide-page>
+                <img class='itemimg' src="img/ben.png" alt="">
+               </ion-slide-page>
+               <ion-slide-page>
+                <img class='itemimg' src="img/adam.jpg" alt="">
+               </ion-slide-page>
+           </ion-slides>
               <div class="arrow_box">
             <div class="ap">
               <h4>Nice shirt</h4>
               <span><h4>$100</h4> <p style="padding-top: 5%;">19 minutes from you</p>
             </div>
             <div class="colordetails">
-              <div class="co">  </div><div class="dt"></div>
+              <div class="co"> <h5>XL</h5> </div><div class="dt"></div>
             </div>
             <div class="local">
 
@@ -23,8 +36,8 @@
 
          <div class="selector">
            <div class="top">
-             <h3  ng-click='change()' class="selected"> Descrition</h3>
-                <h3  ng-click='change()' >comment</h3>
+             <h3  ng-click='d()' class="selected"> Descrition</h3>
+                <h3  ng-click='comment()' >comment</h3>
            </div>
            <div class="">
           <div class="" ng-show='view.d'>
@@ -57,25 +70,25 @@ Create a 'pin-follow' element with attributes for Pinterest username and fullnam
 Example</p>
           </div>
           <div ng-show='view.comments' class="">
-            <div class="list">
+            <div class=""> ///NOTE CLAST LISAT IS VERY BAD AVOID IT AS MUCH AS POSSIB
 
               <a class="item item-avatar" href="#">
-                <img src="venkman.jpg">
+                <img src="IMG/BEN.PNG">
                 <h2>Venkman</h2>
                 <p>Back off, man. I'm a scientist.</p>
               </a>
               <a class="item item-avatar" href="#">
-                <img src="venkman.jpg">
+                <img src="IMG/BEN.PNG">
                 <h2>Venkman</h2>
                 <p>Back off, man. I'm a scientist.</p>
               </a>
               <a class="item item-avatar" href="#">
-                <img src="venkman.jpg">
+                <img src="IMG/BEN.PNG">
                 <h2>Venkman</h2>
                 <p>Back off, man. I'm a scientist.</p>
               </a>
               <a class="item item-avatar" href="#">
-                <img src="venkman.jpg">
+                <img src="IMG/BEN.PNG">
                 <h2>Venkman</h2>
                 <p>Back off, man. I'm a scientist.</p>
               </a>
@@ -86,7 +99,7 @@ Example</p>
            </div>
          </div>
             <div class="">
-              <button class="button icon-left ion-star button-positive">Favorites</button>
+              <button class=" icon-left ion-ios-location-outline localbutton">  old aba road</button>
 
               <!-- <selector></selector> -->
             </div>
