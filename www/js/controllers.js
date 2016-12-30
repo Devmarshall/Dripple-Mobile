@@ -1,7 +1,26 @@
 angular.module('starter.controllers', [])
-.controller('itemctrl',function(){
+.controller('itemctrl',function($scope){
 
 
+$scope.view={
+  comments:false,
+  d:true,
+  user:true/////////for now  true
+}
+$scope.change=function(){
+if($scope.view.comments===false){
+  $scope.view={
+    comments:true,
+    d:false
+  }
+}
+else{
+  $scope.view={
+    comments:false,
+    d:true
+    }
+}
+}
 })
 
 

@@ -1,11 +1,11 @@
 
-var mainApp = angular.module("mainApp", []);
+var mainApp = angular.module("selector", []);
 
 //Create a directive, first parameter is the html element to be attached.
 //We are attaching student html tag.
 //This directive will be activated as soon as any student element is encountered in html
 
-mainApp.directive('arrow', function() {
+mainApp.directive('selector', function() {
    //define the directive object
    var directive = {};
 
@@ -13,7 +13,7 @@ mainApp.directive('arrow', function() {
    directive.restrict = 'E';
 
    //template replaces the complete element with its text.
-   directive.template = "Student: <b>{{student.name}}</b> , Roll No: <b>{{student.rollno}}</b>";
+   directive.template = "Student: <b>233333</b> , Roll No: <b>{{student.rollno}}</b>";
 
    //scope is used to distinguish each student element based on criteria.
    directive.scope = {

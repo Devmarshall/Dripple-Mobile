@@ -14,10 +14,81 @@
               <div class="co">  </div><div class="dt"></div>
             </div>
             <div class="local">
-              <i class="ion-ios-location-outline"></i> <h5>117 Old aba road</h5>
-            </div>
+
+              <a class="item item-icon-left" href="#">
+                <i class="ion-ios-location-outline"></i>
+                <p>117 Old aba road</p>
+                </a>
+         </div>
+
+         <div class="selector">
+           <div class="top">
+             <h3  ng-click='change()' class="selected"> Descrition</h3>
+                <h3  ng-click='change()' >comment</h3>
+           </div>
+           <div class="">
+          <div class="" ng-show='view.d'>
+            <p>To see a demo and further details go to https://www.pointblankdevelopment.com.au/blog/angularjs-directives-for-pinterest-buttons-and-widgets
+
+Installation
+
+Install using bower: bower install angular-pinterest
+
+Alternatively download the code and include the angular-pinterest.js file in your page.
+
+Add the 'angular-pinterest' module as a dependency of your AngularJS application:
+
+angular.module('myApp', ['angular-pinterest']);
+Usage
+
+Pin It Button
+
+Create a 'pin-it' element with attributes for the different settings of the button, values can be set directly or viewmodel properties can be used that are set in the controller.
+
+Example
+
+<!-- <pin-it url="vm.url" description="vm.description" media="vm.media" config="'above'"></pin-it>
+<pin-it url="'https://www.pointblankdevelopment.com.au'" description="'Point Blank Development'" media="''https://www.pointblankdevelopment.com.au/images/social_media.jpg''" config="'beside'" size="'large'" color="'white'"></pin-it>
+<pin-it url="vm.url" description="vm.description" media="vm.media" shape="'round'" size="'large'"></pin-it>
+Follow Button -->
+
+Create a 'pin-follow' element with attributes for Pinterest username and fullname.
+
+Example</p>
+          </div>
+          <div ng-show='view.comments' class="">
+            <div class="list">
+
+              <a class="item item-avatar" href="#">
+                <img src="venkman.jpg">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+              </a>
+              <a class="item item-avatar" href="#">
+                <img src="venkman.jpg">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+              </a>
+              <a class="item item-avatar" href="#">
+                <img src="venkman.jpg">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+              </a>
+              <a class="item item-avatar" href="#">
+                <img src="venkman.jpg">
+                <h2>Venkman</h2>
+                <p>Back off, man. I'm a scientist.</p>
+              </a>
+
+
+              </div>
+          </div>
+           </div>
+         </div>
             <div class="">
               <button class="button icon-left ion-star button-positive">Favorites</button>
+
+              <!-- <selector></selector> -->
             </div>
         </div>
           </div>
