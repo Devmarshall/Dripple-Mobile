@@ -3,8 +3,8 @@ function InfoBox(opts) {
     this.latlng_ = opts.latlng;
     this.map_ = opts.map;
     this.content = opts.content;
-    this.offsetVertical_ = -195;
-    this.offsetHorizontal_ = 5;
+    this.offsetVertical_ = -22;
+    this.offsetHorizontal_ = 23;
     this.height_ = 165;
     this.width_ = 266;
     var me = this;
@@ -39,9 +39,9 @@ InfoBox.prototype.draw = function () {
     var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
     if (!pixPosition) return;
     // Now position our DIV based on the DIV coordinates of our bounds
-    this.div_.style.width = this.width_ + "px";
+    // this.div_.style.width = this.width_ + "px";
     this.div_.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
-    this.div_.style.height = this.height_ + "px";
+    // this.div_.style.height = this.height_ + "px";
     this.div_.style.top = (pixPosition.y + this.offsetVertical_) + "px";
     this.div_.style.display = 'block';
 };
@@ -55,13 +55,25 @@ InfoBox.prototype.draw = function () {
 InfoBox.prototype.createElement = function () {
     var panes = this.getPanes();
     var div = this.div_;
+    var img = document.createElement("img");
+      var img2 = document.createElement("img");
+        var img3 = document.createElement("p");
+        var textnode = document.createTextNode("11+");
+        img3.appendChild(textnode);
+          img.className = "imginfobox";
+            img2.className = "imginfobox";
+              img3.className = "textinfobox";
+              img.src='img/ben.png';
+              img2.src='img/ben.png';
     if (!div) {
         // This does not handle changing panes. You can set the map to be null and
         // then reset the map to move the div.
         div = this.div_ = document.createElement("div");
             div.className = "infobox"
         var contentDiv = document.createElement("div");
-
+div.appendChild(img);
+div.appendChild(img2);
+div.appendChild(img3);
 
 
         // function removeInfoBox(ib) {
