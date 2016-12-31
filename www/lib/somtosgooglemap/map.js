@@ -5,6 +5,18 @@ module.directive('smap', function() {
         replace: true,
         template: '<div></div>',
         link: function(scope, element, attrs) {
+          function includeJs(jsFilePath) {
+          var js = document.createElement("script");
+
+          js.type = "text/javascript";
+          js.src = jsFilePath;
+
+          document.body.appendChild(js);
+          }
+
+
+          includeJs("lib/somtosgooglemap/custominfobox.js");
+          includeJs("lib/somtosgooglemap/custommarker.js");
             console.log(element);
 
               var myOptions = {
@@ -31,17 +43,19 @@ module.directive('smap', function() {
 
             addMarker= function(pos){
           		 var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
-          		//  var marker = new google.maps.Marker({
-          		// 			position: myLatlng,
-          		// 			map: map,
-          		// 			title:"Hello World!"
-          		// 	});
 
+               /////pass the image value to the image here
           		overlay = new CustomMarker(myLatlng,	map,
           			{
           				marker_id: '123'
           			}
-          		);
+          		  );
+
+              var infoBox = new InfoBox({
+                 latlng: myLatlng,
+                 map: map,
+                 content: this.content
+             });
 
           	} //end addMarker
 
