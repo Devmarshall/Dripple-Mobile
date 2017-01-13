@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'angularGrid' ,'starter.controllers','ngCordova','selector','smap'])
+angular.module('starter', ['ionic', 'angularGrid' ,'starter.controllers','ngCordova','selector','smap','angularRipple'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -43,6 +43,12 @@ controller: 'itemctrl'
 url: '/grid',
 templateUrl: 'templates/grid.html',
 controller: 'grid'
+})
+
+.state('profilepageseller',{
+  url:'/profilepageseller',
+  templateUrl:'templates/profilepageseller.html',
+  controller:'profilepageseller'
 })
 
   .state('app.search', {

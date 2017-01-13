@@ -1,4 +1,4 @@
-<ion-view  ng-controller="PlaylistCtrl"  cache-view="false">
+<ion-view  ng-controller="PlaylistsCtrl"  cache-view="false">
     <ion-content >
       <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
@@ -15,7 +15,45 @@
          </div>
        </info-window>
    </ng-map> -->
+   <smap id="map_canvas"  location="location"></smap>
+   <div ng-click="nxtpag()" id="ov" class="non">   </div>
+     <div angular-ripple id="pop" class="fat_ trans" >
+      <div class="pop_ ">
+        <i ng-click="close()" class="icon ion-ios-close-outline"></i>
+        <div class="">
+          <img src="img/ben.png" alt="" />
+          <div class="">
+            <h6>Shop</h6>
+            <p>
+              name
+            </p>
+          </div>
+        </div>
+        <section>
+          <div class="image_">
+            <img src="img/ben.png" alt="" />
+                <img src="img/ben.png" alt="" />
+                    <img src="img/ben.png" alt="" />
+                        <img src="img/ben.png" alt="" />
+                            <img src="img/ben.png" alt="" />
+                            <div class=""  ng-click="profilepageseller()">
+                              <p>
+                                11+
+                              </p>
+                            </div>
+                          </div>
+                          <div class="stuff">
+                          <ul>
+                            <li><h6>10</h6>     <i class="icon ion-eye"></i> </li>
+                            <li><h6>10</h6>     <i class="icon ion-thumbsup"></i> </li>
+                            <li><h6>10</h6>     <i class="icon ion-chatbubble"></i> </li>
+                            <li> <p style="margin-left:200%">20km</p></li>
+                          </ul>
+                          <p style="float:initial"></p>
+                          </div>
 
-   <smap id="map_canvas"></smap>
+        </section>
+      </div>
+    </div>
     </ion-content>
 </ion-view>

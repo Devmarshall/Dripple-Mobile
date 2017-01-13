@@ -4,6 +4,8 @@ function CustomMarker(latlng, map, args) {
 	this.setMap(map);
 }
 
+
+
 CustomMarker.prototype = new google.maps.OverlayView();
 
 CustomMarker.prototype.draw = function() {
@@ -33,9 +35,12 @@ CustomMarker.prototype.draw = function() {
 		}
 
 		google.maps.event.addDomListener(div, "click", function(event) {
-			alert('You clicked on a custom marker!');
-			google.maps.event.trigger(self, "click");/////mad i can add ho
+			var sa = document.getElementById('pop');
+			sa.className="fat_2";
+			var ov = document.getElementById('ov');
+			ov.className="ov";
 		});
+
 
 		var panes = this.getPanes();
 		panes.overlayImage.appendChild(div);
