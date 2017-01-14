@@ -4,6 +4,18 @@
           height: 100%;
       }
 
+      #likersimg{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-left: -7px;
+        /*position: absolute;*/
+        border: 1px solid white;
+        margin-right: 0;
+        margin-top: 5%;
+        margin-bottom: 5%;
+      }
+
       #map {
           width: 100%;
           height: 100%;
@@ -85,7 +97,7 @@
           transition: all 0.6s ease-out;
       }
       .grid-img {
-          border-radius: 15px;
+          /*border-radius: 15px;*/
 
           width: 100%;
           vertical-align: middle;
@@ -395,13 +407,13 @@
             /*margin-top: -50%;*/
       }
 
-      .pop_ img{
-        width: 40px;
-      height: 40px;
-      float: left;
-      margin-right: 3%;
-      border-radius: 50%;
-      }
+            .pop_ img{
+              width: 40px;
+            height: 40px;
+            float: left;
+            margin-right: 3%;
+            border-radius: 50%;
+            }
 
       .pop_ section img{
       width: 30px;
@@ -557,7 +569,27 @@
           height: 40%;
           text-align: -webkit-center;
           padding-top: 10%;
+        	position: relative;
+          border-bottom-left-radius: 20%;
+          border-bottom-right-radius: 20%;
         }
+
+
+        .protop:after {
+          top: 100%;
+          	left: 50%;
+          	border: solid transparent;
+          	content: " ";
+          	height: 0;
+          	width: 0;
+          	position: absolute;
+          	pointer-events: none;
+          	border-color: rgba(136, 183, 213, 0);
+          	border-top-color: #88b7d5;
+          	border-width: 17px;
+          	margin-left: -17px;
+        }
+
 
         .protop ul{
           margin-top: 5%;
@@ -582,4 +614,164 @@
           margin-left: 40%;
           font-size: 150%;
           margin-right: 10%;
+        }
+
+        .protop2{
+          margin-top: 10%;
+          padding-left: 4%;
+          padding-right: 4%;
+          padding-top:20%;
+          position: relative;
+          display: -webkit-box;
+            border-radius: 0 0 50% 50%/15%;
+        }
+
+        .protop2  div{
+          /*box-shadow: 1px 1px 20px #cdcdcd;*/
+        }
+
+        .protop2 div div {
+          display: flex;
+          background: transparent;
+
+        }
+
+        .protop2 div div img{
+          height: 83%;
+          width: 33%;
+          margin-right:10%;
+          /*margin-left: 5%;*/
+          float: left;
+          margin-top: -10%;
+
+        }
+
+
+
+        .protop2 .image_{
+          box-shadow: 0px 0px 0px 0px #fff;
+        }
+
+        .protop2 .image_ img{
+          height: 55%;
+          width: 17%;
+          box-shadow: 1px 1px  1px #cdcdcd;
+          margin: 0;
+          margin-right:3%;
+          border-radius: 10%;
+        }
+
+        .proptop2div{
+          color: transparent;
+        }
+
+        ._protop p{
+          color: gray;
+          font-size: small;
+          margin-top: 7%;
+          margin-bottom: 3%;
+        }
+
+        .protop2 section {
+          margin-top: 14%;
+        }
+
+        ._protop{
+            box-shadow: 1px 1px 30px #cdcdcd;
+            padding-left: 3%;
+            background: white;
+            margin-top: 30%;
+            padding-bottom: 3%
+
+        }
+
+        .protop2{
+          background: url('../img/ben.png');
+        }
+
+        #circl_{
+          position: relative;;
+          text-align: center;
+          width: 36px;
+          display: inline;
+          float: right;
+          height: 36px;
+          padding-top: 10px;
+          background: #E040FB;
+          border-radius: 100px;
+          color: white;
+          margin-top: 4%;
+          box-shadow: 1px 1px 15px #cdcdcd;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        #likers{
+          position: relative;
+            display: flex;
+            padding-left: 6%;
+        }
+
+
+        #likersp{
+          margin-left: 3%
+        }
+
+
+        .angular-grid{
+          margin-top: 19%;
+        }
+
+        .angular-grid li{
+          padding: 10px;
+          margin: 0;
+          border: 0;
+          background: transparent;
+          /*margin-top: 20px;*/
+        }
+
+        .griitm{
+          box-shadow: 1px 1px 15px #cdcdcd;
+          border-radius: 14px;
+        }
+
+        .angular-grid li div div h5{
+          float: left;
+          margin: 0;
+        }
+
+        .angular-grid li div  h6{
+          margin-bottom: 0px;
+          /*float: right;*/
+        }
+
+        .angular-grid li div  p{
+          /*margin-bottom: 0px;*/
+          /*float: right;*/
+          color: #cdcdcd;
+        }
+
+        .angular-grid li div div a{
+          float: right;
+          background: #E040FB;
+          padding: 4px;
+          color: #fff;
+          border-radius: 10000px;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+
+        .angular-grid li div div h5{
+          color: #aa0000;
+        }
+
+
+        .angular-grid li div{
+          display: inline-table;
+          width: 100%;
+        }
+
+        .griitm2{
+          padding: 10px;
         }

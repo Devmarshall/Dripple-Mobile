@@ -48,7 +48,7 @@ controller: 'grid'
 .state('profilepageseller',{
   url:'/profilepageseller',
   templateUrl:'templates/profilepageseller.html',
-  controller:'profilepageseller'
+  controller:'grid'
 })
 
   .state('app.search', {
@@ -88,6 +88,8 @@ controller: 'grid'
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  // $urlRouterProvider.otherwise('/app/playlists');
   // $urlRouterProvider.otherwise('/item');
+  // $urlRouterProvider.otherwise('/grid');
+    $urlRouterProvider.otherwise('/profilepageseller');
 });

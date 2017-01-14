@@ -131,10 +131,30 @@
         })
 
         .controller('profilepageseller',function(){
-          
+
         })
 
-        .controller('PlaylistsCtrl', function($scope,$state) {
+        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance) {
+
+          $scope.refresh = function(){
+              angularGridInstance.gallery.refresh();
+          }
+
+
+          imageService.loadImages().then(function(data){
+               data.data.items.forEach(function(obj){
+                   var desc = obj.description,
+                       width = desc.match(/width="(.*?)"/)[1],
+                       height = desc.match(/height="(.*?)"/)[1];
+
+                   obj.actualHeight  = height;
+                   obj.actualWidth = width;
+               });
+              $scope.pics = data.data.items;
+           });
+           $scope.refresh = function(){
+               angularGridInstance.gallery.refresh();
+           }
 
           $scope.close=function(){
             var sa = document.getElementById('pop');

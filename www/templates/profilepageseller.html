@@ -4,21 +4,62 @@
         <ion-view>
           <ion-content>
 
-            <div class="protop">
-              <img src="img/ben.png" alt="" />
-              <p>
-                John
-              </p>
+            <div class="protop2" >
 
 
-              <ul>
-                <li><h6>10</h6>     <i class="icon ion-eye"></i> </li>
-                <li><h6>10</h6>     <i class="icon ion-thumbsup"></i> </li>
-                <li><h6>10</h6>     <i class="icon ion-chatbubble"></i> </li>
-    </ul>
-
-
+              <div class="_protop">
+                <div class="proptop2div">
+                  <img src="img/ben.png" alt="" />
+                  <section class="">
+                    <h5>
+                      John
+                    </h5>
+                    <p>
+                      Male/Social enterpreniour
+                      I sell with the best price
+                    </p>
+                  </section>
+                </div>
+                <div id="likers">
+                  <img id="likersimg" src="img/ben.png" alt="" />
+                  <img id="likersimg" src="img/ben.png" alt="" />
+                  <img id="likersimg" src="img/ben.png" alt="" />
+                  <img id="likersimg" src="img/ben.png" alt="" />
+                  <p id="likersp">
+                    and 1000 people like this
+                  </p>
+                  <div id="circl_">
+                      <i class="ion-android-favorite sid-lik"></i>
+                  </div>
+                </div>
+                <p>
+                  Top
+                </p>
+                <div class="image_">
+                  <img src="img/ben.png" alt="" />
+                      <img src="img/ben.png" alt="" />
+                          <img src="img/ben.png" alt="" />
+                              <img src="img/ben.png" alt="" />
+                                  <img src="img/ben.png" alt="" />
+                                </div>
+              </div>
             </div>
-
+            <ul    class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+                 <li data-ng-repeat="pic in pics" class="grid">
+                  <div class="griitm">
+                    <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+                    <div class="griitm2">
+                      <h6>nam</h6>
+                      <p>shop</p>
+                     <div class="">
+                       <h5>
+                         $pric
+                       </h5>
+                       <a>find</a>
+                     </div>
+                    </div>
+                  </div>
+                 </li>
+             </ul>
           </ion-content>
         </ion-view>
