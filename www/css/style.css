@@ -1,4 +1,4 @@
-      /* Empty. Add your own CSS if you like */
+ /* Empty. Add your own CSS if you like */
 
       .scroll {
           height: 100%;
@@ -680,13 +680,26 @@
             box-shadow: 1px 1px 30px #cdcdcd;
             padding-left: 3%;
             background: white;
-            margin-top: 30%;
+            margin-top: 10%;
             padding-bottom: 3%
-
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 9999;
         }
 
-        .protop2{
+        .protop2 div{
+          padding-bottom: 4%;
+        }
+
+
+        .back{
+          -webkit-filter: blur(5px);
+        filter: blur(5px);
           background: url('../img/ben.png');
+          width: 100%;
+          height: 60%;
+          position: absolute;
         }
 
         #circl_{
@@ -696,7 +709,6 @@
           display: inline;
           float: right;
           height: 36px;
-          padding-top: 10px;
           background: #E040FB;
           border-radius: 100px;
           color: white;
@@ -704,6 +716,8 @@
           box-shadow: 1px 1px 15px #cdcdcd;
           margin-left: auto;
           margin-right: auto;
+          padding: 0;
+
         }
 
         #likers{
@@ -775,3 +789,31 @@
         .griitm2{
           padding: 10px;
         }
+
+
+        #circl_ i{
+          position: absolute;
+          margin-left: -5px;
+          padding-top: 9px;
+        }
+
+
+
+
+          .fabhous{
+            height: 45px;
+            width: 45px;
+            color: white;
+            background: #e040fb;
+            margin-left: 85vw;
+            margin-top: 80vh;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 2;
+            border: 0;
+            color: #fff;
+            font-size: 34px;
+            text-align: -webkit-center;
+            padding-top: 6px;
+
+          }

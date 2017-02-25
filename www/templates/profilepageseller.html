@@ -2,11 +2,12 @@
 
 
         <ion-view>
+          <div class="bar bar-header bar-light mydiv">
+            <h1 class="title">Dripple</h1>
+          </div>
           <ion-content>
-
+              <div class="back" ></div>
             <div class="protop2" >
-
-
               <div class="_protop">
                 <div class="proptop2div">
                   <img src="img/ben.png" alt="" />
@@ -45,15 +46,15 @@
               </div>
             </div>
             <ul    class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-                 <li data-ng-repeat="pic in pics" class="grid">
+                 <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
                   <div class="griitm">
                     <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
                     <div class="griitm2">
-                      <h6>nam</h6>
-                      <p>shop</p>
+                      <h6>Red velvet cake</h6>
+                      <p>Favored cakes</p>
                      <div class="">
                        <h5>
-                         $pric
+                         $ 15,000
                        </h5>
                        <a>find</a>
                      </div>

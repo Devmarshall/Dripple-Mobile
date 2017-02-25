@@ -1,5 +1,14 @@
+
+
+
+
+
 <ion-view  ng-controller="PlaylistsCtrl"  cache-view="false">
-    <ion-content >
+
+    <ion-content>
+      <div class="fabhous" ng-click="switch()">
+      <i class="icon" ng-class="(false==check.check) ? 'ion-ios-list-outline' : 'ion-map'"></i>
+      </div>
       <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
          <div  style="padding-left:10px"  ng-non-bindable class="m">
@@ -15,6 +24,8 @@
          </div>
        </info-window>
    </ng-map> -->
+
+
    <smap id="map_canvas"  location="location"></smap>
    <div ng-click="nxtpag()" id="ov" class="non">   </div>
      <div angular-ripple id="pop" class="fat_ trans" >

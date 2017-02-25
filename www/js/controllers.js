@@ -59,7 +59,7 @@
                     return $http.jsonp("https://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=JSON_CALLBACK");
                 };
             }])
-            .controller('grid', ['$scope','imageService','angularGridInstance', function ($scope,imageService,angularGridInstance) {
+            .controller('grid', ['$scope','$state','imageService','angularGridInstance', function ($scope,$state,imageService,angularGridInstance) {
                imageService.loadImages().then(function(data){
                     data.data.items.forEach(function(obj){
                         var desc = obj.description,
@@ -73,6 +73,10 @@
                 });
                 $scope.refresh = function(){
                     angularGridInstance.gallery.refresh();
+                }
+
+                $scope.item=function(){
+                  $state.go('item');
                 }
             }])
 
@@ -136,8 +140,21 @@
 
         .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance) {
 
+          $scope.check=[];
+
+          $scope.check.chek=false;
+
           $scope.refresh = function(){
               angularGridInstance.gallery.refresh();
+          }
+
+          $scope.switch=function(){
+            if($scope.check.check===false){
+               $scope.check.check=true;
+            }
+            else {
+                    $scope.check.check=false;
+            }
           }
 
 
