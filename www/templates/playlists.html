@@ -2,13 +2,13 @@
 
 
 
-
-<ion-view  ng-controller="PlaylistsCtrl"  cache-view="false">
+ <div class="fabhous" ng-click="switch()">
+                   <i class="icon" ng-class="(false==check.chek) ? 'ion-map' : 'ion-ios-list-outline'"></i>
+      </div>
+<ion-view    cache-view="false">
 
     <ion-content>
-      <div class="fabhous" ng-click="switch()">
-      <i class="icon" ng-class="(false==check.check) ? 'ion-ios-list-outline' : 'ion-map'"></i>
-      </div>
+     
       <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
          <div  style="padding-left:10px"  ng-non-bindable class="m">
@@ -26,10 +26,31 @@
    </ng-map> -->
 
 
-   <smap id="map_canvas"  location="location"></smap>
-   <div ng-click="nxtpag()" id="ov" class="non">   </div>
+   <smap ng-if="check.chek" id="map_canvas"  location="location"></smap>
+
+     <ul  ng-if="check.chek1"  class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+                 <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
+                  <div class="griitm">
+                    <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+                    <div class="griitm2">
+                      <h6>Red velvet cake</h6>
+                      <p>Favored cakes</p>
+                     <div class="">
+                       <h5>
+                         $ 15,000
+                       </h5>
+                       <a>find</a>
+                     </div>
+                    </div>
+                  </div>
+                 </li>
+             </ul>
+
+ 
+
+   <div  ng-click="nxtpag()" id="ov" class="non">   </div>
      <div angular-ripple id="pop" class="fat_ trans" >
-      <div class="pop_ ">
+      <div ng-if="check.chek" class="pop_ ">
         <i ng-click="close()" class="icon ion-ios-close-outline"></i>
         <div class="">
           <img src="img/ben.png" alt="" />

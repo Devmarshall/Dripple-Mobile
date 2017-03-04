@@ -54,11 +54,21 @@
         })
 
 
-        .service('imageService',['$q','$http',function($q,$http){
-                this.loadImages = function(){
-                    return $http.jsonp("https://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=JSON_CALLBACK");
+        // .service('imageService',['$q','$http',function($q,$http){
+        //         this.loadImages = function(){
+        //             return $http.jsonp("https://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=JSON_CALLBACK");
+        //         };
+        //     }])
+
+
+
+.service('imageService',['$q','$http',function($q,$http){
+                this.loadImages = function(x){
+                    return $http.get(x);
                 };
             }])
+
+
             .controller('grid', ['$scope','$state','imageService','angularGridInstance', function ($scope,$state,imageService,angularGridInstance) {
                imageService.loadImages().then(function(data){
                     data.data.items.forEach(function(obj){
@@ -134,7 +144,276 @@
           ];
         })
 
-        .controller('profilepageseller',function(){
+
+              .controller('load', function($scope,$http,imageService,angularGridInstance) {
+
+
+            
+
+                $scope.item=function(){
+                  $state.go('item');
+                }
+
+            $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }
+
+          $scope.data={};
+
+          
+            $scope.find=function(x){
+               $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }
+            $scope.choice[x]=true;
+            console.log($scope.choice);
+                                // $http.get("http://localhost:8080/routes/pullall/:"+x ).success(function(data, status) {
+               
+                 // $scope.data=data;
+                   imageService.loadImages("http://localhost:8080/routes/oop/:"+x ).then(function(data){
+                    console.log(data.data);
+                    data.data.forEach(function(obj){
+                        var desc = obj.description,
+                            // width = desc.match(/width="(.*?)"/)[1],
+                            // height = desc.match(/height="(.*?)"/)[1];
+
+                             width = 80;
+                            height = 90;
+
+                        obj.actualHeight  = height;
+                        obj.actualWidth = width;
+                    });
+                   $scope.pics = data.data;
+                });
+                $scope.refresh = function(){
+                    angularGridInstance.gallery.refresh();
+                }
+
+               // });///clears stuff
+            }
+
+      
+        })
+
+         .controller('post', function($scope,$http,$localStorage) {
+          var category="";
+          $scope.data={
+            name:"",
+            description:"",
+            token:$localStorage.token,
+            date: new Date()
+          }
+
+          $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }
+
+          $scope.selectcat=function(x){
+             $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }
+            $scope.choice[x]=true;
+            category=x;
+            console.log($scope.choice);
+          }
+         
+            $scope.post=function(){
+
+
+              if(category==""){
+                alert("select category");
+              }
+
+              else  if($scope.data.description.length<11){
+                alert("description too short must be above 19 characters");
+              }
+
+              else if(false){
+                //for images
+              }
+
+              else if($scope.data.name.length<1){
+                alert("name empty");
+              }
+
+             else{
+                $http.post("http://localhost:8080/routes/post/:"+$localStorage.token
+                +"-:"+$scope.data.name+"-:"+$scope.data.description+"-:"+category+"-:"+$scope.data.date, {params: {name: 'somto'}} ).success(function(data, status) {
+               if(data.status==1){
+                  alert("saved");
+                   $scope.data={
+                    name:"",
+                    description:"",
+                    token:$localStorage.token,
+                    date: new Date()
+                  }///clears stuff
+
+
+                   $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }///clear more stuff
+                 
+               }    
+             })
+             }
+            }
+
+        })
+
+        .controller('profilepageseller',function($scope,$http,$state,$localStorage){
+
+  // $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
+  //    console.log(data)
+  //     })
+        $scope.data="";
+      $http.post("http://localhost:8080/routes/user/:"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
+       console.log(data)
+        $scope.data=data[0];
+      })
+
+
+        })
+
+
+         .controller('check',function($scope,$localStorage){
+          console.log($localStorage.token);
+            $scope.view={
+              check:true,
+              login:false,
+              profile:false
+            };
+
+            if($localStorage.token){
+             if($localStorage.token.length==40){
+               $scope.view={
+                check:false,
+                login:false,
+                profile:true
+            }
+            }
+            else{
+              $scope.view={
+              check:false,
+              login:true,
+               profile:false
+            };
+            }
+          }
+          else{
+              $scope.view={
+              check:false,
+              login:true,
+               profile:false
+            };
+            }
+
+        })
+
+
+        .controller('signup',function($localStorage,$scope,$http,$state){
+
+                  $scope.user={
+                    name:"",
+                    email:"",
+                    password:"",
+                    password1:""
+                  }
+               $scope.signup=function(){
+
+                  if($scope.user.password.length<1||$scope.user.email.length<1||$scope.user.name.length<1){
+                    alert("field empty");
+                  }
+                    else if ($scope.user.password.length<6&&$scope.user.password.length>1) {
+                    alert("password too short");
+                  }
+                  
+                  else if($scope.user.password!=$scope.user.password1){
+                           alert("password dont match");
+                 }
+
+                  else if($scope.user.name.length<6){
+                            alert("name too short");
+                }
+
+                  else if(1!=1){
+                    ////eamail validation
+                  }
+
+                  else{
+                  $http.post("http://localhost:8080/routes/signup/:"+$scope.user.name+"-:"+$scope.user.password+"-:"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
+             
+                    console.log(data[0].tokken);
+                    if(data[0].tokken.length==40){
+                    $localStorage.token=data[0].tokken;
+                    console.log($localStorage.token);
+                    $state.go($state.current, {}, {reload: true});
+                   }
+                  })
+                  }
+        }
+      })
+
+          .controller('login',function($scope,$http,$state){
+
+            $scope.login=function(){
+      //             var data = $.param({
+      //             book: JSON.stringify({
+      //             author: $scope.author,
+      //            title : $scope.title,
+      //              body : $scope.body
+      //   })
+      // });
+
+      $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
+     console.log(data)
+      })
+            }
+
+
+            $scope.signupm=function(){
+              alert(2);
+              $state.go("signup");
+            }
+
+             $scope.forgot=function(){
+                
+            }
+
 
         })
 
@@ -142,18 +421,25 @@
 
           $scope.check=[];
 
-          $scope.check.chek=false;
+          $scope.check.chek=true;
+                    $scope.check.chek1=false;
+                    $scope.check.chek2=false;
+          console.log( $scope.check.chek);
 
           $scope.refresh = function(){
               angularGridInstance.gallery.refresh();
           }
 
           $scope.switch=function(){
-            if($scope.check.check===false){
-               $scope.check.check=true;
+            if($scope.check.chek===false){
+               $scope.check.chek=true;
+                         $scope.check.chek1=false;
+                console.log( $scope.check.chek);
             }
             else {
-                    $scope.check.check=false;
+                    $scope.check.chek=false;
+                              $scope.check.chek1=true;
+                      console.log( $scope.check.chek);
             }
           }
 
@@ -174,6 +460,7 @@
            }
 
           $scope.close=function(){
+            // $scope.check.chek2=true;
             var sa = document.getElementById('pop');
             sa.className="fat_";
             var ov = document.getElementById('ov');

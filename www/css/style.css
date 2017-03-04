@@ -733,7 +733,7 @@
 
 
         .angular-grid{
-          margin-top: 19%;
+          /*margin-top: 19%;*/
         }
 
         .angular-grid li{
@@ -794,8 +794,7 @@
         #circl_ i{
           position: absolute;
           margin-left: -5px;
-          padding-top: 9px;
-        }
+          padding-top: 9px        }
 
 
 
@@ -805,8 +804,8 @@
             width: 45px;
             color: white;
             background: #e040fb;
-            margin-left: 85vw;
-            margin-top: 80vh;
+            margin-left: 83vw;
+            margin-top: 81vh;
             border-radius: 50%;
             position: absolute;
             z-index: 2;
@@ -817,3 +816,48 @@
             padding-top: 6px;
 
           }
+
+
+
+          .item-input{
+              border: 0;   
+          }
+
+          .item{
+            border: 0;
+          }
+
+          form{
+            margin-top: 5vh;
+          }
+
+          /*.item-input input, .item-input textarea{
+            background: white;
+         */ }
+
+         .button.button-balanced:hover{
+
+         }
+
+         .itemarea{
+          height: 400px;
+         }
+
+         #login_{
+          text-align: center;
+         }
+
+         .modal_ img{
+                 border-radius: 50%;
+                  width: 35vh;
+                  height: 35vh;
+                  margin-top: 3vh;
+                  padding: 24px;
+                  box-shadow: 0px 0px 12px #cdcdcd;
+         }
+
+         .checkbox input, .checkbox-icon{
+          float: left;
+          padding: 1%;
+
+         }

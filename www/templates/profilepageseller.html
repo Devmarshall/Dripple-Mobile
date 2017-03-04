@@ -1,10 +1,14 @@
 
 
 
-        <ion-view>
-          <div class="bar bar-header bar-light mydiv">
-            <h1 class="title">Dripple</h1>
-          </div>
+        <ion-view ng-controller="profilepageseller">
+
+         <div class="bar bar-header">
+  <h1 class="title">Dripple</h1>
+  <button ng-click="change()" style="position: fixed;
+    background: white;
+    border: 0;" class="icon ion-person"></button>
+</div>
           <ion-content>
               <div class="back" ></div>
             <div class="protop2" >
@@ -13,11 +17,12 @@
                   <img src="img/ben.png" alt="" />
                   <section class="">
                     <h5>
-                      John
+                      {{data.name}}
                     </h5>
                     <p>
                       Male/Social enterpreniour
                       I sell with the best price
+                      <!-- {{data.bio}} -->
                     </p>
                   </section>
                 </div>

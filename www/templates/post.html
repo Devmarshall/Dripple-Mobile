@@ -1,0 +1,52 @@
+<ion-modal-view class="modal">
+
+   <ion-content>
+
+     <div class="modal_" style="text-align: -webkit-center;
+                                  font-size: 45px">
+
+
+
+                                      <img src="img/upload-picture.png" alt="" />
+
+
+       <label class="item item-input item-floating-label">
+         <span class="input-label">name</span>
+         <input style="color:black"class="in" type="text" placeholder="name" ng-model="data.name">
+       </label>
+       <p style="font-size: initial;">
+         {{data.description}}
+       </p>
+       <label class="item item-input item-floating-label">
+               <span class="input-label">Description</span>
+         <input style="
+                        color: black;" type="text" placeholder="Description"   ng-model="data.description">
+       </label>
+
+
+       <ul style="       white-space: nowrap;
+    display: inline-flex;
+    width: 100vw;
+    overflow: auto;">
+
+                        <li style="display:inline;"><ion-checkbox ng-model="choice.mclothing" ng-click='selectcat("mclothing")'>Male clothing</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.fclothing" ng-click='selectcat("fclothing")'>Female clothing</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Accesories" ng-click='selectcat("Accesories")'>Accesories</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gadgets" ng-click='selectcat("Gadgets")'>Gadgets</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Food" ng-click='selectcat("Food")'>Food</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gaccessory" ng-click='selectcat("Gaccessory")'>Gadget Accesory</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.HomeI" ng-click='selectcat("HomeI")'>Home items</ion-checkbox></li>
+           <li  style="display:inline;"><ion-checkbox ng-model="choice.others" ng-click='selectcat("others")'>others</ion-checkbox></li>
+
+</ul>
+
+       <button ng-click="post()" class="button   button-full button-balanced curves ">Post</button>
+
+       <i class="icon ion-ios-close-outline" ng-click="closeModal()"></i>
+
+     </div>
+
+
+
+   </ion-content>
+ </ion-modal-view>

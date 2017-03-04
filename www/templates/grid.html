@@ -1,12 +1,35 @@
-<ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-     <li data-ng-repeat="pic in pics" class="grid">
-         <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
-         <div class="">
-           <h6>nam</h6>
-           <p>
-             pric
-           </p>
-           <a>find</a>
-         </div>
-     </li>
- </ul>
+
+
+            <ul style="       white-space: nowrap;
+                display: inline-flex;
+                width: 100vw;
+                overflow: auto;">
+                                    <li style="display:inline;"><ion-checkbox ng-model="choice.mclothing" ng-click='find("mclothing")'>Male clothing</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.fclothing" ng-click='find("fclothing")'>Female clothing</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.Accesories" ng-click='find("Accesories")'>Accesories</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.Gadgets" ng-click='find("Gadgets")'>Gadgets</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.Food" ng-click='find("Food")'>Food</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.Gaccessory" ng-click='find("Gaccessory")'>Gadget Accesory</ion-checkbox></li>
+                               <li  style="display:inline;"><ion-checkbox ng-model="choice.HomeI" ng-click='find("HomeI")'>Home items</ion-checkbox></li>
+                       <li  style="display:inline;"><ion-checkbox ng-model="choice.others" ng-click='find("others")'>others</ion-checkbox></li>
+
+            </ul>
+
+
+           <ul  class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+                 <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
+                  <div class="griitm">
+                    <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+                    <div class="griitm2">
+                      <h6>{{pic.name}}</h6>
+                      <p>{{pic.shopname}}</p>
+                     <div class="">
+                       <h5>
+                         $ 15,000
+                       </h5>
+                       <a>find</a>
+                     </div>
+                    </div>
+                  </div>
+                 </li>
+             </ul>
