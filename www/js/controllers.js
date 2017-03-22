@@ -145,7 +145,7 @@
         })
 
 
-              .controller('load', function($scope,$http,imageService,angularGridInstance) {
+              .controller('load', function($scope,$http,imageService,angularGridInstance,$state) {
 
 
             
@@ -300,6 +300,7 @@
   // $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
   //    console.log(data)
   //     })
+  console.log($localStorage.token);
         $scope.data="";
       $http.post("http://localhost:8080/routes/user/:"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
        console.log(data)
@@ -417,7 +418,7 @@
 
         })
 
-        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance) {
+        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance,$localStorage) {
 
           $scope.check=[];
 
@@ -444,16 +445,17 @@
           }
 
 
-          imageService.loadImages().then(function(data){
-               data.data.items.forEach(function(obj){
+          imageService.loadImages("http://localhost:8080/routes/location/:"+$localStorage.token).then(function(data){
+            console.log(data);
+               data.data.forEach(function(obj){
                    var desc = obj.description,
-                       width = desc.match(/width="(.*?)"/)[1],
-                       height = desc.match(/height="(.*?)"/)[1];
+                       width = 70,
+                       height = 160;
 
                    obj.actualHeight  = height;
                    obj.actualWidth = width;
                });
-              $scope.pics = data.data.items;
+              $scope.pics = data.data;
            });
            $scope.refresh = function(){
                angularGridInstance.gallery.refresh();
