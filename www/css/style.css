@@ -213,7 +213,7 @@
 
       .local i{
       font-size: 28px;
-      color: #E040FB;
+      color: #FF5252;
       }
 
 
@@ -234,11 +234,11 @@
 
         padding-left:0;
       border: 0;
-      color: #E040FB;
+      color: #FF5252;
       }
       .item-icon-left p{
       border: 0;
-      /*color: #E040FB;*/
+      /*color: #FF5252;*/
       /*float: right;*/
       }
 
@@ -250,13 +250,13 @@
 
       .selected{
       color: white;
-      background-color:  #E040FB;
+      background-color:  #FF5252;
       }
 
       .selector{
         /*padding: 10px;*/
         text-align: left;
-        border: 1px solid #E040FB;
+        border: 1px solid #FF5252;
         border-top: 0;
         margin-top: 5%;
       }
@@ -270,7 +270,7 @@
       width: 76%;
       height:40px;
       border-radius: 100px;
-      background-color: #E040FB;
+      background-color: #FF5252;
       color: white;
       margin-left: 12%;
       margin-right: 12%;
@@ -285,7 +285,7 @@
         text-align: center;
         font-size: 20px;
         padding: 5px;
-        border: 1px solid #E040FB;
+        border: 1px solid #FF5252;
       }
 
 
@@ -312,7 +312,7 @@
         height: 29px;
         width: 29px;
         border-radius: 50%;
-        background-color: #E040FB;
+        background-color: #FF5252;
       }
 
 
@@ -326,7 +326,7 @@
       	width: 0;
       	pointer-events: none;
       	/*border-color: rgba(136, 183, 213, 0);*/
-      	border-top-color: #E040FB;
+      	border-top-color: #FF5252;
       	border-width: 9px;
       	margin-left: -9px;
         position: absolute;
@@ -386,7 +386,7 @@
           border-radius: 50%;
           color: white;
         position: absolute;
-        	background: #E040FB;
+        	background: #FF5252;
           text-align: center;
           vertical-align: middle;
           padding: 13%;
@@ -709,7 +709,7 @@
           display: inline;
           float: right;
           height: 36px;
-          background: #E040FB;
+          background: #FF5252;
           border-radius: 100px;
           color: white;
           margin-top: 4%;
@@ -767,7 +767,7 @@
 
         .angular-grid li div div a{
           float: right;
-          background: #E040FB;
+          background: #FF5252;
           padding: 4px;
           color: #fff;
           border-radius: 10000px;
@@ -803,7 +803,7 @@
             height: 45px;
             width: 45px;
             color: white;
-            background: #e040fb;
+            background: #FF5252;
             margin-left: 83vw;
             margin-top: 81vh;
             border-radius: 50%;
@@ -820,7 +820,7 @@
 
 
           .item-input{
-              border: 0;   
+              border: 0;
           }
 
           .item{
@@ -860,4 +860,47 @@
           float: left;
           padding: 1%;
 
+         }
+
+         .post_no_login{
+           padding-top: 40%;
+           text-align: center;
+         }
+
+         .post_no_login button{
+           width: 60vw;
+           margin-top: 20px;
+         }
+
+
+         .ion-bug{
+            margin-top: 30vh;
+            text-align: center;
+            font-size: 43vh;
+            color: #cdcdcd;
+         }
+
+
+         .icon__ {
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             width: 120px;
+             height: 120px;
+             margin:-60px 0 0 -60px;
+             -webkit-animation:spin 4s linear infinite;
+             -moz-animation:spin 4s linear infinite;
+             animation:spin 4s linear infinite;
+         }
+         @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+         @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+         @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+
+
+
+         .spinner svg {
+             width: 128px;
+             height: 128px;
          }

@@ -1,6 +1,6 @@
-<ion-modal-view class="modal">
+<ion-view class="modal">
 
-   <ion-content>
+   <ion-content ng-show="log.post">
 
      <div class="modal_" style="text-align: -webkit-center;
                                   font-size: 45px">
@@ -54,4 +54,13 @@
 
 
    </ion-content>
- </ion-modal-view>
+
+
+
+   <div class="post_no_login"   ng-show="log.login">
+     <p>Wanna use our services ,</br> Login first</p>
+     <button  ng-click="login()" class="button button-assertive">
+  Login
+</button>
+   </div>
+ </ion-view

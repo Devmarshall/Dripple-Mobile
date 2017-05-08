@@ -26,7 +26,6 @@
 
 
 
-
           $scope.d=function(){
             console.log("description");
             $scope.view={
@@ -70,17 +69,17 @@
 
 
             .controller('grid', ['$scope','$state','imageService','angularGridInstance', function ($scope,$state,imageService,angularGridInstance) {
-               imageService.loadImages().then(function(data){
-                    data.data.items.forEach(function(obj){
-                        var desc = obj.description,
-                            width = desc.match(/width="(.*?)"/)[1],
-                            height = desc.match(/height="(.*?)"/)[1];
-
-                        obj.actualHeight  = height;
-                        obj.actualWidth = width;
-                    });
-                   $scope.pics = data.data.items;
-                });
+              //  imageService.loadImages().then(function(data){
+              //       data.data.items.forEach(function(obj){
+              //           var desc = obj.description,
+              //               width = desc.match(/width="(.*?)"/)[1],
+              //               height = desc.match(/height="(.*?)"/)[1];
+               //
+              //           obj.actualHeight  = height;
+              //           obj.actualWidth = width;
+              //       });
+              //      $scope.pics = data.data.items;
+              //   });
                 $scope.refresh = function(){
                     angularGridInstance.gallery.refresh();
                 }
@@ -148,7 +147,7 @@
               .controller('load', function($scope,$http,imageService,angularGridInstance,$state) {
 
 
-            
+
 
                 $scope.item=function(){
                   $state.go('item');
@@ -167,7 +166,7 @@
 
           $scope.data={};
 
-          
+
             $scope.find=function(x){
                $scope.choice={
             mclothing:false,
@@ -182,7 +181,7 @@
             $scope.choice[x]=true;
             console.log($scope.choice);
                                 // $http.get("http://localhost:8080/routes/pullall/:"+x ).success(function(data, status) {
-               
+
                  // $scope.data=data;
                    imageService.loadImages("http://localhost:8080/routes/oop/:"+x ).then(function(data){
                     console.log(data.data);
@@ -206,16 +205,38 @@
                // });///clears stuff
             }
 
-      
+
         })
 
-         .controller('post', function($scope,$http,$localStorage) {
+         .controller('post', function($scope,$http,$localStorage,$state) {
           var category="";
+          $scope.log={
+            login:false
+          }
           $scope.data={
             name:"",
             description:"",
             token:$localStorage.token,
             date: new Date()
+          }
+
+          $scope.login=function(){
+              $state.go('login');
+          }
+
+
+          if (!$localStorage.token) {
+              $scope.log={
+                        login:true,
+                        post:false
+                      }
+          }
+
+          else if ($localStorage.token  && true) {
+              $scope.log={
+              login:false,
+              post:true
+              }
           }
 
           $scope.choice={
@@ -244,7 +265,7 @@
             category=x;
             console.log($scope.choice);
           }
-         
+
             $scope.post=function(){
 
 
@@ -287,8 +308,8 @@
             HomeI:false,
             others:false
           }///clear more stuff
-                 
-               }    
+
+               }
              })
              }
             }
@@ -296,16 +317,43 @@
         })
 
         .controller('profilepageseller',function($scope,$http,$state,$localStorage){
+            $scope.show={
+            nopage:false,
+            profile:false,
+            spinner:true
+            }
+
+
+          $scope.checker=function(){
+            $http.get("http://localhost:8080/routes/getalluserdatauser/:"+$localStorage.token+"" ).success(function(data, status) {
+             console.log(data)
+              $scope.data=data[0];
+              $scope.show={
+              nopage:false,
+              profile:true,
+              spinner:false
+              }///query success
+            }) .error(function(err)
+               {
+              ////error
+              ///
+              $scope.show={
+              nopage:true,
+              profile:false,
+              spinner:false
+              }
+               });
+          }
 
   // $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
   //    console.log(data)
   //     })
-  console.log($localStorage.token);
-        $scope.data="";
-      $http.post("http://localhost:8080/routes/user/:"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
-       console.log(data)
-        $scope.data=data[0];
-      })
+  // console.log($localStorage.token);
+  //       $scope.data="";
+  //     $http.post("http://localhost:8080/routes/user/:"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
+  //      console.log(data)
+  //       $scope.data=data[0];
+  //     })
 
 
         })
@@ -346,7 +394,7 @@
         })
 
 
-        .controller('signup',function($localStorage,$scope,$http,$state){
+        .controller('signup',function($localStorage,$scope,$http,$state,$window){
 
                   $scope.user={
                     name:"",
@@ -362,7 +410,7 @@
                     else if ($scope.user.password.length<6&&$scope.user.password.length>1) {
                     alert("password too short");
                   }
-                  
+
                   else if($scope.user.password!=$scope.user.password1){
                            alert("password dont match");
                  }
@@ -377,7 +425,7 @@
 
                   else{
                   $http.post("http://localhost:8080/routes/signup/:"+$scope.user.name+"-:"+$scope.user.password+"-:"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
-             
+                        $window.location.reload(true);
                     console.log(data[0].tokken);
                     if(data[0].tokken.length==40){
                     $localStorage.token=data[0].tokken;
@@ -389,7 +437,13 @@
         }
       })
 
-          .controller('login',function($scope,$http,$state){
+          .controller('login',function($scope,$http,$state,$window){
+
+            $scope.data={
+              password:"",
+              name:""
+            }
+
 
             $scope.login=function(){
       //             var data = $.param({
@@ -400,19 +454,29 @@
       //   })
       // });
 
-      $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
-     console.log(data)
+      $http.post("http://localhost:8080/routes/login/:"+$scope.data.name+"/:"+$scope.data.password+"", ).success(function(data, status) {
+
+        if (data) {
+          if (data.tokken) {
+            $localStorage.token=data.tokken;
+            $window.location.reload(true);
+          }
+          else {
+
+          }
+        }
+
       })
             }
 
 
             $scope.signupm=function(){
-              alert(2);
+
               $state.go("signup");
             }
 
              $scope.forgot=function(){
-                
+
             }
 
 

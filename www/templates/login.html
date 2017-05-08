@@ -12,19 +12,19 @@
       <div class="list" id="login_">
        <label class="item item-input item-floating-label">
     <span class="input-label">First Name</span>
-    <input type="text" placeholder="First Name">
+    <input type="text" placeholder="First Name" ng-model="data.name">
   </label>
   <label class="item item-input item-floating-label">
-    <span class="input-label">Last Name</span>
-    <input type="text" placeholder="Last Name">
+    <span class="input-label">password</span>
+    <input type="password" placeholder="password" ng-model="data.password">
   </label>
- 
+
    <label class="item">
-          <button ng-click="login()"class="button button-block button-positive" type="submit">Log in</button>
+          <button ng-click="login()"class="button button-block button-assertive" type="submit">Log in</button>
         </label>
 
-        <a ng-click="forgot()">forgoten? password</a>
-        <span>dont have an account <p ng-click="signupm()">Sign up</p></span>
+        <a ng-click="forgot()">forgoten? password</a></br>
+        <span>dont have an account <a ng-click="signupm()">Sign up</a></span>
       </div>
     </form>
   </ion-content>

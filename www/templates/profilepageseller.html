@@ -9,7 +9,30 @@
     background: white;
     border: 0;" class="icon ion-person"></button>
 </div>
-          <ion-content>
+          <ion-content ng-init="checker()">
+
+
+            <ion-refresher
+                    pulling-text="Refreshing..."
+                    on-refresh="checker()">
+                  </ion-refresher>
+
+
+                  <div  ng-show="show.spinner" class="load"  style="text-align: center;
+    font-size: x-large;
+    margin-top: 139px;">
+                        <ion-spinner icon="ios-small"></ion-spinner>
+                    <p>loading</p>
+                  </div>
+
+
+                  <div style="text-align:center;margin-top:25%" ng-show="show.nopage">
+
+                       <i class="icon ion-bug"></i>
+                       <p style="color:#cdcdcd;">Sorry had an issue connecting to the internet</p>
+                </div>
+
+            <div class="" ng-show="show.profile">
               <div class="back" ></div>
             <div class="protop2" >
               <div class="_protop">
@@ -17,7 +40,6 @@
                   <img src="img/ben.png" alt="" />
                   <section class="">
                     <h5>
-                      {{data.name}}
                     </h5>
                     <p>
                       Male/Social enterpreniour
@@ -67,5 +89,8 @@
                   </div>
                  </li>
              </ul>
+            </div>
+
           </ion-content>
+
         </ion-view>
