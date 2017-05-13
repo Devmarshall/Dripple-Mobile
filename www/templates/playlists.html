@@ -8,7 +8,7 @@
 <ion-view    cache-view="false">
 
     <ion-content>
-     
+
       <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
          <div  style="padding-left:10px"  ng-non-bindable class="m">
@@ -26,7 +26,7 @@
    </ng-map> -->
 
 
-   <smap ng-if="check.chek" id="map_canvas"  location="location"></smap>
+   <smap ng-if="check.chek" id="map_canvas"   d="pic" location="location"></smap>
 
      <ul  ng-if="check.chek1"  class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
                  <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
@@ -46,7 +46,7 @@
                  </li>
              </ul>
 
- 
+
 
    <div  ng-click="nxtpag()" id="ov" class="non">   </div>
      <div angular-ripple id="pop" class="fat_ trans" >

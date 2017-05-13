@@ -17,7 +17,13 @@
                     on-refresh="checker()">
                   </ion-refresher>
 
+                  <div class="start" ng-show="show.sell">
+                    <p>Sorry your not an enterprenur now so you got a  simple profile</br>wanna become one now</p>
+                    <button ng-click="sell()" class="button button-block button-assertive">start</button>
+                  </div>
 
+
+                <p ng-bind="gPlace.place"></p>
                   <div  ng-show="show.spinner" class="load"  style="text-align: center;
     font-size: x-large;
     margin-top: 139px;">
@@ -40,10 +46,11 @@
                   <img src="img/ben.png" alt="" />
                   <section class="">
                     <h5>
+                      {{data.shopname}}
                     </h5>
+                    <h6>{{data.name}}</h6>
                     <p>
-                      Male/Social enterpreniour
-                      I sell with the best price
+                      {{data.description}}
                       <!-- {{data.bio}} -->
                     </p>
                   </section>

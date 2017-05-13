@@ -1,0 +1,43 @@
+
+
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Sign up</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="
+    padding-left: 5vw;
+    padding-right: 5vw;">
+
+    <form ng-submit="doLogin()">
+      <div class="list">
+
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Shopname</span>
+    <input type="text" placeholder="Shopname" ng-model="shop.shopname">
+  </label>
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Place</span>
+  <input ng-model="shop.chosenPlace"  details='shop.place' googleplace type="text"/>
+  </label>
+  <label class="item item-input item-floating-label">
+    <span class="input-label">description</span>
+    <input type="text" placeholder="Short description bout your bussiness" ng-model="shop.description">
+  </label>
+
+<label  class="item">
+  <p class="white-space:normal"ng-bind='shop.description'></p>
+</label>
+
+
+   <label class="item">
+     <button ng-click="sell()" class="button button-block button-assertive" type="submit"> Become an enterprenuir
+
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

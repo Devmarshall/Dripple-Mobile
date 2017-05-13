@@ -2,9 +2,15 @@ var module = angular.module('smap', []);
 module.directive('smap', function() {
     return {
         restrict: 'E',
+        scope:{
+          d:'@'
+        },
         replace: true,
         template: '<div></div>',
         link: function(scope, element, attrs) {
+          console.log(scope);
+          var item=scope;
+          console.log(item.d);
           function includeJs(jsFilePath) {
           var js = document.createElement("script");
 

@@ -1,4 +1,4 @@
-        angular.module('starter.controllers', [])
+   angular.module('starter.controllers', [])
         .controller('itemctrl',function($scope){
 
 
@@ -143,6 +143,72 @@
           ];
         })
 
+
+
+        .controller('editctrl', function($scope,$http,  $localStorage) {
+
+          $scope.vm={data:'on'}
+          function getLocation() {
+          if (navigator.geolocation) {
+            // alert("hey");
+            console.log("hey");
+              navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            alert("no geo");
+          }
+          return 1;
+        }
+
+        $scope.changep=function(x){
+          console.log(x);
+          if (x=='On') {
+            console.log('ping');
+            $localStorage.location=1;
+            getLocation();
+          }else{
+            $localStorage.location=null;
+          }
+          console.log($localStorage.location);
+        }
+
+        function showPosition(position) {
+          console.log(position.coords.latitude);
+          console.log(position.coords.longitude);
+          $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:latitude-:'+position.coords.latitude).success(function(data,status){
+          })
+
+          $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:longitude-:'+position.coords.longitude).success(function(data,status){
+      })
+
+    // x.innerHTML = "Latitude: " + position.coords.latitude +
+    // "<br>Longitude: " + position.coords.longitude;
+}
+
+        $scope.m={chosenPlace:""};
+        $scope.pass={
+          one:'',
+          two:''
+        }
+
+        $scope.change=function(){
+          if ($scope.pass.one==$scope.pass.two) {
+            $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:password-:'+$scope.pass.one).success(function(data,status){
+
+
+            })
+          }
+          else {
+            alert('password dont match');
+          }
+
+
+        }
+
+
+        $scope.logout=function(){
+          $localStorage.token=null;
+        }
+})
 
               .controller('load', function($scope,$http,imageService,angularGridInstance,$state) {
 
@@ -315,12 +381,91 @@
             }
 
         })
+        .controller('sellerinit',function($scope,$http,$state,$localStorage){
+
+
+          $scope.gplace;
+          $scope.shop={
+            shopname:'',
+            place:'',
+            chosenPlace:'',
+            description:''
+          }
+
+          $scope.sell=function(){
+            console.log($scope.shop);
+
+            if ($scope.shop.shopname.length<6) {
+              alert('the name too short must be above 6 characters');
+            }
+            else if ($scope.shop.description.length<20) {
+              alert('your description doesnt sound fully explanatly try above 20 characters');
+            }
+
+            else if ($scope.shop.place.length<3) {
+              alert('please select a place from the map list');
+            }
+
+            else {
+               var lat,lng='';
+              if ($scope.shop.place.length==5) {
+                lat=$scope.shop.place[3];
+                lng=$scope.shop.place[4];
+              }
+
+              else  if ($scope.shop.place.length==4) {
+                  lat=$scope.shop.place[2];
+                  lng=$scope.shop.place[3];
+                }
+
+
+                $scope.shop.chosenPlace=$scope.shop.chosenPlace.replace('-', '');
+                $scope.shop.chosenPlace=$scope.shop.chosenPlace.replace(':', '');
+                $scope.shop.chosenPlace=$scope.shop.chosenPlace.replace('/', '');
+                lat=lat.toString().replace('-','*')
+                lng=lng.toString().replace('-','*');
+                $scope.shop.description=$scope.shop.description.replace('-', '');
+                $scope.shop.description=$scope.shop.description.replace(':', '');
+                $scope.shop.description=$scope.shop.description.replace('/', '');
+                lat=lat.toString().replace('-','*')
+                ///means where good to go
+                $http.get('http://localhost:8080/routes/sellerinit/:'+$localStorage.token+'-:'+$scope.shop.shopname+'-:'+$scope.shop.chosenPlace+'-:'+lat+'-:'+lng+'-:'+$scope.shop.description).success(function(data,status){
+
+                    alert('success');
+
+                })
+
+            }
+            // if (  $scope.gplace.place.length>0) {//means their is lat and lng to use
+            //   alert($scope.gplace/place[3]);
+            // }
+            // $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:latitude-:'+position.coords.latitude).success(function(data,status){
+            // })
+          }
+        })
 
         .controller('profilepageseller',function($scope,$http,$state,$localStorage){
             $scope.show={
             nopage:false,
             profile:false,
-            spinner:true
+            spinner:true,
+            sell:false    }
+
+            $scope.wm={fulldress:'',
+            address_1:''}
+
+            $scope.gPlace={
+              place:''
+            };
+
+            $scope.sell=function(){
+            $state.go('sellerinit');
+            }
+
+
+
+            $scope.change=function(){
+              $state.go('edit');
             }
 
 
@@ -328,11 +473,22 @@
             $http.get("http://localhost:8080/routes/getalluserdatauser/:"+$localStorage.token+"" ).success(function(data, status) {
              console.log(data)
               $scope.data=data[0];
-              $scope.show={
-              nopage:false,
-              profile:true,
-              spinner:false
-              }///query success
+              ///query success
+              if ($scope.data.seller) {
+                $scope.show={
+                nopage:false,
+                profile:true,
+                spinner:false,
+                sell:false
+                }
+              }else {
+                $scope.show={
+                nopage:false,
+                profile:false,
+                spinner:false,
+                sell:true
+                }
+              }
             }) .error(function(err)
                {
               ////error
@@ -360,7 +516,7 @@
 
 
          .controller('check',function($scope,$localStorage){
-          console.log($localStorage.token);
+          // console.log($localStorage.token);
             $scope.view={
               check:true,
               login:false,
@@ -437,13 +593,12 @@
         }
       })
 
-          .controller('login',function($scope,$http,$state,$window){
+          .controller('login',function($scope,$localStorage,$http,$state,$window){
 
             $scope.data={
               password:"",
               name:""
             }
-
 
             $scope.login=function(){
       //             var data = $.param({
@@ -451,14 +606,14 @@
       //             author: $scope.author,
       //            title : $scope.title,
       //              body : $scope.body
-      //   })
-      // });
 
       $http.post("http://localhost:8080/routes/login/:"+$scope.data.name+"/:"+$scope.data.password+"", ).success(function(data, status) {
+console.log(data);
 
         if (data) {
-          if (data.tokken) {
-            $localStorage.token=data.tokken;
+          if (data[0].tokken) {
+            console.log(data[0]);
+            $localStorage.token=data[0].tokken;
             $window.location.reload(true);
           }
           else {
@@ -519,7 +674,10 @@
                    obj.actualHeight  = height;
                    obj.actualWidth = width;
                });
+               $scope.pics='';
               $scope.pics = data.data;
+             $scope.pic=JSON.stringify(data.data);
+              console.log($scope.pics);
            });
            $scope.refresh = function(){
                angularGridInstance.gallery.refresh();

@@ -4,9 +4,27 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','angularMoment','ngStorage', 'ngMaterial','angularGrid' ,'starter.controllers','ngCordova','selector','smap','angularRipple'])
+angular.module('starter', ['ionic','angularMoment','ngStorage', 'ngMaterial','angularGrid' ,'starter.controllers','ngCordova','selector','smap','angularRipple','starter.mod'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$interval,$localStorage,$http) {
+
+if ($localStorage.location) {/////means its not null now
+  $interval(ping,960000);///pings after 16 minutes your location if ur active or set it
+}
+  function ping(){
+    console.log('ping');
+    navigator.geolocation.getCurrentPosition(showPosition);
+
+  }
+  function showPosition(position) {
+    console.log(position.coords.latitude);
+    console.log(position.coords.longitude);
+    $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:latitude-:'+position.coords.latitude).success(function(data,status){
+    })
+
+    $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:Longitude-:'+position.coords.longitude).success(function(data,status){
+})
+}
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -32,11 +50,18 @@ angular.module('starter', ['ionic','angularMoment','ngStorage', 'ngMaterial','an
     templateUrl: 'templates/tabs.html'
   })
 
-.state('main', {
-    url: '/main',
-    abstract: true,
-    templateUrl: 'templates/tabsshome.html'
-  })
+  .state('main', {
+      url: '/main',
+      abstract: true,
+      templateUrl: 'templates/tabsshome.html'
+    })
+
+
+    .state('sellerinit', {
+        url: '/sellerinit',
+        templateUrl: 'templates/sellinit.html',
+        controller:'sellerinit'
+      })
 
  .state('main.profile', {
       url: '/profile',
@@ -122,6 +147,12 @@ templateUrl: 'templates/item.html',
 controller: 'itemctrl'
 })
 
+.state('edit', {
+url: '/edit',
+templateUrl: 'templates/edit.html',
+controller: 'editctrl'
+})
+
 .state('signup', {
 url: '/signup',
 templateUrl: 'templates/signup.html',
@@ -148,14 +179,16 @@ controller: 'grid'
   controller:'grid'
 })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
+.state('app.search', {
+  url: '/search',
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/search.html'
     }
-  })
+  }
+})
+
+
 
   .state('app.browse', {
       url: '/browse',

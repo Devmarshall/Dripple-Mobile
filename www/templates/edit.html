@@ -1,0 +1,70 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Sign up</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content style="
+    padding-left: 5vw;
+    padding-right: 5vw;">
+
+<!-- <geolocation></geolocation> -->
+    <ul class="list">
+
+      <li class="item item-toggle noborder">
+          location
+           <label class="toggle toggle-assertive">
+             <input type="checkbox" ng-model="vm.data" ng-true-value="'On'" ng-false-value="'Off'" ng-change="changep(vm.data)">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+           </label>
+    </li>
+    <li>
+      <p>Put on or off location</p>
+    </li>
+
+
+    </ul>
+
+<!--
+    <div ng-app="myApp">
+    <div>Google Places Autocomplte integration in Angular</div>
+    <div>To Test, start typing the name of any Indian city</div>
+    <div>selection is: {{m.chosenPlace}}</div>
+    <div><input ng-model="m.chosenPlace" googleplace/></div>
+</div -->
+    <form ng-submit="doLogin()">
+      <div class="list">
+
+  <!-- <label class="item item-input item-floating-label">
+    <span class="input-label">Username</span>
+    <input type="text" placeholder="Username" ng-model="user.name">
+  </label>
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Email</span>
+    <input type="text" placeholder="Email" ng-model="user.email">
+  </label> -->
+
+
+  <label class="item item-input item-floating-label">
+    <span class="input-label">password</span>
+    <input type="password" placeholder="password" ng-model="pass.one">
+  </label>
+  <label class="item item-input item-floating-label">
+    <span class="input-label">Password</span>
+    <input type="password" placeholder="retype-password" ng-model="pass.two">
+  </label>
+   <label class="item">
+     <button ng-click="change()" class="button button-block button-assertive" type="submit">change password
+       <button style="    border-radius: 9111px;
+    margin-top: 15vh;"ng-click="logout()" class="button button-block button-assertive" type="submit"> Logout
+
+          </button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

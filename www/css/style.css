@@ -897,10 +897,24 @@
          @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 
+         .start{
+           text-align: center;
+         }
 
-
+         .start button{
+           width: 70vw;
+           border-radius: 10px;
+           margin-left: 15vw;
+         }
 
          .spinner svg {
              width: 128px;
              height: 128px;
          }
+
+        .start p {    text-align: -webkit-center;
+            margin-top: 20VH;
+            PADDING-LEFT: 10vw;
+            padding-right: 10vw;
+            margin-bottom: 5vh;
+          }
