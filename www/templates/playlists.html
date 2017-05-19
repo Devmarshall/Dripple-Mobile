@@ -5,9 +5,24 @@
  <div class="fabhous" ng-click="switch()">
                    <i class="icon" ng-class="(false==check.chek) ? 'ion-map' : 'ion-ios-list-outline'"></i>
       </div>
-<ion-view    cache-view="false">
+<ion-view    cache-view="false" >
 
     <ion-content>
+      <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" ng-model='pics.text' placeholder="Search">
+      </label>
+    </div>
+    <ul style="       white-space: nowrap;
+ display: inline-flex;
+ width: 100vw;
+ overflow: auto;">
+
+                      <li  style="display:inline;"><ion-checkbox ng-model="pics.e" ng-click='init("0")'> Enterpreniurs</ion-checkbox></li>
+                <li  style="display:inline;"><ion-checkbox ng-model="pics.i" ng-click='init("1")'>Items</ion-checkbox></li>
+
+</ul>
 
       <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
@@ -25,25 +40,27 @@
        </info-window>
    </ng-map> -->
 
-
-   <smap ng-if="check.chek" id="map_canvas"   d="pic" location="location"></smap>
-
+   <!-- 0 means items-->
+   <smap ng-if="check.chek" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pics.map'   ></smap>
+ <testdir counter="filtereditems.length" />
      <ul  ng-if="check.chek1"  class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-                 <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
-                  <div class="griitm">
-                    <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
-                    <div class="griitm2">
-                      <h6>{{pic.name}}</h6>
-                      <p>{{pic.shopname}}</p>
-                     <div class="">
-                       <h5>
-                         $ 15,000
-                       </h5>
-                       <a>find</a>
-                     </div>
-                    </div>
-                  </div>
-                 </li>
+
+       <li  data-ng-repeat="pic in pics.map" class="grid" ng-click="item()">
+        <div class="griitm">
+          <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+          <div class="griitm2">
+            <h6>{{pic.name}}</h6>
+            <p>{{pic.shopname}}</p>
+           <div class="">
+             <h5>
+              {{pic.price}}
+             </h5>
+             <a>find</a>
+           </div>
+          </div>
+        </div>
+       </li>
+
              </ul>
 
 

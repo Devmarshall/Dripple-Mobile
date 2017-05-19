@@ -1,4 +1,19 @@
    angular.module('starter.controllers', [])
+
+
+               .service('stater', function($state) {
+
+                 return {
+                   get:function(x){
+                     $state.go('sellerinit');
+                   }
+                 }
+
+            })
+
+
+
+
         .controller('itemctrl',function($scope){
 
 
@@ -145,7 +160,7 @@
 
 
 
-        .controller('editctrl', function($scope,$http,  $localStorage) {
+        .controller('editctrl', function($scope,$http, $state, $localStorage,$window) {
 
           $scope.vm={data:'on'}
           function getLocation() {
@@ -191,14 +206,18 @@
         }
 
         $scope.change=function(){
-          if ($scope.pass.one==$scope.pass.two) {
+          alert('changing');
+          if ($scope.pass.one.length<6) {
+            alert('password too short');
+          }
+        else  if ($scope.pass.one!=$scope.pass.two) {
+          alert('passwords dont match');
+          }
+          else {
             $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:password-:'+$scope.pass.one).success(function(data,status){
 
 
             })
-          }
-          else {
-            alert('password dont match');
           }
 
 
@@ -206,7 +225,10 @@
 
 
         $scope.logout=function(){
+          alert('logout');
           $localStorage.token=null;
+          $state.go('main.trade');
+            $window.location.reload(true);
         }
 })
 
@@ -282,6 +304,7 @@
           $scope.data={
             name:"",
             description:"",
+            price:'',
             token:$localStorage.token,
             date: new Date()
           }
@@ -353,7 +376,7 @@
 
              else{
                 $http.post("http://localhost:8080/routes/post/:"+$localStorage.token
-                +"-:"+$scope.data.name+"-:"+$scope.data.description+"-:"+category+"-:"+$scope.data.date, {params: {name: 'somto'}} ).success(function(data, status) {
+                +"-:"+$scope.data.name+"-:"+$scope.data.description+"-:"+category+"-:"+$scope.data.date+"-:"+$scope.data.price, {params: {name: 'somto'}} ).success(function(data, status) {
                if(data.status==1){
                   alert("saved");
                    $scope.data={
@@ -581,13 +604,21 @@
 
                   else{
                   $http.post("http://localhost:8080/routes/signup/:"+$scope.user.name+"-:"+$scope.user.password+"-:"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
-                        $window.location.reload(true);
-                    console.log(data[0].tokken);
-                    if(data[0].tokken.length==40){
-                    $localStorage.token=data[0].tokken;
-                    console.log($localStorage.token);
-                    $state.go($state.current, {}, {reload: true});
-                   }
+                    if (data.error) {
+                      alert(data.message);
+                    }
+
+                    else {
+                      $window.location.reload(true);
+                      $state.go('main.trade')
+                  console.log(data[0].tokken);
+                  if(data[0].tokken.length==40){
+                  $localStorage.token=data[0].tokken;
+                  console.log($localStorage.token);
+                  $state.go($state.current, {}, {reload: true});
+                 }
+                    }
+
                   })
                   }
         }
@@ -610,15 +641,16 @@
       $http.post("http://localhost:8080/routes/login/:"+$scope.data.name+"/:"+$scope.data.password+"", ).success(function(data, status) {
 console.log(data);
 
-        if (data) {
+        if (data.length>0) {
           if (data[0].tokken) {
             console.log(data[0]);
             $localStorage.token=data[0].tokken;
             $window.location.reload(true);
           }
-          else {
 
-          }
+        }
+        else {
+          alert('wrong details')
         }
 
       })
@@ -637,9 +669,16 @@ console.log(data);
 
         })
 
-        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance,$localStorage) {
+        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance,$localStorage,$http) {
+
+
+
+
 
           $scope.check=[];
+          $scope.pics={};
+          $scope.pics.text='';
+
 
           $scope.check.chek=true;
                     $scope.check.chek1=false;
@@ -664,8 +703,38 @@ console.log(data);
           }
 
 
+        $scope.init=function(x){
+
+
+
+          if (x==1) {
+            if ($scope.pics.i==true) {
+              $scope.pics.e=false;
+            }
+            $http.get('http://localhost:8080/routes/searchitems/:'+$localStorage.token+'-:'+$scope.pics.text).success(function(data,status){
+              console.log(data);
+              $scope.pics.map=data;
+             $scope.pics.filter=0;
+            })
+          }
+          else {
+            if ($scope.pics.e==true) {
+              $scope.pics.i=false;
+            }
+            $http.get('http://localhost:8080/routes/searchusers/:'+$localStorage.token+'-:'+$scope.pics.text).success(function(data,status){
+              console.log(data);
+              $scope.pics.map=data;
+              $scope.pics.filter=1;
+            })
+          }
+
+        }
+
+
           imageService.loadImages("http://localhost:8080/routes/location/:"+$localStorage.token).then(function(data){
-            console.log(data);
+
+            console.log(data.data);
+            $scope.pics={};
                data.data.forEach(function(obj){
                    var desc = obj.description,
                        width = 70,
@@ -674,10 +743,8 @@ console.log(data);
                    obj.actualHeight  = height;
                    obj.actualWidth = width;
                });
-               $scope.pics='';
-              $scope.pics = data.data;
-             $scope.pic=JSON.stringify(data.data);
-              console.log($scope.pics);
+              $scope.pics.pic = data.data;
+
            });
            $scope.refresh = function(){
                angularGridInstance.gallery.refresh();
@@ -742,4 +809,13 @@ console.log(data);
               { image: 'img/ben.png', id: 3 },
             ]}
           ]
+  $scope.f=$localStorage.token;
+      //  setTimeout(  $scope.$apply(function() {
+        //    $scope.pics.map=$scope.pics.map;
+        //  }),10000);
+        $scope.$watch('pics', function (newValue) {
+    //Do anything with $scope.letters
+    console.log($scope.pics);
+    $scope.pics=newValue;
+        });
           });

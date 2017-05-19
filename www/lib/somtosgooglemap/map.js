@@ -1,16 +1,46 @@
+var person = new Object();
+var markers=[];
+var overlayss=[];
+var map;
+var info;
+ var controller = ['$scope','$state','stater', function ($scope,$state,stater) {
+//   $state.go('sellinit');
+    //  stater.get();
+ }];
+
 var module = angular.module('smap', []);
-module.directive('smap', function() {
+module.directive('smap', ['stater', function(stater) {
     return {
         restrict: 'E',
         scope:{
-          d:'@'
+          'datapoint':'=',
+          'filter':'=',
+          'tokken':'='
+
         },
         replace: true,
         template: '<div></div>',
+        controller:controller,
         link: function(scope, element, attrs) {
+        //   stater.get();
           console.log(scope);
-          var item=scope;
-          console.log(item.d);
+                  if (!navigator.geolocation) {
+
+                  }
+        navigator.geolocation.getCurrentPosition(showPosition);
+
+
+        function showPosition(xox){
+          function initmark(){
+            var myLatlng = new google.maps.LatLng(xox.coords.latitude,xox.coords.longitude);
+
+             /////pass the image value to the image here
+           overlay = new CustomMarker(myLatlng,	map,
+             {
+               marker_id: '123'
+             }
+             );
+           }
           function includeJs(jsFilePath) {
           var js = document.createElement("script");
 
@@ -20,60 +50,152 @@ module.directive('smap', function() {
           document.body.appendChild(js);
           }
 
-
           includeJs("lib/somtosgooglemap/custominfobox.js");
           includeJs("lib/somtosgooglemap/custommarker.js");
             console.log(element);
 
               var myOptions = {
-                zoom: 16,
-                center: new google.maps.LatLng(4.7774200, 7.0134000),
+                zoom: 18,
+                center: new google.maps.LatLng( xox.coords.latitude,  xox.coords.longitude),
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
 
-            var map = new google.maps.Map(document.getElementById(attrs.id), myOptions);
+
+
+
+           map = new google.maps.Map(document.getElementById(attrs.id), myOptions);
             map.setOptions({styles: stylejson()});
-            google.maps.event.addListener(map, 'click', function(e) {
-                scope.$apply(function() {
-                    addMarker({
-                    lat: e.latLng.lat(),
-                    lng: e.latLng.lng()
-                  });
-
-                    console.log(e.ba);
-                });
-
-            }); // end click listener
+            initmark();
+            //  google.maps.event.addListener(map, 'click', function(e) {
+            //    scope.$apply(function() {
+              //      addMarker({
+                //    lat: e.latLng.lat(),
+                  //  lng: e.latLng.lng()
+                //  });
+                  //  console.log(e.ba);
+                //});
+          //  }); // end click listener
 
 
             addMarker= function(pos){
-          		 var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
+              var myLatlng = new google.maps.LatLng(pos.lat,pos.lng);
 
                /////pass the image value to the image here
-          		overlay = new CustomMarker(myLatlng,	map,
-          			{
-          				marker_id: '123'
-          			}
-          		  );
+             overlay = new CustomMarker(myLatlng,	map,
+               {
+                 marker_id: '123'
+               }
+               );
+               markers.push(overlay);
 
-              var infoBox = new InfoBox({
+               info = new InfoBox({
                  latlng: myLatlng,
                  map: map,
                  content: this.content
              });
+             overlayss.push(info);
+           } //end addMarker
 
-          	} //end addMarker
+
+           scope.$watch('tokken',function(value){
+             if (value) {
+              // alert(value)
+             }
+           });
+
+           scope.$watch('datapoint', function(value){
+      if(value){
+        console.log('change');
+        if (scope.filter=='0') {/////seller
+           clearMap();
+           clearkini();
+              setTimeout(function(){functionName2(value); }, 1000);
+              console.log('items');
+        }
+
+        else {
+           clearMap();
+           clearkini();
+        setTimeout(function(){functionName(); }, 1000);
+        console.log('users');
+        }
+
+        function functionName2(x) {
+///////for the items
+  console.log(x);
+          for (var i = 0; i < x.length; i++) {
+            var myLatlng = new google.maps.LatLng(x[i].lat,x[i].lng);
+
+             /////pass the image value to the image here
+           overlay = new CustomMarker(myLatlng,	map,
+             {
+               marker_id: '123'
+             }
+             );
+
+             markers.push(overlay);
+          }
 
         }
+
+        function clearMap() {
+        for (i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    }
+
+    function clearkini() {
+    for (i = 0; i < overlayss.length; i++) {
+        overlayss[i].setMap(null);
+    }
+    overlayss = [];
+}
+
+          function functionName() {
+            ////for sellers
+            for (var i = 0; i < value.length; i++) {
+              value[i]
+              addMarker({
+              lat: value[i].lat,
+              lng:  value[i].lng
+            });
+            }
+          }
+
+       }
+     });
+
+
+        }
+      }
     };
-});
+}])
 
 function MapCtrl($scope) {
 
     $scope.mapPin = 'No pin set yet';
 
 }
+
+
+function simpleStringify (object){
+    var simpleObject = {};
+    for (var prop in object ){
+        if (!object.hasOwnProperty(prop)){
+            continue;
+        }
+        if (typeof(object[prop]) == 'object'){
+            continue;
+        }
+        if (typeof(object[prop]) == 'function'){
+            continue;
+        }
+        simpleObject[prop] = object[prop];
+    }
+    return JSON.stringify(simpleObject); // returns cleaned up JSON
+};
 
 
 function stylejson(){

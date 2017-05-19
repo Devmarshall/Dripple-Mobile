@@ -37,6 +37,7 @@ CustomMarker.prototype.draw = function() {
 		google.maps.event.addDomListener(div, "click", function(event) {
 			var sa = document.getElementById('pop');
 			sa.className="fat_2";
+
 			var ov = document.getElementById('ov');
 			ov.className="ov";
 		});

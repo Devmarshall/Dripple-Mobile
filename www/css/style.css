@@ -309,8 +309,8 @@
       #marker{
         position: absolute;
         cursor: pointer;
-        height: 29px;
-        width: 29px;
+        height: 50px;
+        width: 50px;
         border-radius: 50%;
         background-color: #FF5252;
       }
@@ -318,7 +318,7 @@
 
 
       #marker:after {
-      	top: 88%;
+      	top: 98%;
       	left: 50%;
       	border: solid transparent;
       	content: " ";
@@ -335,10 +335,10 @@
       }
 
       #immagemarker{
-        left: 1px;
-        top: 1px;
-        width: 27px;
-        height: 27px;
+        left: 2px;
+        top: 2px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         position: absolute;
         z-index: 1;
@@ -493,7 +493,7 @@
             -moz-transition: all  0.7s ease-in-out;
             -o-transition: all  0.7s ease-in-out;
             transition: all  0.7s ease-in-out;
-            margin-top: -50%;
+            margin-top: -50vh;
           }
 
 
@@ -556,6 +556,7 @@
             border-radius: 50%;
             padding: 1%;
         }
+
 
         .image_ div p{
           margin: 0;
