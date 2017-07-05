@@ -14,13 +14,30 @@
         <input type="text" ng-model='pics.text' placeholder="Search">
       </label>
     </div>
-    <ul style="       white-space: nowrap;
+    <i ng-click='toggle_()' class="icon ion-grid filter"></i>
+    <ul ng-if='toggle' style="       white-space: nowrap;
  display: inline-flex;
  width: 100vw;
  overflow: auto;">
 
-                      <li  style="display:inline;"><ion-checkbox ng-model="pics.e" ng-click='init("0")'> Enterpreniurs</ion-checkbox></li>
-                <li  style="display:inline;"><ion-checkbox ng-model="pics.i" ng-click='init("1")'>Items</ion-checkbox></li>
+ <li  style="display:inline;"><ion-checkbox ng-model="pics.all" ng-init='initialize()' ng-click='init("-1")'> all</ion-checkbox></li>
+ <li  style="display:inline;"><ion-checkbox ng-model="pics.e" ng-click='init("0")'> Enterpreniurs</ion-checkbox></li>
+<li  style="display:inline;"><ion-checkbox ng-model="pics.i" ng-click='init("1")'>Items</ion-checkbox></li>
+
+</ul>
+
+<ul ng-if='toggle' style="       white-space: nowrap;
+    display: inline-flex;
+    width: 100vw;
+    overflow: auto;">
+                        <li style="display:inline;"><ion-checkbox ng-model="choice.mclothing" ng-click='find("mclothing")'>Male clothing</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.fclothing" ng-click='find("fclothing")'>Female clothing</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Accesories" ng-click='find("Accesories")'>Accesories</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gadgets" ng-click='find("Gadgets")'>Gadgets</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Food" ng-click='find("Food")'>Food</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gaccessory" ng-click='find("Gaccessory")'>Gadget Accesory</ion-checkbox></li>
+                   <li  style="display:inline;"><ion-checkbox ng-model="choice.HomeI" ng-click='find("HomeI")'>Home items</ion-checkbox></li>
+           <li  style="display:inline;"><ion-checkbox ng-model="choice.others" ng-click='find("others")'>others</ion-checkbox></li>
 
 </ul>
 
@@ -41,28 +58,28 @@
    </ng-map> -->
 
    <!-- 0 means items-->
-   <smap ng-if="check.chek" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pics.map'   ></smap>
- <testdir counter="filtereditems.length" />
-     <ul  ng-if="check.chek1"  class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+   <smap ng-if="check.chek" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>
+    <div  ng-if="check.chek1" class="">
+        <ul     angular-grid="pp" grid-width="300" refresh-on-img-load="false" ag-id="gallery"  >
 
-       <li  data-ng-repeat="pic in pics.map" class="grid" ng-click="item()">
-        <div class="griitm">
-          <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
-          <div class="griitm2">
-            <h6>{{pic.name}}</h6>
-            <p>{{pic.shopname}}</p>
-           <div class="">
-             <h5>
-              {{pic.price}}
-             </h5>
-             <a>find</a>
-           </div>
+         <li ng-click='next(pic)'  data-ng-repeat="pic in pp track by $index"  class="grid" ng-click="item()">
+          <div class="griitm">
+            <img src="img/ben.png" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+            <div class="griitm2">
+              <h6>{{pic.name}}</h6>
+              <p>{{pic.shopname}}</p>
+             <div class="">
+               <h5>
+                {{pic.price}}
+               </h5>
+               <a>find</a>
+             </div>
+            </div>
           </div>
-        </div>
-       </li>
-
-             </ul>
-
+         </li>
+               </ul>
+      <ion-infinite-scroll style="color:green" on-infinite="loadmore()" distance="30%" ng-if="moreDataCanBeLoaded" icon="ion-ios-football" ></ion-infinite-scroll>
+    </div>
 
 
    <div  ng-click="nxtpag()" id="ov" class="non">   </div>
@@ -105,4 +122,5 @@
       </div>
     </div>
     </ion-content>
+
 </ion-view>

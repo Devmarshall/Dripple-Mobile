@@ -17,11 +17,15 @@
                <ion-slide-page>
                 <img class='itemimg' src="img/adam.jpg" alt="">
                </ion-slide-page>
-           </ion-slides>
+             </ion-slides>
+
               <div class="arrow_box">
             <div class="ap">
-              <h4>Nice shirt</h4>
-              <span><h4>$100</h4> <p style="padding-top: 5%;">19 minutes from you</p>
+              <h4>{{data.name}}</h4>
+
+              <a href="#/chat/{{data.usertoken}}"  class="stuffa button button-icon icon ion-android-textsms" ></a>
+
+              <span><h4>N{{data.price}}</h4> <p style="padding-top: 5%;">19 minutes from you</p>
             </div>
             <div class="colordetails">
               <div class="co"> <h5>XL</h5> </div><div class="dt"></div>
@@ -30,69 +34,37 @@
 
               <a class="item item-icon-left" href="#">
                 <i class="ion-ios-location-outline"></i>
-                <p>117 Old aba road</p>
+                <p>{{data.location}}</p>
                 </a>
          </div>
 
          <div class="selector">
            <div class="top">
-             <h3  ng-click='d()' class="selected"> Descrition</h3>
-                <h3  ng-click='comment()' >comment</h3>
+             <h3  ng-click='d()' id="description" class="selected"> Descrition</h3>
+                <h3 id="comment"  ng-click='comment()'  >comment</h3>
            </div>
            <div class="">
           <div class="" ng-show='view.d'>
-            <p>To see a demo and further details go to https://www.pointblankdevelopment.com.au/blog/angularjs-directives-for-pinterest-buttons-and-widgets
-
-Installation
-
-Install using bower: bower install angular-pinterest
-
-Alternatively download the code and include the angular-pinterest.js file in your page.
-
-Add the 'angular-pinterest' module as a dependency of your AngularJS application:
-
-angular.module('myApp', ['angular-pinterest']);
-Usage
-
-Pin It Button
-
-Create a 'pin-it' element with attributes for the different settings of the button, values can be set directly or viewmodel properties can be used that are set in the controller.
-
-Example
-
-<!-- <pin-it url="vm.url" description="vm.description" media="vm.media" config="'above'"></pin-it>
-<pin-it url="'https://www.pointblankdevelopment.com.au'" description="'Point Blank Development'" media="''https://www.pointblankdevelopment.com.au/images/social_media.jpg''" config="'beside'" size="'large'" color="'white'"></pin-it>
-<pin-it url="vm.url" description="vm.description" media="vm.media" shape="'round'" size="'large'"></pin-it>
-Follow Button -->
-
-Create a 'pin-follow' element with attributes for Pinterest username and fullname.
-
-Example</p>
+            <p>{{data.discription}}</p>
           </div>
           <div ng-show='view.comments' class="">
-            <div class=""> ///NOTE CLAST LISAT IS VERY BAD AVOID IT AS MUCH AS POSSIB
-
-              <a class="item item-avatar" href="#">
+            <div class=""  >
+              <a ng-repeat="comment in comments" class="item item-avatar" href="#">
                 <img src="IMG/BEN.PNG">
                 <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
-              </a>
-              <a class="item item-avatar" href="#">
-                <img src="IMG/BEN.PNG">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
-              </a>
-              <a class="item item-avatar" href="#">
-                <img src="IMG/BEN.PNG">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
-              </a>
-              <a class="item item-avatar" href="#">
-                <img src="IMG/BEN.PNG">
-                <h2>Venkman</h2>
-                <p>Back off, man. I'm a scientist.</p>
+                <p>{{comment.message}}</p>
               </a>
 
+
+              <div ng-if='user()' class="bar  item-input-inset">
+                <a id="stuffa" class="button button-icon icon ion-android-camera" ng-click="sendim()"></a>
+
+                <label class="item-input-wrapper " id="stuff">
+                  <input style="padding-left:0" type="text" id="message" name="message" ng-model="m.message" placeholder="Type message">
+                </label>
+
+                <a class="button button-icon icon ion-android-send" ng-click="send()"></a>
+            </div>
 
               </div>
           </div>

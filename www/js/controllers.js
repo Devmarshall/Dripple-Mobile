@@ -12,10 +12,46 @@
             })
 
 
+.controller('chat',function($scope,$http,$stateParams){
+  //alert(JSON.stringify($stateParams))
+})
 
 
-        .controller('itemctrl',function($scope){
+        .controller('itemctrl',function($scope,$localStorage,$state,$http,$stateParams){
+            var id='';
+            $scope.m={
+              message:'',
+              messages:[]
+            }
+            var description=document.getElementById('description');
+            var comment=document.getElementById('comment');
+            $scope.data={};
+            $scope.comments=[];
+          $scope.$on('$ionicView.enter', function(e) {
+            id=$stateParams._id;
+            $http.get('http://localhost:8080/routes/item/'+id+'/'+$localStorage.token).success(function(data,stat){
+              console.log(data);
+              $scope.data=data;
+            })
+            $http.get('http://localhost:8080/routes/getcomments/'+id+'/'+$localStorage.token).success(function(data,stat){
+              console.log(data);
+              $scope.comments=data;
+            })
+          });
 
+          $scope.user = function(){
+            var bo=false;
+            if ($localStorage.token.length>30) {
+              bo=true;
+            }
+            return bo;
+          }
+
+          $scope.send = function(){
+            $http.get('http://localhost:8080/routes/comment/'+id+'/'+$localStorage.token+'/'+$scope.m.message).success(function(data,stat){
+            $scope.comments.push({message:$scope.m.message})
+            })
+          }
 
           $scope.options = {
             loop: false,
@@ -46,8 +82,10 @@
             $scope.view={
               comments:false,
               d:true,
-              // user:true/////////for now  true
             }
+
+            description.className='selected';
+            comment.className='nselected';
           }
 
         $scope.view={
@@ -62,6 +100,8 @@
             d:false,
             // user:true/////////for now  true
           }
+          description.className='nselected';
+          comment.className='selected';
         }
 
 
@@ -189,10 +229,10 @@
         function showPosition(position) {
           console.log(position.coords.latitude);
           console.log(position.coords.longitude);
-          $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:latitude-:'+position.coords.latitude).success(function(data,status){
+          $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
           })
 
-          $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:longitude-:'+position.coords.longitude).success(function(data,status){
+          $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/longitude/'+position.coords.longitude).success(function(data,status){
       })
 
     // x.innerHTML = "Latitude: " + position.coords.latitude +
@@ -214,7 +254,7 @@
           alert('passwords dont match');
           }
           else {
-            $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:password-:'+$scope.pass.one).success(function(data,status){
+            $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/password/'+$scope.pass.one).success(function(data,status){
 
 
             })
@@ -268,10 +308,10 @@
           }
             $scope.choice[x]=true;
             console.log($scope.choice);
-                                // $http.get("http://localhost:8080/routes/pullall/:"+x ).success(function(data, status) {
+                                // $http.get("http://localhost:8080/routes/pullall/"+x ).success(function(data, status) {
 
                  // $scope.data=data;
-                   imageService.loadImages("http://localhost:8080/routes/oop/:"+x ).then(function(data){
+                   imageService.loadImages("http://localhost:8080/routes/oop/"+x ).then(function(data){
                     console.log(data.data);
                     data.data.forEach(function(obj){
                         var desc = obj.description,
@@ -375,8 +415,8 @@
               }
 
              else{
-                $http.post("http://localhost:8080/routes/post/:"+$localStorage.token
-                +"-:"+$scope.data.name+"-:"+$scope.data.description+"-:"+category+"-:"+$scope.data.date+"-:"+$scope.data.price, {params: {name: 'somto'}} ).success(function(data, status) {
+                $http.post("http://localhost:8080/routes/post/"+$localStorage.token
+                +"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price, {params: {name: 'somto'}} ).success(function(data, status) {
                if(data.status==1){
                   alert("saved");
                    $scope.data={
@@ -452,7 +492,7 @@
                 $scope.shop.description=$scope.shop.description.replace('/', '');
                 lat=lat.toString().replace('-','*')
                 ///means where good to go
-                $http.get('http://localhost:8080/routes/sellerinit/:'+$localStorage.token+'-:'+$scope.shop.shopname+'-:'+$scope.shop.chosenPlace+'-:'+lat+'-:'+lng+'-:'+$scope.shop.description).success(function(data,status){
+                $http.get('http://localhost:8080/routes/sellerinit/'+$localStorage.token+'/'+$scope.shop.shopname+'/'+$scope.shop.chosenPlace+'/'+lat+'/'+lng+'/'+$scope.shop.description).success(function(data,status){
 
                     alert('success');
 
@@ -462,7 +502,7 @@
             // if (  $scope.gplace.place.length>0) {//means their is lat and lng to use
             //   alert($scope.gplace/place[3]);
             // }
-            // $http.post('http://localhost:8080/routes/updateuser/:'+$localStorage.token+'-:latitude-:'+position.coords.latitude).success(function(data,status){
+            // $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
             // })
           }
         })
@@ -493,7 +533,7 @@
 
 
           $scope.checker=function(){
-            $http.get("http://localhost:8080/routes/getalluserdatauser/:"+$localStorage.token+"" ).success(function(data, status) {
+            $http.get("http://localhost:8080/routes/getalluserdatauser/"+$localStorage.token+"" ).success(function(data, status) {
              console.log(data)
               $scope.data=data[0];
               ///query success
@@ -524,12 +564,12 @@
                });
           }
 
-  // $http.post("http://localhost:8080/routes/login/:somto-:password", {params: {name: 'somto'}} ).success(function(data, status) {
+  // $http.post("http://localhost:8080/routes/login/somto/password", {params: {name: 'somto'}} ).success(function(data, status) {
   //    console.log(data)
   //     })
   // console.log($localStorage.token);
   //       $scope.data="";
-  //     $http.post("http://localhost:8080/routes/user/:"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
+  //     $http.post("http://localhost:8080/routes/user/"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
   //      console.log(data)
   //       $scope.data=data[0];
   //     })
@@ -603,7 +643,7 @@
                   }
 
                   else{
-                  $http.post("http://localhost:8080/routes/signup/:"+$scope.user.name+"-:"+$scope.user.password+"-:"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
+                  $http.post("http://localhost:8080/routes/signup/"+$scope.user.name+"/"+$scope.user.password+"/"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
                     if (data.error) {
                       alert(data.message);
                     }
@@ -625,7 +665,6 @@
       })
 
           .controller('login',function($scope,$localStorage,$http,$state,$window){
-
             $scope.data={
               password:"",
               name:""
@@ -638,7 +677,7 @@
       //            title : $scope.title,
       //              body : $scope.body
 
-      $http.post("http://localhost:8080/routes/login/:"+$scope.data.name+"/:"+$scope.data.password+"", ).success(function(data, status) {
+      $http.post("http://localhost:8080/routes/login/"+$scope.data.name+"/"+$scope.data.password+"", ).success(function(data, status) {
 console.log(data);
 
         if (data.length>0) {
@@ -669,15 +708,140 @@ console.log(data);
 
         })
 
-        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance,$localStorage,$http) {
+        .controller('PlaylistsCtrl', function($scope,$state,imageService,angularGridInstance,$localStorage,$http,$location) {
+          var kk=[];
+          var searchvar='';
+          $scope.toggle=false;
+          $scope.moreDataCanBeLoaded=true;
+          $scope.$watch('pp', function (newValue) {
+          setTimeout(function () {
+            $scope.$apply(function () {
+              $scope.pp=kk;
+              console.log($scope.pp);
+                });
+        }, 200);
+        //  $scope.pic=newValue;
+          });
+
+          $scope.searchtoggle=1;
+
+          $scope.pp=[];
+          $scope.choice={
+          mclothing:false,
+          fclothing:false,
+          Accesories:false,
+          Gadgets:false,
+          Food:false,
+          Gaccessory:false,
+          HomeI:false,
+          others:false
+        }
 
 
 
+          $scope.find=function(x){
+            kk.splice(0,kk.length);
+            $scope.moreDataCanBeLoaded=true;
+            find_(x)
+             // });///clears stuff
+          }
+          function find_(x){
+
+              console.log(x);
+            $scope.searchtoggle=0;
+            searchvar=x;
+            $scope.choice={
+            mclothing:false,
+            fclothing:false,
+            Accesories:false,
+            Gadgets:false,
+            Food:false,
+            Gaccessory:false,
+            HomeI:false,
+            others:false
+          }
+            $scope.choice[x]=true;
+                                // $http.get("http://localhost:8080/routes/pullall/"+x ).success(function(data, status) {
+
+                 // $scope.data=data;
 
 
+                   imageService.loadImages("http://localhost:8080/routes/oop/"+x+'/'+$localStorage.token+'/'+kk.length ).then(function(data){
+                    console.log(data.data);
+                    if (data.data.length==0) {
+                        $scope.moreDataCanBeLoaded=false;
+                    }
+                    else {
+                    data.data.forEach(function(obj){
+                        var desc = obj.description,
+                            // width = desc.match(/width="(.*?)"/)[1],
+                            // height = desc.match(/height="(.*?)"/)[1];
+
+                             width = 80;
+                            height = 90;
+
+                        obj.actualHeight  = height;
+                        obj.actualWidth = width;
+                        kk =kk.concat(obj);
+                        $scope.pp='';
+                    });
+  }
+                });
+
+                $scope.refresh = function(){
+                    angularGridInstance.gallery.refresh();
+                }
+
+          }
+
+          $scope.next =function(x){
+            $location.path('/item/'+x.id)
+          }
+
+          $scope.toggle_=function(){
+            if ($scope.toggle==false) {
+              $scope.toggle=true;
+            }
+            else {
+              $scope.toggle=false;
+            }
+          }
+
+          $scope.pic={
+            text:'',
+            map:[]
+          };
+
+          imageService.loadImages('http://localhost:8080/routes/searchall/'+$localStorage.token+'/'+kk.length).then(function(data){
+
+            console.log(data.data);
+               data.data.forEach(function(obj){
+                   var desc = obj.description,
+                       width = 70,
+                       height = 160;
+
+                   obj.actualHeight  = height;
+                   obj.actualWidth = width;
+               });
+               data.data.forEach(function(obj){
+                kk =kk.concat(obj);
+                $scope.pp='';
+               })
+           });
+           $scope.refresh = function(){
+               angularGridInstance.gallery.refresh();
+           }
+
+
+          $scope.pics={
+          e:false,
+          i:false,
+          all:true,
+          text:'',
+          map:[]
+        };
           $scope.check=[];
-          $scope.pics={};
-          $scope.pics.text='';
+
 
 
           $scope.check.chek=true;
@@ -702,53 +866,139 @@ console.log(data);
             }
           }
 
+          $scope.loadmore=function(){
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            if ($scope.searchtoggle==1) {
+              if($scope.pics.all) ini_(-1);
+              else if ($scope.pics.i) ini_(1);
+              else ini_(0);
+            }
+            else {
+            find_(searchvar);
+            }
+          }
+
 
         $scope.init=function(x){
+          kk.splice(0,kk.length);
+          $scope.moreDataCanBeLoaded=true;
+          $scope.pics['i']=false;
+          $scope.pics['e']=false;
+          $scope.pics['all']=false;
+          ini_(x);
 
-
-
-          if (x==1) {
-            if ($scope.pics.i==true) {
-              $scope.pics.e=false;
-            }
-            $http.get('http://localhost:8080/routes/searchitems/:'+$localStorage.token+'-:'+$scope.pics.text).success(function(data,status){
-              console.log(data);
-              $scope.pics.map=data;
-             $scope.pics.filter=0;
-            })
-          }
-          else {
-            if ($scope.pics.e==true) {
-              $scope.pics.i=false;
-            }
-            $http.get('http://localhost:8080/routes/searchusers/:'+$localStorage.token+'-:'+$scope.pics.text).success(function(data,status){
-              console.log(data);
-              $scope.pics.map=data;
-              $scope.pics.filter=1;
-            })
-          }
 
         }
 
+        function ini_(x){
+          if ($scope.pics.text=='') {
+            $scope.pics.text='**none**';
+          }
+          if (x==1) {
+            $scope.pics['i']=true;
+            imageService.loadImages('http://localhost:8080/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
-          imageService.loadImages("http://localhost:8080/routes/location/:"+$localStorage.token).then(function(data){
+                if (data.data.length==0) {
+                    $scope.moreDataCanBeLoaded=false;
+                }
+                else {
+                  data.data.forEach(function(obj){
+                      var desc = obj.description,
+                          width = 70,
+                          height = 160;
+                      obj.actualHeight  = height;
+                      obj.actualWidth = width;
+                      setTimeout(function () {
+                        $scope.$apply(function () {
+                          kk =kk.concat(obj);
+                          $scope.pp='';
+                            });
+                    }, 200);
+                      console.log(obj);
+                  });
+                }
+                 $scope.pics.filter=0;
 
-            console.log(data.data);
-            $scope.pics={};
-               data.data.forEach(function(obj){
-                   var desc = obj.description,
-                       width = 70,
-                       height = 160;
 
-                   obj.actualHeight  = height;
-                   obj.actualWidth = width;
-               });
-              $scope.pics.pic = data.data;
+             });
+             $scope.refresh = function(){
+                 angularGridInstance.gallery.refresh();
+             }
+          }
+
+          else   if (x==-1) {
+            $scope.pics['all']=true;
+            imageService.loadImages('http://localhost:8080/routes/searchall/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+
+              if (data.data.length==0) {
+                  $scope.moreDataCanBeLoaded=false;
+              }
+              else {
+                data.data.forEach(function(obj){
+                    var desc = obj.description,
+                        width = 70,
+                        height = 160;
+                    obj.actualHeight  = height;
+                    obj.actualWidth = width;
+                    setTimeout(function () {
+                      $scope.$apply(function () {
+                        kk =kk.concat(obj);
+                        $scope.pp='';
+                          });
+                  }, 200);
+                    console.log(obj);
+                });
+              }
+                 $scope.pics.filter=0;
+
+
+             });
+             $scope.refresh = function(){
+                 angularGridInstance.gallery.refresh();
+             }
+            }
+          else {
+          $scope.pics['e']=true;
+          imageService.loadImages('http://localhost:8080/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+
+            if (data.data.length==0) {
+                $scope.moreDataCanBeLoaded=false;
+            }
+            else {
+              data.data.forEach(function(obj){
+                  var desc = obj.description,
+                      width = 70,
+                      height = 160;
+                  obj.actualHeight  = height;
+                  obj.actualWidth = width;
+                  setTimeout(function () {
+                    $scope.$apply(function () {
+                      kk =kk.concat(obj);
+                      $scope.pp='';
+                        });
+                }, 200);
+                  console.log(obj);
+              });
+            }
+              // angularGridInstance.gallery.refresh();
+
+               $scope.pics.filter=0;
+
 
            });
            $scope.refresh = function(){
                angularGridInstance.gallery.refresh();
            }
+          }
+        //  $scope.check.chek1=false;
+          setTimeout(function () {
+
+        //  $scope.check.chek1=true;
+
+        }, 20);
+        }
+
+
 
           $scope.close=function(){
             // $scope.check.chek2=true;
@@ -811,11 +1061,7 @@ console.log(data);
           ]
   $scope.f=$localStorage.token;
       //  setTimeout(  $scope.$apply(function() {
-        //    $scope.pics.map=$scope.pics.map;
+        //    $scope.pp=$scope.pp;
         //  }),10000);
-        $scope.$watch('pics', function (newValue) {
-    //Do anything with $scope.letters
-    console.log($scope.pics);
-    $scope.pics=newValue;
-        });
+
           });

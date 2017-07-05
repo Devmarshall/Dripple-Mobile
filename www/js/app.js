@@ -63,6 +63,24 @@ if ($localStorage.location) {/////means its not null now
         controller:'sellerinit'
       })
 
+      .state('chat', {
+          url: '/chat/:tokken',
+          templateUrl: 'templates/chat0.html',
+          controller:'chat'
+        })
+
+      .state('postitem', {
+          url: '/postitem',
+          templateUrl: 'templates/post.html',
+          controller:'post'
+        })
+
+        .state('postservice', {
+            url: '/postservice',
+            templateUrl: 'templates/postservice.html',
+            controller:'post'
+          })
+
  .state('main.profile', {
       url: '/profile',
       views: {
@@ -96,7 +114,7 @@ if ($localStorage.location) {/////means its not null now
       url: '/post',
       views: {
         'main_post': {
-          templateUrl: 'templates/post.html',
+          templateUrl: 'templates/postmain.html',
           controller: 'post'
         }
       }
@@ -142,7 +160,7 @@ if ($localStorage.location) {/////means its not null now
 })
 
 .state('item', {
-url: '/item',
+url: '/item/:_id',
 templateUrl: 'templates/item.html',
 controller: 'itemctrl'
 })
