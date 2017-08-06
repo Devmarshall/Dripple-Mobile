@@ -1,0 +1,23 @@
+<ion-view view-title="Direct messages">
+
+
+  <ion-content>
+    <div class="search_">
+      <input ng-model="search__.text" ng-change='search__.fun_()'  placeholder="search for user" type="text" name="" value="">
+      <a class="button button-icon icon ion-search" > </a>
+      <ul>
+        <li ng-repeat="list in search__.lists">
+          <a ng-if="list.fname" href="#/message/{{list.tokken}}">{{list.name}}</a>
+        </ul>
+    </div>
+    <ul>
+      <a href="#/chat/{{d.id}}" ng-repeat='d in search__.history' class="item"><div class="messanger_">
+        <img src="img/ben.png" alt="">
+        <div class="">
+          <h4>{{d.name}}</h4>
+          <p>{{d.id}}</p>
+        </div>
+      </div></a>
+    </ul>
+  </ion-content>
+</ion-view>

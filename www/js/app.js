@@ -6,11 +6,38 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic','angularMoment','ngStorage', 'ngMaterial','angularGrid' ,'starter.controllers','ngCordova','selector','smap','angularRipple','starter.mod'])
 
-.run(function($ionicPlatform,$interval,$localStorage,$http) {
+.run(function($ionicPlatform,$interval,amMoment,socket,$localStorage,$http) {
+
+  var config = {
+     apiKey: "AIzaSyAUJMG0nXuxPQVo9MCvLiiB70VamKHfoYk",
+     authDomain: "dripple-82679.firebaseapp.com",
+     databaseURL: "https://dripple-82679.firebaseio.com",
+     projectId: "dripple-82679",
+     storageBucket: "",
+     messagingSenderId: "359156677593"
+   };
+   firebase.initializeApp(config);
+
 
 if ($localStorage.location) {/////means its not null now
   $interval(ping,960000);///pings after 16 minutes your location if ur active or set it
 }
+
+
+
+amMoment.changeLocale('en');
+console.log($localStorage.token);
+if ($localStorage.token) {
+  if ($localStorage.token.length>20) {
+    socket.emit('adduser',{data:$localStorage.token});
+  }
+  else {
+    }
+}
+else {
+ //alert($localStorage.token)
+}
+
   function ping(){
     console.log('ping');
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -63,9 +90,16 @@ if ($localStorage.location) {/////means its not null now
         controller:'sellerinit'
       })
 
+
+      .state('dms', {
+          url: '/dms',
+          templateUrl: 'templates/dms.html',
+          controller:'dms'
+        })
+
       .state('chat', {
           url: '/chat/:tokken',
-          templateUrl: 'templates/chat0.html',
+          templateUrl: 'templates/chat.html',
           controller:'chat'
         })
 
@@ -104,7 +138,7 @@ if ($localStorage.location) {/////means its not null now
       url: '/hot',
       views: {
         'main_hot': {
-          templateUrl: 'templates/grid.html',
+          templateUrl: 'templates/bid.html',
           controller: 'load'
         }
       }
@@ -124,7 +158,7 @@ if ($localStorage.location) {/////means its not null now
       url: '/trends',
       views: {
         'main_trends': {
-          templateUrl: 'templates/signup.html',
+          templateUrl: 'templates/trends.html',
           // controller: 'ChatDetailCtrl'
         }
       }

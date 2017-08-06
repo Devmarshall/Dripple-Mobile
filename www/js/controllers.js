@@ -1,3 +1,5 @@
+
+
    angular.module('starter.controllers', [])
 
 
@@ -11,9 +13,268 @@
 
             })
 
+            .factory('socket', ['$rootScope', function($rootScope) {
+            //  var url = "https://warm-plateau-82871.herokuapp.com/";
+            // var url="http://localhost:3200";
+            var url="https://dripplechatserver.herokuapp.com/";
+               var socket = io.connect(url);
+               console.log("connecting");
+               return {
+                  url: function() {
+                     return url;
+                  },
+                  on: function(eventName, callback) {
+                     socket.on(eventName, callback);
+                  },
+                  emit: function(eventName, data) {
+                     socket.emit(eventName, data);
+                  },
+                  ioo: function() {
+                     console.log(socket);
+                     return socket;
+                  }
+               };
+            }])
 
-.controller('chat',function($scope,$http,$stateParams){
+
+            .controller('dms',function($ionicScrollDelegate,$http,$scope,$localStorage,$location){
+              $scope.$on('$ionicView.enter', function() {
+                console.log($localStorage);
+
+              $scope.search__={fun_:function(){
+                                if ($scope.search__.text.length>3) {
+                                  if (true) {
+                                    $http.get("https://dripplemain.herokuapp.com/usersearch/"+$scope.search__.text).success(handleSuccess2);
+                                    }
+                                }
+                                else {
+                                  $scope.search__.lists=[]
+                                }
+                                },
+                                  text:'',
+                                  lists:[],
+                                  history:$localStorage.historyvi
+                                }
+
+                                function handleSuccess2(x,y){
+                                      $scope.search__.lists=x;
+                                }
+
+
+
+            })
+          })
+
+            .controller('test', function(socket,$rootScope, $localStorage, $interval, $scope, $state) {
+              $scope.data_={
+                name:'',
+                message:''
+              };
+              socket.on('message_',function(data){
+                console.log('received'+JSON.stringify(data));
+              //  alert(data.message)
+                      setTimeout(function () {
+                   $scope.$apply(function () {
+                     $scope.data_={
+                       name:data.name,
+                       message:data.message
+                     };
+                    // initchat(data)
+                     document.getElementById("a").style.zIndex = '10';
+                     setTimeout(function(){document.getElementById("a").style.zIndex = '0'},2000);
+                   });
+                    }, 2);
+
+
+
+                        $rootScope.$broadcast('BOOM!', data)
+
+                        //   $state.reload();
+                     })
+
+                     function initchat(x){
+
+                       var history=[];
+                       if ($localStorage.historyvi) {
+                         $localStorage.history_v={}
+                       }
+                       else {
+                         $localStorage.historyvi=[];
+                         }
+                     //  if (!$localStorage.historyvi[x.tokken]) {
+                       //}
+                       if (!contains($localStorage.historyvi,x.name)) {
+                         $localStorage.historyvi.push({id:x.tokken,name:x.name});
+                       }
+                         console.log($localStorage);
+                     }
+
+                     function contains(x,y){
+                       var  val = false;
+                       if (x.length>0) {
+                       x.forEach(function(obj){
+                         if (obj.name==y) {
+                           val=true;
+                         }
+                       })
+                       }
+                     }
+          })
+
+
+.controller('chat',function(socket,$scope,$ionicScrollDelegate,$stateParams,$localStorage,$http){
   //alert(JSON.stringify($stateParams))
+
+        var id=0;
+   var authors=['bob','raymond','elisa'];
+
+   function createRandomMessage(id){
+     return {
+       id:id,
+       author:authors[Math.floor(Math.random()*2)],
+       message:'whout whout'
+     }
+   }
+
+   function loadBunch(n){
+     var data=[];
+     var i=0, l=n || 20;
+     for(i=0;i<l;i++){
+       data.push(createRandomMessage(++id));
+     }
+     return data;
+   }
+
+   $scope.messages=[].concat(loadBunch(30));
+   $scope.isLoading=false;
+
+   //fake call to the server and insert new nodes at the begining
+   $scope.loadOlder=function(){
+     alert(3);
+     $scope.isLoading=true
+     $timeout(function(){
+       loadBunch(20).map(function(val){
+         $scope.messages.unshift(val);
+         console.log($scope.messages);
+       })
+       $scope.isLoading=false;
+     },1000);
+   }
+
+
+
+        var chatinit=false;
+        $scope.data='';
+        $scope.m={
+          message:'',
+          messages:[]
+        }
+
+        $scope.$on('BOOM!', function(events, args){
+          initchat(data);
+          setTimeout(function() {
+               $scope.$apply(function() {
+                 $scope.m.messages.push({message:args.message,tokken:args.tokken,name:args.name})
+                 $ionicScrollDelegate.scrollBottom();
+                 });
+             }, 20);
+           })
+
+
+        $scope.contains=function(x) {
+          var to_=false;
+          var check='img/ben.png';
+          if (x==check) {
+            to_=true;
+          }
+          return to_;
+        }
+
+
+        $scope.me=function(x) {
+          var to_=false;
+          var check=$localStorage.token;
+          if (x==check) {
+            to_=true;
+          }
+          return to_;
+        }
+
+        var tokken='';
+        $scope.$on('$ionicView.enter', function() {
+
+         tokken=$stateParams.tokken;
+
+          if (true) {
+            if(tokken.charAt( 0 ) === ':' ){
+    			     tokken =  tokken.slice( 1 );
+    					 console.log({token:tokken});
+    			}
+          $http.get('https://dripplemain.herokuapp.com/routes/conversations/'+tokken+'/'+$localStorage.token+'/'+$scope.m.messages.length).success(function(x){
+            console.log(x);
+            x.forEach(function(obj){
+              $scope.m.messages.push({message:obj.message,tokken:obj.tokken,time:obj.time})
+            })
+            $ionicScrollDelegate.scrollBottom();
+          });
+        //  Chats.http('user/'+tokken).success(handleSuccess);
+        }
+      });
+
+      function handleSuccess(x){
+        console.log(x);
+        $scope.data=x;
+        if (  $scope.data.name) {
+          chatinit=true
+        }
+      }
+
+      $scope.send=function(){
+        console.log($scope.m);
+        if ($scope.m.message.length>0) {
+          console.log('texting');
+          initchat(  $scope.data);
+        //  sendmessage();
+        $scope.m.messages.push({message:$scope.m.message,tokken:$localStorage.token})
+          socket.emit('message',
+                      {message:$scope.m.message,
+                    //    name:$localStorage.user.name,
+                      time:Date.now(),
+                        tokken:$localStorage.token,
+                        to:tokken});
+         $ionicScrollDelegate.scrollBottom();
+          }
+          }
+
+          function initchat(x){
+
+            var history=[];
+            if ($localStorage.historyvi) {
+              $localStorage.history_v={}
+            }
+            else {
+              $localStorage.historyvi=[];
+              }
+          //  if (!$localStorage.historyvi[x.tokken]) {
+            //}
+            if (!contains($localStorage.historyvi,x.name)) {
+              $localStorage.historyvi.push({id:x.tokken,name:x.name});
+            }
+              console.log($localStorage);
+          }
+
+          function contains(x,y){
+            var  val = false;
+            if (x.length>0) {
+            x.forEach(function(obj){
+              if (obj.name==y) {
+                val=true;
+              }
+            })
+            }
+
+            return val;
+          }
 })
 
 
@@ -29,11 +290,11 @@
             $scope.comments=[];
           $scope.$on('$ionicView.enter', function(e) {
             id=$stateParams._id;
-            $http.get('http://localhost:8080/routes/item/'+id+'/'+$localStorage.token).success(function(data,stat){
+            $http.get('https://dripplemain.herokuapp.com/routes/item/'+id+'/'+$localStorage.token).success(function(data,stat){
               console.log(data);
               $scope.data=data;
             })
-            $http.get('http://localhost:8080/routes/getcomments/'+id+'/'+$localStorage.token).success(function(data,stat){
+            $http.get('https://dripplemain.herokuapp.com/routes/getcomments/'+id+'/'+$localStorage.token).success(function(data,stat){
               console.log(data);
               $scope.comments=data;
             })
@@ -48,7 +309,7 @@
           }
 
           $scope.send = function(){
-            $http.get('http://localhost:8080/routes/comment/'+id+'/'+$localStorage.token+'/'+$scope.m.message).success(function(data,stat){
+            $http.get('https://dripplemain.herokuapp.com/routes/comment/'+id+'/'+$localStorage.token+'/'+$scope.m.message).success(function(data,stat){
             $scope.comments.push({message:$scope.m.message})
             })
           }
@@ -229,10 +490,10 @@
         function showPosition(position) {
           console.log(position.coords.latitude);
           console.log(position.coords.longitude);
-          $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
+          $http.post('https://dripplemain.herokuapp.com/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
           })
 
-          $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/longitude/'+position.coords.longitude).success(function(data,status){
+          $http.post('https://dripplemain.herokuapp.com/routes/updateuser/'+$localStorage.token+'/longitude/'+position.coords.longitude).success(function(data,status){
       })
 
     // x.innerHTML = "Latitude: " + position.coords.latitude +
@@ -254,7 +515,7 @@
           alert('passwords dont match');
           }
           else {
-            $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/password/'+$scope.pass.one).success(function(data,status){
+            $http.post('https://dripplemain.herokuapp.com/routes/updateuser/'+$localStorage.token+'/password/'+$scope.pass.one).success(function(data,status){
 
 
             })
@@ -272,7 +533,7 @@
         }
 })
 
-              .controller('load', function($scope,$http,imageService,angularGridInstance,$state) {
+              .controller('load', function($scope,$http,imageService,angularGridInstance,$state,$window) {
 
 
 
@@ -308,10 +569,10 @@
           }
             $scope.choice[x]=true;
             console.log($scope.choice);
-                                // $http.get("http://localhost:8080/routes/pullall/"+x ).success(function(data, status) {
+                                // $http.get("https://dripplemain.herokuapp.com/routes/pullall/"+x ).success(function(data, status) {
 
                  // $scope.data=data;
-                   imageService.loadImages("http://localhost:8080/routes/oop/"+x ).then(function(data){
+                   imageService.loadImages("https://dripplemain.herokuapp.com/routes/oop/"+x+'/'+$localStorage.token+'/'+$scope.pics.length ).then(function(data){
                     console.log(data.data);
                     data.data.forEach(function(obj){
                         var desc = obj.description,
@@ -336,11 +597,126 @@
 
         })
 
-         .controller('post', function($scope,$http,$localStorage,$state) {
+         .controller('post', function($scope,$http,$localStorage,$state,$cordovaFile,$ionicPlatform,$window) {
           var category="";
           $scope.log={
             login:false
           }
+
+         var d=[];
+          $scope.img={
+            'd1':'img/upload-picture.png',
+            'd2':'img/upload-picture.png',
+            'd3':'img/upload-picture.png'
+          }
+         
+
+          //   $scope.$on('img',function(data){
+           // $scope.img=data.targetScope.img;
+          //console.log($scope.img);
+          //setTimeout(function() {
+            // console.log( $scope.img);
+         //  $scope.$apply(); //this triggers a $digest
+         //}, 20);
+        ///})
+
+        $scope.$watch('img', function (newValue) {
+          setTimeout(function () {
+           $scope.$apply(); //this triggers a $digest
+        }, 200);
+        //  $scope.pic=newValue;
+          });
+
+
+
+
+          function saveToFirebase2(_imageBlob, _filename) {
+
+             // return $q(function (resolve, reject) {
+             // Create a root reference to the firebase storage
+
+             var storageRef = firebase.storage().ref();
+
+             var uploadTask = storageRef.child('images/' + _filename).put(_imageBlob);
+
+             uploadTask.on('state_changed', function(snapshot) {
+               // Observe state change events such as progress, pause, and resume
+               // See below for more detail
+             }, function(error) {
+                reject(error)
+             }, function() {
+                var downloadURL = uploadTask.snapshot.downloadURL;
+                 alert(downloadURL);
+              });
+
+          }
+
+
+
+
+
+
+
+
+
+
+
+            var save =function (x) {
+              var fileName, path;
+
+              fileName = x.replace(/^.*[\\\/]/, '');
+
+
+              if ($ionicPlatform.is("android")) {
+                 path = cordova.file.cacheDirectory
+              } else {
+                 path = cordova.file.tempDirectory
+              }
+
+
+              $cordovaFile.readAsArrayBuffer(path, fileName).then(function(success) {
+                 // success - get blob data
+                 var imageBlob = new Blob([success], {
+                    type: "image/jpeg"
+                 });
+                 //console.log(imageBlob);
+                 saveToFirebase2(imageBlob, fileName);
+
+              }, function(error) {
+                 //console.log(error);
+              });
+
+           }
+
+
+
+          $scope.imgup =function(x){
+            window.imagePicker.getPictures(
+                	function(results) {
+                      for (var i = 1; i <= results.length; i++) {
+                      $scope.img['d'+i] = results[i-1];
+                      d['d'+i] = results[i-1];
+                    }
+
+                     setTimeout(function () {
+                     $scope.$apply(); //this triggers a $digest
+                  }, 200);
+                    console.log($scope.img)
+
+                   
+                		for (var i = 0; i < results.length; i++) {
+                			//save(results[i])
+                		}
+                    
+                	}, function (error) {
+                		console.log('Error: ' + error);
+                	}, {
+                		maximumImagesCount: 3,
+                	}
+                );
+
+          }
+
           $scope.data={
             name:"",
             description:"",
@@ -415,7 +791,7 @@
               }
 
              else{
-                $http.post("http://localhost:8080/routes/post/"+$localStorage.token
+                $http.post("https://dripplemain.herokuapp.com/routes/post/"+$localStorage.token
                 +"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price, {params: {name: 'somto'}} ).success(function(data, status) {
                if(data.status==1){
                   alert("saved");
@@ -445,8 +821,6 @@
 
         })
         .controller('sellerinit',function($scope,$http,$state,$localStorage){
-
-
           $scope.gplace;
           $scope.shop={
             shopname:'',
@@ -492,17 +866,17 @@
                 $scope.shop.description=$scope.shop.description.replace('/', '');
                 lat=lat.toString().replace('-','*')
                 ///means where good to go
-                $http.get('http://localhost:8080/routes/sellerinit/'+$localStorage.token+'/'+$scope.shop.shopname+'/'+$scope.shop.chosenPlace+'/'+lat+'/'+lng+'/'+$scope.shop.description).success(function(data,status){
+                $http.get('https://dripplemain.herokuapp.com/routes/sellerinit/'+$localStorage.token+'/'+$scope.shop.shopname+'/'+$scope.shop.chosenPlace+'/'+lat+'/'+lng+'/'+$scope.shop.description).success(function(data,status){
 
                     alert('success');
-
+                    $state.go('main.trade');
                 })
 
             }
             // if (  $scope.gplace.place.length>0) {//means their is lat and lng to use
             //   alert($scope.gplace/place[3]);
             // }
-            // $http.post('http://localhost:8080/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
+            // $http.post('https://dripplemain.herokuapp.com/routes/updateuser/'+$localStorage.token+'/latitude/'+position.coords.latitude).success(function(data,status){
             // })
           }
         })
@@ -533,7 +907,7 @@
 
 
           $scope.checker=function(){
-            $http.get("http://localhost:8080/routes/getalluserdatauser/"+$localStorage.token+"" ).success(function(data, status) {
+            $http.get("https://dripplemain.herokuapp.com/routes/getalluserdatauser/"+$localStorage.token+"" ).success(function(data, status) {
              console.log(data)
               $scope.data=data[0];
               ///query success
@@ -564,12 +938,12 @@
                });
           }
 
-  // $http.post("http://localhost:8080/routes/login/somto/password", {params: {name: 'somto'}} ).success(function(data, status) {
+  // $http.post("https://dripplemain.herokuapp.com/routes/login/somto/password", {params: {name: 'somto'}} ).success(function(data, status) {
   //    console.log(data)
   //     })
   // console.log($localStorage.token);
   //       $scope.data="";
-  //     $http.post("http://localhost:8080/routes/user/"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
+  //     $http.post("https://dripplemain.herokuapp.com/routes/user/"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
   //      console.log(data)
   //       $scope.data=data[0];
   //     })
@@ -643,14 +1017,13 @@
                   }
 
                   else{
-                  $http.post("http://localhost:8080/routes/signup/"+$scope.user.name+"/"+$scope.user.password+"/"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
+                  $http.post("https://dripplemain.herokuapp.com/routes/signup/"+$scope.user.name+"/"+$scope.user.password+"/"+$scope.user.email+"", {params: {name: 'somto'}} ).success(function(data, status) {
                     if (data.error) {
                       alert(data.message);
                     }
 
                     else {
-                      $window.location.reload(true);
-                      $state.go('main.trade')
+                  $state.go('main.trade')
                   console.log(data[0].tokken);
                   if(data[0].tokken.length==40){
                   $localStorage.token=data[0].tokken;
@@ -677,14 +1050,14 @@
       //            title : $scope.title,
       //              body : $scope.body
 
-      $http.post("http://localhost:8080/routes/login/"+$scope.data.name+"/"+$scope.data.password+"", ).success(function(data, status) {
+      $http.get("https://dripplemain.herokuapp.com/routes/login/"+$scope.data.name+"/"+$scope.data.password+"" ).success(function(data, status) {
 console.log(data);
 
-        if (data.length>0) {
-          if (data[0].tokken) {
-            console.log(data[0]);
-            $localStorage.token=data[0].tokken;
+        if (data.status==1) {
+          if (data.tokken) {
+            $localStorage.token=data.tokken;
             $window.location.reload(true);
+            $state.go('main.trade');
           }
 
         }
@@ -722,6 +1095,10 @@ console.log(data);
         }, 200);
         //  $scope.pic=newValue;
           });
+
+          $scope.tog_=function(){
+            $state.go('dms');
+          }
 
           $scope.searchtoggle=1;
 
@@ -761,12 +1138,12 @@ console.log(data);
             others:false
           }
             $scope.choice[x]=true;
-                                // $http.get("http://localhost:8080/routes/pullall/"+x ).success(function(data, status) {
+                                // $http.get("https://dripplemain.herokuapp.com/routes/pullall/"+x ).success(function(data, status) {
 
                  // $scope.data=data;
 
 
-                   imageService.loadImages("http://localhost:8080/routes/oop/"+x+'/'+$localStorage.token+'/'+kk.length ).then(function(data){
+                   imageService.loadImages("https://dripplemain.herokuapp.com/routes/oop/"+x+'/'+$localStorage.token+'/'+kk.length ).then(function(data){
                     console.log(data.data);
                     if (data.data.length==0) {
                         $scope.moreDataCanBeLoaded=false;
@@ -795,7 +1172,9 @@ console.log(data);
           }
 
           $scope.next =function(x){
-            $location.path('/item/'+x.id)
+            if (x.price) {
+              $location.path('/item/'+x.id)
+            }
           }
 
           $scope.toggle_=function(){
@@ -812,7 +1191,7 @@ console.log(data);
             map:[]
           };
 
-          imageService.loadImages('http://localhost:8080/routes/searchall/'+$localStorage.token+'/'+kk.length).then(function(data){
+          imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+kk.length).then(function(data){
 
             console.log(data.data);
                data.data.forEach(function(obj){
@@ -896,7 +1275,7 @@ console.log(data);
           }
           if (x==1) {
             $scope.pics['i']=true;
-            imageService.loadImages('http://localhost:8080/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+            imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
                 if (data.data.length==0) {
                     $scope.moreDataCanBeLoaded=false;
@@ -928,7 +1307,7 @@ console.log(data);
 
           else   if (x==-1) {
             $scope.pics['all']=true;
-            imageService.loadImages('http://localhost:8080/routes/searchall/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+            imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
               if (data.data.length==0) {
                   $scope.moreDataCanBeLoaded=false;
@@ -959,7 +1338,7 @@ console.log(data);
             }
           else {
           $scope.pics['e']=true;
-          imageService.loadImages('http://localhost:8080/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+          imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
             if (data.data.length==0) {
                 $scope.moreDataCanBeLoaded=false;

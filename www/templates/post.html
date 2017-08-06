@@ -1,13 +1,30 @@
 <ion-view class="modal">
-
-   <ion-content ng-show="log.post">
+  <div class="bar bar-header bar-light mydiv">
+    <h1 class="title">Dripple</h1>
+  </div>
+   <ion-content class='has-header' ng-show="log.post">
 
      <div class="modal_" style="text-align: -webkit-center;
                                   font-size: 45px">
 
 
+                                  <style media="screen">
+                                    .swiper-pagination-bullet {
+                                      background: pink
+                                    }
+                                  </style>
 
-                                      <img src="img/upload-picture.png" alt="" />
+                                    <ion-slides id="itemswipe" class='itemsly'  options="options" slider="data.slider" style="height:50vh">
+                                       <ion-slide-page>
+                                        <img ng-src="{{img.d1}}" class='itemimg'  alt=""  ng-click="imgup('1')">
+                                       </ion-slide-page>
+                                       <ion-slide-page>
+                                        <img class='itemimg' ng-src="{{img.d2}}" alt=""    ng-click="imgup('2')">
+                                       </ion-slide-page>
+                                       <ion-slide-page>
+                                        <img class='itemimg' ng-src="{{img.d3}}" alt=""      ng-click="imgup('3')">
+                                       </ion-slide-page>
+                                     </ion-slides>
 
 
        <label class="item item-input item-floating-label">
@@ -57,10 +74,11 @@
 
 
 
-   <div class="post_no_login"   ng-show="log.login">
+   <div class="post_no_login"  class='has-header'  ng-show="log.login">
      <p>Wanna use our services ,</br> Login first</p>
      <button style='background:#FF5252' ng-click="login()" class="button button-assertive">
   Login
 </button>
    </div>
+
  </ion-view

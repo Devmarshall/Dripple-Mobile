@@ -9,7 +9,7 @@
       }
 
       .overflow-scroll{
-        overflow-y: hidden;
+
       }
 
       #likersimg{
@@ -865,7 +865,7 @@
                   width: 35vh;
                   height: 35vh;
                   margin-top: 3vh;
-                  padding: 24px;
+                  padding: 4px;
                   box-shadow: 0px 0px 12px #cdcdcd;
          }
 
@@ -1031,134 +1031,11 @@
   color: red;
 }
 
-.chat span{
-  display: flex;
-font-size: 10px;
+.optionbtm{
+  float: right;
+margin-left: 80vw;
 }
 
-
-
-#normal{
-  border: 0;
-  box-shadow: 0px 0px 0px #fff;
-  border-bottom: 1px solid saddlebrown;
-  border-radius: 0;
-  align-content: stretch;
-}
-
-#chatlist{
-  padding: 0px;
-  margin-left: 5%;
-  width: 90%;
-  border-radius: 0;
-  box-shadow: 0px 0px 0px #fff;
-  margin-right: 5%;
-  border-bottom: 1px solid #cdcdcd;
-  margin-top: 0;
-}
-
-#chatlist img  {
-  float: left;
-position: static;
-margin-right: 10px;
-}
-
-#chatlist i{
-  margin-right: 13px;
-}
-
-#notifications{
-  border-bottom: 1px solid #CDCDCD;
-  margin-bottom: 2.5%;
-}
-
-#notifications a{
-  box-shadow: 1px 1px 1px #fff;
-  padding: 0;
-  margin-bottom: 2.5%;
-  border-radius: 0;
-}
-
-@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700);
-@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-
-html, body {
-    background: #e5e5e5;
-    font-family: 'Lato', sans-serif;
-    margin: 0px auto;
-}
-::selection{
-    color: inherit;
-}
-a{
-  }
-
-/* M E N U */
-
-.menu {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    width: 100%;
-    height: 50px;
-      z-index: 100;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-.back {
-    position: absolute;
-    width: 90px;
-    height: 50px;
-    top: 0px;
-    left: 0px;
-    color: #fff;
-    line-height: 50px;
-    font-size: 30px;
-    padding-left: 10px;
-    cursor: pointer;
-}
-.back img {
-    position: absolute;
-    top: 5px;
-    left: 30px;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255,255,255,0.98);
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
-    margin-left: 15px;
-    }
-.back:active {
-    background: rgba(255,255,255,0.2);
-}
-.name{
-    position: absolute;
-    top: 3px;
-    left: 110px;
-    font-family: 'Lato';
-    font-size: 25px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.98);
-    cursor: default;
-}
-.last{
-    position: absolute;
-    top: 30px;
-    left: 115px;
-    font-family: 'Lato';
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    cursor: default;
-}
-
-/* M E S S A G E S */
 
 .chat {
     list-style: none;
@@ -1344,7 +1221,42 @@ emoji.funny{background-image: url(http://i.imgur.com/qKia58V.png);}
   to { opacity: 0.5; }
 }
 
+::-webkit-scrollbar {
+    min-width: 12px;
+    width: 2px;
+    max-width: 12px;
+    color: blue;
+    min-height: 12px;
+    height: 12px;
+    max-height: 12px;
+  }
 
+::-webkit-scrollbar-thumb {
+    background: #blue;
+    border: none;
+    border-radius: 100px;
+    border: solid 3px #e5e5e5;
+    box-shadow: inset 0px 0px 3px #999;
+}
+
+#itemswipe  .swiper-pagination-bullet .swiper-pagination-bullet-active{
+  background: pink
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+  box-shadow: inset 0px 0px 3px #888;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: pink;
+  box-shadow: inset 0px 0px 3px #7f7f7f;
+}
+
+::-webkit-scrollbar-button {
+    display: block;
+    height: 26px;
+}
 
 /* T Y P E */
 
@@ -1417,4 +1329,53 @@ height: 55px;
 #chatlist img{
 width: 60px;
 height: 60px;
+}
+
+.messanger_{
+padding: 10px;
+    display: flow-root;
+}
+
+.messanger_ img{
+  float: left;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+
+.search_{
+  display: inline-flex;
+  width: 100%;
+  height: 44px;
+  color: silver;
+}
+
+.search_ a{
+  color: silver;
+}
+
+.search_ input{
+    width: 85%;
+    padding: 9px;
+    font-weight: 100;
+    border-bottom: 1px solid silver;
+    height: 44px;
+}
+
+
+.search_ ul {
+    position: absolute;
+    margin-top: 44px;
+    background: white;
+    z-index: 3;
+    width: 88vw;
+    margin-left: 6vw;
+}
+
+.search_ li{
+    height: 40px;
+    font-size: 20px;
+    padding: 8px;
+    color: black
 }

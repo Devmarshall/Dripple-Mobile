@@ -1,13 +1,25 @@
 
 
 
+<style media="screen">
+  .header-badge{
+    top:-7px !important;
+    left:-11px !important;
+  }
 
+  .button-icon{
+    font-size: xx-large;
+    float:right;
+  }
+</style>
  <div class="fabhous" ng-click="switch()">
                    <i class="icon" ng-class="(false==check.chek) ? 'ion-map' : 'ion-ios-list-outline'"></i>
       </div>
 <ion-view    cache-view="false" >
-
-    <ion-content>
+  <div class="bar bar-header bar-light mydiv">
+    <h1 class="title">Dripple</h1>
+  </div>
+    <ion-content class="has-header">
       <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
@@ -15,6 +27,7 @@
       </label>
     </div>
     <i ng-click='toggle_()' class="icon ion-grid filter"></i>
+    <button ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">8</span></button>
     <ul ng-if='toggle' style="       white-space: nowrap;
  display: inline-flex;
  width: 100vw;

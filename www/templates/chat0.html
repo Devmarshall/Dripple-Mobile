@@ -1,1 +1,125 @@
-  
+
+<ion-view view-title="Chat" >
+    <div class="bars bar-header " style="color:white">
+      <div style='color:black' class="h1 title" >{{da.name}}  {{da.topic}}</div>
+
+      </div>
+    <ion-content class="has-header"  style="margin-bottom:30px">
+  <!-- <div class="list chat"  on-scroll="onChatScroll(10)"   ng-repeat="d in messages track  by $index"  ng-if="d.message.length>0"> -->
+
+      <ol  class="chat">
+
+      <ol ng-scroll="onChatScroll(10)"   ng-repeat="d in messages track  by $index"  ng-if="d.message.length>0">
+      <li class="other"   ng-if="!d.type && d.position" ng-click="profilmov(d)">
+          <div class="avatar"><img ng-src="{{d.img}}" draggable="false"/></div>
+        <div class="msg">
+          <p>{{d.message}}</p>
+        <time am-time-ago="d.time"></time>
+        </div>
+      </li>
+      <li class="self" ng-if="!d.type && d.sender" ng-click="profilmov(d)">
+          <div class="avatar"><img ng-src="{{d.img}}" draggable="false"/></div>
+        <div class="msg">
+          <p>  {{d.message}}</p>
+          <!-- <p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
+          <p>Mejor otro día</p> -->
+          <time am-time-ago="d.time"></time>
+        </div>
+      </li>
+
+
+      <li class="self" ng-if="d.type && d.sender" ng-click="profilmov(d)">
+          <div class="avatar"><img ng-src="{{d.img}}" draggable="false" /></div>
+        <div class="msg">
+          <img src="{{d.message}}" draggable="false"/>
+          <time am-time-ago="d.time"></time>
+        </div>
+      </li>
+
+
+      <li class="other" ng-if="d.type && d.position" ng-click="profilmov(d)">
+          <div class="avatar"><img id="img_ss" ng-src="{{d.img}}" draggable="false"/></div>
+        <div class="msg">
+          <img  src="{{d.message}}" draggable="false"/>
+          <time am-time-ago="d.time"></time>
+        </div>
+      </li>
+    </ol>
+    </ol>
+      <!--
+      <li class="other">
+          <div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Gracias! <emoji class="hearth_blue"/></p>
+          <time>20:20</time>
+        </div>
+      </li>
+          <div class="day">Hoy</div>
+      <li class="self">
+          <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Te apetece jugar a Minecraft?</p>
+          <time>18:03</time>
+        </div>
+      </li>
+      <li class="other">
+          <div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Venga va, hace ya mucho que no juego...</p>
+          <time>18:07</time>
+        </div>
+      </li>
+      <li class="self">
+          <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Ehh, me crashea el Launcher... <emoji class="cryalot"/></p>
+          <time>18:08</time>
+        </div>
+      </li>
+      <li class="other">
+          <div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+        <div class="msg">
+          <p><emoji class="lmao"/></p>
+          <time>18:08</time>
+        </div>
+      </li>
+      <li class="self">
+          <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Es broma</p>
+          <p>Ataque Moai!</p>
+          <p><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span></p>
+          <time>18:09</time>
+        </div>
+      </li>
+      <li class="other">
+          <div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+        <div class="msg">
+            <p>Copón</p>
+          <p><emoji class="funny"/></p>
+          <time>18:08</time>
+        </div>
+      </li>
+      <li class="self">
+          <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+        <div class="msg">
+          <p>Hey there's a new update about this chat UI with more responsive elements! Check it now:</p>
+          <p><a href="http://codepen.io/Varo/pen/YPmwpQ" target="parent">Chat UI 2.0</a></p>
+          <time>18:09</time>
+        </div>
+      </li>
+      </ol>
+    -->
+
+      </ion-content>
+    <footer class="bar bar-footer item-input-inset">
+      <a id="stuffa" class="button button-icon icon ion-android-camera" ng-click="sendim()"></a>
+
+      <label class="item-input-wrapper " id="stuff">
+        <input style="padding-left:10vw" type="text" id="message" name="message" ng-model="m.message" placeholder="Type message">
+      </label>
+
+      <a class="button button-icon icon ion-android-send" ng-click="send()"></a>
+  </footer>
+
+  </ion-view>
