@@ -9,14 +9,29 @@ angular.module('starter', ['ionic','angularMoment','ngStorage', 'ngMaterial','an
 .run(function($ionicPlatform,$interval,amMoment,socket,$localStorage,$http) {
 
   var config = {
-     apiKey: "AIzaSyAUJMG0nXuxPQVo9MCvLiiB70VamKHfoYk",
-     authDomain: "dripple-82679.firebaseapp.com",
-     databaseURL: "https://dripple-82679.firebaseio.com",
-     projectId: "dripple-82679",
-     storageBucket: "",
-     messagingSenderId: "359156677593"
-   };
+    apiKey: "AIzaSyAUJMG0nXuxPQVo9MCvLiiB70VamKHfoYk",
+    authDomain: "dripple-82679.firebaseapp.com",
+    databaseURL: "https://dripple-82679.firebaseio.com",
+    projectId: "dripple-82679",
+    storageBucket: "dripple-82679.appspot.com",
+    messagingSenderId: "359156677593"
+  };
    firebase.initializeApp(config);
+
+      firebase.auth().signInAnonymously()
+                    .then(function (_auth) {
+                      // console.log("Logged In!")
+
+                      // after we login, we want to load up any data
+                      // loadData();
+
+                    })
+                    .catch(function (error) {
+                      // Handle Errors here.
+                      var errorCode = error.code;
+                      var errorMessage = error.message;
+
+                    });
 
 
 if ($localStorage.location) {/////means its not null now

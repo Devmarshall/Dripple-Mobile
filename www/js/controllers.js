@@ -3,11 +3,16 @@
    angular.module('starter.controllers', [])
 
 
-               .service('stater', function($state) {
+               .service('stater', function($state,$ionicPopup) {
 
                  return {
                    get:function(x){
                      $state.go('sellerinit');
+                   },alert:function(title,text){
+                       $ionicPopup.alert({
+                        title:title,
+                          templates:text
+                            })
                    }
                  }
 
@@ -597,11 +602,14 @@
 
         })
 
-         .controller('post', function($scope,$http,$localStorage,$state,$cordovaFile,$ionicPlatform,$window) {
+         .controller('post', function($httpParamSerializer,stater,$ionicLoading,$ionicPopup,$scope,$http,$localStorage,$state,$cordovaFile,$ionicPlatform,$window) {
           var category="";
           $scope.log={
             login:false
           }
+          $scope.array_=[];
+          $scope.blogs=[];
+          var check=[];
 
          var d=[];
           $scope.img={
@@ -609,7 +617,7 @@
             'd2':'img/upload-picture.png',
             'd3':'img/upload-picture.png'
           }
-         
+
 
           //   $scope.$on('img',function(data){
            // $scope.img=data.targetScope.img;
@@ -627,44 +635,79 @@
         //  $scope.pic=newValue;
           });
 
+          function isnot(array,value){
+            var d=true;
+            for (var i = array.length - 1; i >= 0; i--) {
+              if (array[i]==value) {
+                  d=false;
+              }
+            }
+            return d;
+          }   
+        
+          function saveToFirebase2(point,data,array_,link ) {    
+            if (data[point]&&isnot(check,point)) {
+            check=check.concat(point)
+            console.log('i');
+            console.log(point);
+            console.log(array_);
+            console.log(data)
+            var storageRef = firebase.storage().ref();
+            var uploadTask = storageRef.child('images/' + data[point].filename).put(data[point].imageBlob).then(function(snapshot){
+            $scope.array_ = $scope.array_.concat({url:snapshot.metadata.downloadURLs["0"]});
+            console.log($scope.array_.length);
+            console.log($scope.blogs.length);
+            console.log($scope.array_);
+            if ($scope.array_.length===$scope.blogs.length) {
+            var link=$localStorage.token+"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price;
+            moveon($scope.array_,link)
+            }
+            });
+            }
+          }
+
+          var moveon =function(data,link){
+            console.log("https://dripplemain.herokuapp.com/routes/post/"+link)
+              $http({
+                  url: "https://dripplemain.herokuapp.com/routes/post/"+link,
+                  method: "POST",
+                  data:  $httpParamSerializer(data),
+                  headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+             }
+              }).success(function(data){
+                    if(data.status==1){
+                 $ionicLoading.hide();
+                  stater.alert('success',"Saved data");
+                   $scope.data={
+                    name:"",
+                    description:"",
+                    token:$localStorage.token,
+                    date: new Date()
+                  }///clears stuff
 
 
+                $scope.choice={
+                mclothing:false,
+                fclothing:false,
+                Accesories:false,
+                Gadgets:false,
+                Food:false,
+                Gaccessory:false,
+                HomeI:false,
+                others:false
+              }///clear more stuff
+               }
+              }).error(function(err){
 
-          function saveToFirebase2(_imageBlob, _filename) {
-
-             // return $q(function (resolve, reject) {
-             // Create a root reference to the firebase storage
-
-             var storageRef = firebase.storage().ref();
-
-             var uploadTask = storageRef.child('images/' + _filename).put(_imageBlob);
-
-             uploadTask.on('state_changed', function(snapshot) {
-               // Observe state change events such as progress, pause, and resume
-               // See below for more detail
-             }, function(error) {
-                reject(error)
-             }, function() {
-                var downloadURL = uploadTask.snapshot.downloadURL;
-                 alert(downloadURL);
               });
-
           }
 
 
-
-
-
-
-
-
-
-
-
-            var save =function (x) {
+            var save =function (point,data,blogarray) {
               var fileName, path;
-
-              fileName = x.replace(/^.*[\\\/]/, '');
+              console.log(blogarray)
+              fileName = data[point].replace(/^.*[\\\/]/, '');
 
 
               if ($ionicPlatform.is("android")) {
@@ -673,19 +716,26 @@
                  path = cordova.file.tempDirectory
               }
 
-
               $cordovaFile.readAsArrayBuffer(path, fileName).then(function(success) {
                  // success - get blob data
                  var imageBlob = new Blob([success], {
                     type: "image/jpeg"
                  });
-                 //console.log(imageBlob);
-                 saveToFirebase2(imageBlob, fileName);
 
+                 blogarray=blogarray.concat({imageBlob:imageBlob,fileName:fileName})
+                  //console.log(imageBlob);
+                 if(point==(data.length-1))
+                  {
+                    $scope.blogs=blogarray;
+                    $ionicLoading.hide()
+                      //do nothing
+                 }
+                 else{
+                  save(point+1,data,blogarray)
+                 }
               }, function(error) {
                  //console.log(error);
               });
-
            }
 
 
@@ -700,15 +750,14 @@
 
                      setTimeout(function () {
                      $scope.$apply(); //this triggers a $digest
-                  }, 200);
+                   }, 200);
                     console.log($scope.img)
 
-                   
-                		for (var i = 0; i < results.length; i++) {
-                			//save(results[i])
-                		}
-                    
-                	}, function (error) {
+                      var dataarray=[]
+                          $ionicLoading.show();
+                			save(0,results,dataarray);
+                	 
+                  }, function (error) {
                 		console.log('Error: ' + error);
                 	}, {
                 		maximumImagesCount: 3,
@@ -756,7 +805,7 @@
           }
 
           $scope.selectcat=function(x){
-             $scope.choice={
+            $scope.choice={
             mclothing:false,
             fclothing:false,
             Accesories:false,
@@ -773,51 +822,33 @@
 
             $scope.post=function(){
 
-
+              $ionicLoading.show();
               if(category==""){
-                alert("select category");
+                stater.alert('oops',"select category");
               }
 
               else  if($scope.data.description.length<11){
-                alert("description too short must be above 19 characters");
+                stater.alert('oops',"description too short must be above 19 characters");
               }
 
-              else if(false){
-                //for images
-              }
-
+             
               else if($scope.data.name.length<1){
-                alert("name empty");
+                stater.alert('oops',"name empty");
+              }
+
+               else if($scope.blogs.length<3){
+                 stater.alert('oops',"select 3 images");
               }
 
              else{
-                $http.post("https://dripplemain.herokuapp.com/routes/post/"+$localStorage.token
-                +"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price, {params: {name: 'somto'}} ).success(function(data, status) {
-               if(data.status==1){
-                  alert("saved");
-                   $scope.data={
-                    name:"",
-                    description:"",
-                    token:$localStorage.token,
-                    date: new Date()
-                  }///clears stuff
-
-
-                   $scope.choice={
-            mclothing:false,
-            fclothing:false,
-            Accesories:false,
-            Gadgets:false,
-            Food:false,
-            Gaccessory:false,
-            HomeI:false,
-            others:false
-          }///clear more stuff
-
-               }
-             })
+              var array_=[];
+              var link=$localStorage.token+"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price;
+               saveToFirebase2(0,$scope.blogs,array_,link);
+               saveToFirebase2(1,$scope.blogs,array_,link);
+               saveToFirebase2(2,$scope.blogs,array_,link);
              }
-            }
+             }
+            
 
         })
         .controller('sellerinit',function($scope,$http,$state,$localStorage){
