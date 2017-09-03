@@ -1,3 +1,14 @@
 [0517/035115.966:ERROR:process_info.cc(625)] range at 0x6f3d30da00000000, size 0x218 fully unreadable
 [0517/035115.970:ERROR:process_info.cc(625)] range at 0x6f3d313c00000000, size 0x218 fully unreadable
 [0517/035115.971:ERROR:process_info.cc(625)] range at 0x0, size 0x218 fully unreadable
+[0817/062008.484:ERROR:settings.cc(258)] Settings magic is not 1129342067
+[0817/074148.039:ERROR:settings.cc(258)] Settings magic is not 1129342067
+[0818/185632.242:ERROR:process_info.cc(632)] range at 0xda5227b600000000, size 0x13a fully unreadable
+[0818/185632.689:ERROR:process_info.cc(632)] range at 0xda5227d600000000, size 0x13a fully unreadable
+[0818/185632.689:ERROR:process_info.cc(632)] range at 0x0, size 0x13a fully unreadable
+[0827/173015.155:ERROR:process_info.cc(632)] range at 0xc1ea341a00000000, size 0x218 fully unreadable
+[0827/173015.217:ERROR:process_info.cc(632)] range at 0xc1ea347c00000000, size 0x218 fully unreadable
+[0827/173015.217:ERROR:process_info.cc(632)] range at 0x0, size 0x218 fully unreadable
+[0827/174355.564:ERROR:process_info.cc(632)] range at 0x3530341a00000000, size 0x18d fully unreadable
+[0827/174355.564:ERROR:process_info.cc(632)] range at 0x3530347c00000000, size 0x18d fully unreadable
+[0827/174355.564:ERROR:process_info.cc(632)] range at 0x0, size 0x18d fully unreadable

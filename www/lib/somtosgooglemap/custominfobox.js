@@ -1,4 +1,4 @@
-function InfoBox(opts) {
+ function InfoBox(opts) {
     google.maps.OverlayView.call(this);
     this.latlng_ = opts.latlng;
     this.map_ = opts.map;
@@ -14,7 +14,7 @@ function InfoBox(opts) {
         });
     // Once the properties of this OverlayView are initialized, set its map so
     // that we can display it. This will trigger calls to panes_changed and
-    // draw.
+    // draw.      https://cloudconvert.com/svg-to-png
     this.setMap(this.map_);
 }
 /* InfoBox extends GOverlay class from the Google Maps API

@@ -45,7 +45,9 @@
             <div class="protop2" >
               <div class="_protop">
                 <div class="proptop2div">
-                  <img src="img/ben.png" alt="" />
+                  <img style="    background: pink;
+    border-radius: 50%;
+    padding: 10px;" src="img/user.png" alt="" />
                   <section class="">
                     <h5>
                       {{data.shopname}}
@@ -57,7 +59,7 @@
                     </p>
                   </section>
                 </div>
-                <div id="likers">
+<!--                 <div id="likers">
                   <img id="likersimg" src="img/ben.png" alt="" />
                   <img id="likersimg" src="img/ben.png" alt="" />
                   <img id="likersimg" src="img/ben.png" alt="" />
@@ -69,34 +71,34 @@
                       <i class="ion-android-favorite sid-lik"></i>
                   </div>
                 </div>
-                <p>
+ -->                <p>
                   Top
                 </p>
-                <div class="image_">
+               <!-- <div class="image_">
                   <img src="img/ben.png" alt="" />
                       <img src="img/ben.png" alt="" />
                           <img src="img/ben.png" alt="" />
                               <img src="img/ben.png" alt="" />
                                   <img src="img/ben.png" alt="" />
-                                </div>
+                                </div> -->
               </div>
             </div>
             <ul    class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-                 <li  data-ng-repeat="pic in pics" class="grid" ng-click="item()">
-                  <div class="griitm">
-                    <img src="{{pic.media.m}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
-                    <div class="griitm2">
-                      <h6>Red velvet cake</h6>
-                      <p>Favored cakes</p>
-                     <div class="">
-                       <h5>
-                         $ 15,000
-                       </h5>
-                       <a>find</a>
-                     </div>
-                    </div>
-                  </div>
-                 </li>
+                  <li ng-click='next(pic)'  data-ng-repeat="pic in pics track by $index"  class="grid" ng-click="item()">
+          <div class="griitm">
+            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+            <div class="griitm2">
+              <h6>{{pic.name}}</h6>
+              <p>{{pic.shopname}}</p>
+             <div class="">
+               <h5>
+                {{pic.price}}
+               </h5>
+               <a>find</a>
+             </div>
+            </div>
+          </div>
+         </li>
              </ul>
             </div>
 

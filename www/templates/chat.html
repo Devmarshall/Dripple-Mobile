@@ -12,7 +12,6 @@
   }
 </style>
      <ion-content class='has-header has-footer' >
-
        <ul lr-infinite-scroll="loadOlder"  class="chat">
           <div ng-repeat="d in m.messages track  by $index"  ng-if="d.message.length>0">
             <li class="other"   ng-if="!contains(d.message) &&!me(d.tokken)" ng-click="profilmov(d)">
@@ -60,6 +59,6 @@
        </label>
 
        <a class="button button-icon icon ion-android-send" ng-click="send()"></a>
-   </footer>
+       </footer>
 
  </ion-view>

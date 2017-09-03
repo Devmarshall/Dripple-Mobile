@@ -8022,9 +8022,9 @@ input:checked + .checkbox-icon:before {
 .platform-android .checkbox-platform .checkbox-icon:before,
 .checkbox-square input:before,
 .checkbox-square .checkbox-icon:before {
-  border-radius: 2px;
-  width: 72%;
-  height: 72%;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   margin-top: 14%;
   margin-left: 14%;
   border-width: 2px; }
@@ -8033,11 +8033,12 @@ input:checked + .checkbox-icon:before {
 .platform-android .checkbox-platform .checkbox-icon:after,
 .checkbox-square input:after,
 .checkbox-square .checkbox-icon:after {
-  border-width: 2px;
-  top: 19%;
-  left: 25%;
-  width: 13px;
-  height: 7px; }
+      border-width: 2px;
+    top: 40%;
+    left: 39%;
+    width: 13px;
+    height: 7px;
+    }
 
 .platform-android .item-checkbox-right .checkbox-square .checkbox-icon::after {
   top: 31%; }

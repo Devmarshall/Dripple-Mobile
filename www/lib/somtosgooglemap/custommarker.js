@@ -22,7 +22,7 @@ CustomMarker.prototype.draw = function() {
 		img = this.img = document.createElement('img');
 		img.id="immagemarker";
 		div.id = 'marker';
-		img.src='img/ben.png';
+		img.src='img/user.png';
 		 div.appendChild(img);
 		// div.style.position = 'absolute';
 		// div.style.cursor = 'pointer';
@@ -42,7 +42,7 @@ CustomMarker.prototype.draw = function() {
 			ov.className="ov";
 		});
 
-
+ 
 		var panes = this.getPanes();
 		panes.overlayImage.appendChild(div);
 	}

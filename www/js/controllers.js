@@ -3,6 +3,19 @@
    angular.module('starter.controllers', [])
 
 
+                .service('saver',function(){
+                  var bidid=''
+                  return {
+                    savebidid:function(x){
+                      bidid=x
+                    },
+                    getbidid:function(){
+                      return bidid
+                    }
+                  }
+                })
+
+
                .service('stater', function($state,$ionicPopup) {
 
                  return {
@@ -42,6 +55,377 @@
             }])
 
 
+             .factory('sock', ['$rootScope', function($rootScope) {
+            //  var url = "https://warm-plateau-82871.herokuapp.com/";
+            // var url="http://localhost:3200";
+               var socket = io.connect('http://localhost:3002');
+               console.log("connecting");
+               return {
+                  url: function() {
+                     return url;
+                  },
+                  on: function(eventName, callback) {
+                     socket.on(eventName, callback);
+                  },
+                  emit: function(eventName, data) {
+                     socket.emit(eventName, data);
+                  },
+                  ioo: function() {
+                     console.log(socket);
+                     return socket;
+                  }
+               };
+            }])
+
+
+
+
+                .service('im',['$q','$http','$localStorage',function($q,$http,$localStorage){
+                    this.loadImages = function(x){
+                        return $http.get(x);
+                    };
+                }])
+                .controller('demo',function ($scope,im,angularGridInstance,$localStorage) {
+
+
+
+
+
+
+              var kk=[{},{},{}];
+              $scope.pics = [];  
+              var searchvar='';
+              $scope.toggle=false;
+              $scope.more=true;
+              // $scope.$watch('pp', function (newValue) {
+              // setTimeout(function () {
+              // $scope.$apply(function () {
+              // $scope.pp=kk;
+              // console.log($scope.pp);
+              //   });
+              //   }, 200);
+              //   //  $scope.pic=newValue;
+              //     });
+
+
+          $scope.tog_=function(){
+            $state.go('dms');
+          }
+
+
+           $scope.searchtoggle=1;
+
+        //  $scope.pp=[];
+          $scope.choice={
+          mclothing:false,
+          fclothing:false,
+          Accesories:false,
+          Gadgets:false,
+          Food:false,
+          Gaccessory:false,
+          HomeI:false,
+          others:false
+        }
+
+
+        load('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+$scope.pics.length)
+
+
+          $scope.toggle_=function(){
+            if ($scope.toggle==false) {
+              $scope.toggle=true;
+            }
+            else {
+              $scope.toggle=false;
+            }
+          }
+                $scope.loadMoreData = function() {
+                  load('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+$scope.pics.length)
+         //         $scope.$broadcast('scroll.infiniteScrollComplete');    
+            }
+
+           
+         
+            function load(x){
+            //  alert($scope.pics.length)
+           //  $scope.$broadcast('scroll.infiniteScrollComplete');  
+                    im.loadImages(x).then(function(data){
+                        if (data.data.length==0) {
+                        //      $scope.moreDataCanBeLoaded=false;
+                           }
+                        data.data.forEach(function(obj){
+                            // var desc = obj.description,
+                            //     width = desc.match(/width="(.*?)"/)[1],
+                            //     height = desc.match(/height="(.*?)"/)[1];
+
+                            // obj.actualHeight  = height;
+                            // obj.actualWidth = width;
+                            $scope.pics.push(obj)
+                        });
+                     });
+                    $scope.refresh = function(){
+                        angularGridInstance.gallery.refresh();
+                    }
+            }
+
+                })
+
+
+             .controller('mainpage',function($scope,imageService,$localStorage,$http){
+              var kk=[{},{},{}];
+              $scope.pp = [{},{},{}];  
+              var searchvar='';
+              $scope.toggle=false;
+              $scope.more=true;
+              // $scope.$watch('pp', function (newValue) {
+              // setTimeout(function () {
+              // $scope.$apply(function () {
+              // $scope.pp=kk;
+              // console.log($scope.pp);
+              //   });
+              //   }, 200);
+              //   //  $scope.pic=newValue;
+              //     });
+
+
+          $scope.tog_=function(){
+            $state.go('dms');
+          }
+
+
+           $scope.searchtoggle=1;
+
+        //  $scope.pp=[];
+          $scope.choice={
+          mclothing:false,
+          fclothing:false,
+          Accesories:false,
+          Gadgets:false,
+          Food:false,
+          Gaccessory:false,
+          HomeI:false,
+          others:false
+        }
+
+
+          $scope.toggle_=function(){
+            if ($scope.toggle==false) {
+              $scope.toggle=true;
+            }
+            else {
+              $scope.toggle=false;
+            }
+          }
+                $scope.loadMoreData = function() {
+                $scope.$broadcast('scroll.infiniteScrollComplete');    
+            }
+
+            loadata()
+         function loadata(){
+             // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+0).then(function(data){
+
+            $http.get('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+0).success(dhand);
+
+                function dhand(x){
+                    $scope.pp = x;
+                  }
+           $scope.refresh = function(){
+               angularGridInstance.gallery.refresh();
+           }
+        }
+         
+
+              })
+
+
+            .controller('mod__',function($scope,sock,$localStorage,saver){
+                $scope.placeBid = function () {
+                $scope.bid.userId = $localStorage.tokken;
+                $scope.bid.productId = saver.getbidid();
+                console.log($scope.bid);
+
+                sock.emit('newBid');
+                console.log('newBid emitted');
+
+                $http.post('http://localhost:3002/api/products/auction/placebid', $scope.bid).then(function (response) {
+                    console.log('bid sucess');
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+          
+            })
+
+
+
+
+            .controller('bid',function($interval,$http,$scope,saver,$location){
+                $scope.data={
+                  products:[]
+                }
+
+
+                $scope.move_=function(x){
+                  saver.savebidid(x)
+                  $location.path('/bidding/product')
+                }
+
+                $http.post('http://localhost:3002/api/products/getproducts').success(dhand);
+
+                function dhand(x){
+                    $scope.products = x;
+
+
+                $interval(function () {
+                    var now = new Date().getTime();
+
+                    $scope.products.forEach(function (product) {
+                        temp_endDate_Time = new Date(product.endDate).getTime();
+
+                        var diff = temp_endDate_Time - now;
+
+                        if (diff < 0) {
+
+                            product.timeRemaining = 'EXPIRED';
+
+                        } else {
+                            product.endDate_Days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            if (product.endDate_Days < 10) {
+                                product.endDate_Days = '0' + product.endDate_Days;
+                            }
+                            product.endDate_Hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            if (product.endDate_Hours < 10) {
+                                product.endDate_Hours = '0' + product.endDate_Hours;
+                            }
+                            product.endDate_Minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                            if (product.endDate_Minutes < 10) {
+                                product.endDate_Minutes = '0' + product.endDate_Minutes;
+                            }
+                            product.endDate_Seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                            if (product.endDate_Seconds < 10) {
+                                product.endDate_Seconds = '0' + product.endDate_Seconds;
+                            }
+                            product.timeRemaining = product.endDate_Days + ':' + product.endDate_Hours + ':' + product.endDate_Minutes + ':' + product.endDate_Seconds;
+                        }
+                    });
+
+                }, 10);
+                }
+
+            })
+
+            .controller('auction',function($scope,$location,$http,saver,$interval,$ionicModal,sock){
+            
+            alert(saver.getbidid())
+            getBids();
+
+
+
+
+
+
+               $ionicModal.fromTemplateUrl('templates/modalbid.html', {
+         scope: $scope,
+         animation: 'slide-in-up',
+         //  controller:"loaduserstuff"
+      }).then(function(modal) {
+         $scope.modal = modal;
+      });
+      $scope.openModal = function() {
+         $scope.modal.show();
+      };
+      $scope.closeModal = function() {
+         $scope.modal.hide();
+      };
+      // Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+         $scope.modal.remove();
+      });
+      // Execute action on hide modal
+      $scope.$on('modal.hidden', function() {
+         // Execute action
+      });
+      // Execute action on remove modal
+      $scope.$on('modal.removed', function() {
+         // Execute action
+      });
+           
+
+
+
+            function getBids() {
+                $http.get('http://localhost:3002/api/products/auction/getproduct/'+saver.getbidid()).then(function (response) {
+                    $scope.auctionProduct = response.data;
+                    $scope.auctionEndDate = response.data.endDate;
+
+                    var lowestBid = Number(angular.copy($scope.auctionProduct.highestBid)) + 1;
+                    $scope.auctionProduct.highestBid=lowestBid
+
+                    var auctionCountdown = $interval(function () {
+                        var now = new Date().getTime();
+                        endDate = new Date(angular.copy($scope.auctionEndDate)).getTime();
+                        var diff = endDate - now;
+
+                        if (diff < 0) {
+                            $scope.timeRemaining = 'Auction Expired';
+                            $scope.showNewBidInput = false;
+                            $interval.cancel(auctionCountdown);
+                            loop = undefined;
+
+                        } else {
+                            $scope.showNewBidInput = true;
+                            endDate_Days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            if (endDate_Days < 10) {
+                                endDate_Days = '0' + endDate_Days;
+                            }
+                            endDate_Hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            if (endDate_Hours < 10) {
+                                endDate_Hours = '0' + endDate_Hours;
+                            }
+                            endDate_Minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                            if (endDate_Minutes < 10) {
+                                endDate_Minutes = '0' + endDate_Minutes;
+                            }
+                            endDate_Seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                            if (endDate_Seconds < 10) {
+                                endDate_Seconds = '0' + endDate_Seconds;
+                            }
+                            $scope.timeRemaining = endDate_Days + ':' + endDate_Hours + ':' + endDate_Minutes + ':' + endDate_Seconds;
+                        }
+                    }, 20);
+                }, function (err) {
+                    console.log(err);
+                });
+
+            }
+
+
+            $scope.placeBid = function () {
+                $scope.bid.userId = angular.copy($scope.user._id);
+                $scope.bid.productId = $scope.currentProduct.id;
+                console.log($scope.bid);
+
+                sock.emit('newBid');
+                console.log('newBid emitted');
+
+                $http.post('/api/products/auction/placebid', $scope.bid).then(function (response) {
+                    console.log('bid sucess');
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+            sock.on('refresh', function () {
+                for(var i =0;i<=2;i++){
+                    getBids();
+                }
+            });
+
+            })
+
+
+
             .controller('dms',function($ionicScrollDelegate,$http,$scope,$localStorage,$location){
               $scope.$on('$ionicView.enter', function() {
                 console.log($localStorage);
@@ -49,7 +433,7 @@
               $scope.search__={fun_:function(){
                                 if ($scope.search__.text.length>3) {
                                   if (true) {
-                                    $http.get("https://dripplemain.herokuapp.com/usersearch/"+$scope.search__.text).success(handleSuccess2);
+                                    $http.get("https://dripplemain.herokuapp.com/routes/usersearch/"+$scope.search__.text).success(handleSuccess2);
                                     }
                                 }
                                 else {
@@ -61,7 +445,7 @@
                                   history:$localStorage.historyvi
                                 }
 
-                                function handleSuccess2(x,y){
+                                function handleSuccess2(x){
                                       $scope.search__.lists=x;
                                 }
 
@@ -152,10 +536,8 @@
 
    $scope.messages=[].concat(loadBunch(30));
    $scope.isLoading=false;
-
    //fake call to the server and insert new nodes at the begining
    $scope.loadOlder=function(){
-     alert(3);
      $scope.isLoading=true
      $timeout(function(){
        loadBunch(20).map(function(val){
@@ -653,7 +1035,7 @@
             console.log(array_);
             console.log(data)
             var storageRef = firebase.storage().ref();
-            var uploadTask = storageRef.child('images/' + data[point].filename).put(data[point].imageBlob).then(function(snapshot){
+            var uploadTask = storageRef.child('images/' + data[point].fileName).put(data[point].imageBlob).then(function(snapshot){
             $scope.array_ = $scope.array_.concat({url:snapshot.metadata.downloadURLs["0"]});
             console.log($scope.array_.length);
             console.log($scope.blogs.length);
@@ -667,6 +1049,7 @@
           }
 
           var moveon =function(data,link){
+            console.log(data)
             console.log("https://dripplemain.herokuapp.com/routes/post/"+link)
               $http({
                   url: "https://dripplemain.herokuapp.com/routes/post/"+link,
@@ -699,10 +1082,10 @@
               }///clear more stuff
                }
               }).error(function(err){
-
+                stater.aler('fail','fail');
+                $ionicLoading.hide()
               });
           }
-
 
             var save =function (point,data,blogarray) {
               var fileName, path;
@@ -822,7 +1205,6 @@
 
             $scope.post=function(){
 
-              $ionicLoading.show();
               if(category==""){
                 stater.alert('oops',"select category");
               }
@@ -841,6 +1223,7 @@
               }
 
              else{
+                $ionicLoading.show();
               var array_=[];
               var link=$localStorage.token+"/"+$scope.data.name+"/"+$scope.data.description+"/"+category+"/"+$scope.data.date+"/"+$scope.data.price;
                saveToFirebase2(0,$scope.blogs,array_,link);
@@ -848,7 +1231,7 @@
                saveToFirebase2(2,$scope.blogs,array_,link);
              }
              }
-            
+           // StrictlyKIRFoundation2017
 
         })
         .controller('sellerinit',function($scope,$http,$state,$localStorage){
@@ -912,12 +1295,14 @@
           }
         })
 
-        .controller('profilepageseller',function($scope,$http,$state,$localStorage){
+        .controller('profilepageseller',function($scope,$http,$state,$localStorage,$location){
             $scope.show={
             nopage:false,
             profile:false,
             spinner:true,
             sell:false    }
+
+            $scope.imgs=[]
 
             $scope.wm={fulldress:'',
             address_1:''}
@@ -930,6 +1315,11 @@
             $state.go('sellerinit');
             }
 
+            $scope.next =function(x){
+            if (x.price) {
+              $location.path('/item/'+x.id)
+            }
+          }
 
 
             $scope.change=function(){
@@ -940,9 +1330,19 @@
           $scope.checker=function(){
             $http.get("https://dripplemain.herokuapp.com/routes/getalluserdatauser/"+$localStorage.token+"" ).success(function(data, status) {
              console.log(data)
-              $scope.data=data[0];
-              ///query success
-              if ($scope.data.seller) {
+             console.log()
+             if (data.data == 'kill') {
+                  $localStorage.token='';
+                  $location.path('/');
+             }
+             else if (data.err) {
+
+             }
+
+             else{
+                $scope.data=data[0];
+                $scope.img=data[0].imgage
+                 if ($scope.data.seller) {
                 $scope.show={
                 nopage:false,
                 profile:true,
@@ -957,6 +1357,9 @@
                 sell:true
                 }
               }
+             }
+              ///query success
+             
             }) .error(function(err)
                {
               ////error
@@ -974,10 +1377,10 @@
   //     })
   // console.log($localStorage.token);
   //       $scope.data="";
-  //     $http.post("https://dripplemain.herokuapp.com/routes/user/"+$localStorage.token+"", {params: {name: 'somto'}} ).success(function(data, status) {
-  //      console.log(data)
-  //       $scope.data=data[0];
-  //     })
+    $http.get("https://dripplemain.herokuapp.com/routes/useritems/"+$localStorage.token ).success(function(data, status) {
+        console.log(data)
+         $scope.pics=data;
+       })
 
 
         })
@@ -1059,7 +1462,6 @@
                   if(data[0].tokken.length==40){
                   $localStorage.token=data[0].tokken;
                   console.log($localStorage.token);
-                  $state.go($state.current, {}, {reload: true});
                  }
                     }
 
@@ -1149,7 +1551,7 @@ console.log(data);
 
           $scope.find=function(x){
             kk.splice(0,kk.length);
-            $scope.moreDataCanBeLoaded=true;
+          //  $scope.moreDataCanBeLoaded=true;
             find_(x)
              // });///clears stuff
           }
@@ -1172,33 +1574,34 @@ console.log(data);
                                 // $http.get("https://dripplemain.herokuapp.com/routes/pullall/"+x ).success(function(data, status) {
 
                  // $scope.data=data;
+    
 
+  //                  imageService.loadImages("https://dripplemain.herokuapp.com/routes/oop/"+x+'/'+$localStorage.token+'/'+kk.length ).then(function(data){
+  //                   console.log(data.data);
+  //                   if (data.data.length==0) {
+  //                       $scope.moreDataCanBeLoaded=false;
+  //                   }
+  //                   else {
+  //                   data.data.forEach(function(obj){
+  //                       var desc = obj.description,
+  //                           // width = desc.match(/width="(.*?)"/)[1],
+  //                           // height = desc.match(/height="(.*?)"/)[1];
 
-                   imageService.loadImages("https://dripplemain.herokuapp.com/routes/oop/"+x+'/'+$localStorage.token+'/'+kk.length ).then(function(data){
-                    console.log(data.data);
-                    if (data.data.length==0) {
-                        $scope.moreDataCanBeLoaded=false;
-                    }
-                    else {
-                    data.data.forEach(function(obj){
-                        var desc = obj.description,
-                            // width = desc.match(/width="(.*?)"/)[1],
-                            // height = desc.match(/height="(.*?)"/)[1];
+  //                            width = 80;
+  //                           height = 90;
 
-                             width = 80;
-                            height = 90;
+  //                       obj.actualHeight  = height;
+  //                       obj.actualWidth = width;
+  //                       console.log(obj);
+  //                       kk =kk.concat(obj);
+  //                       $scope.pp='';
+  //                   });
+  // }
+  //               });
 
-                        obj.actualHeight  = height;
-                        obj.actualWidth = width;
-                        kk =kk.concat(obj);
-                        $scope.pp='';
-                    });
-  }
-                });
-
-                $scope.refresh = function(){
-                    angularGridInstance.gallery.refresh();
-                }
+  //               $scope.refresh = function(){
+  //                   angularGridInstance.gallery.refresh();
+  //               }
 
           }
 
@@ -1222,25 +1625,25 @@ console.log(data);
             map:[]
           };
 
-          imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+kk.length).then(function(data){
+          // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+kk.length).then(function(data){
 
-            console.log(data.data);
-               data.data.forEach(function(obj){
-                   var desc = obj.description,
-                       width = 70,
-                       height = 160;
+          //   console.log(data.data);
+          //      data.data.forEach(function(obj){
+          //          var desc = obj.description,
+          //              width = 70,
+          //              height = 160;
 
-                   obj.actualHeight  = height;
-                   obj.actualWidth = width;
-               });
-               data.data.forEach(function(obj){
-                kk =kk.concat(obj);
-                $scope.pp='';
-               })
-           });
-           $scope.refresh = function(){
-               angularGridInstance.gallery.refresh();
-           }
+          //          obj.actualHeight  = height;
+          //          obj.actualWidth = width;
+          //      });
+          //      data.data.forEach(function(obj){
+          //       kk =kk.concat(obj);
+          //       $scope.pp='';
+          //      })
+          //  });
+          //  $scope.refresh = function(){
+          //      angularGridInstance.gallery.refresh();
+          //  }
 
 
           $scope.pics={
@@ -1284,14 +1687,14 @@ console.log(data);
               else ini_(0);
             }
             else {
-            find_(searchvar);
+            //find_(searchvar);
             }
           }
 
 
         $scope.init=function(x){
           kk.splice(0,kk.length);
-          $scope.moreDataCanBeLoaded=true;
+    //      $scope.moreDataCanBeLoaded=true;
           $scope.pics['i']=false;
           $scope.pics['e']=false;
           $scope.pics['all']=false;
@@ -1306,99 +1709,99 @@ console.log(data);
           }
           if (x==1) {
             $scope.pics['i']=true;
-            imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+            // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
-                if (data.data.length==0) {
-                    $scope.moreDataCanBeLoaded=false;
-                }
-                else {
-                  data.data.forEach(function(obj){
-                      var desc = obj.description,
-                          width = 70,
-                          height = 160;
-                      obj.actualHeight  = height;
-                      obj.actualWidth = width;
-                      setTimeout(function () {
-                        $scope.$apply(function () {
-                          kk =kk.concat(obj);
-                          $scope.pp='';
-                            });
-                    }, 200);
-                      console.log(obj);
-                  });
-                }
-                 $scope.pics.filter=0;
+            //     if (data.data.length==0) {
+            //        // $scope.moreDataCanBeLoaded=false;
+            //     }
+            //     else {
+            //       data.data.forEach(function(obj){
+            //           var desc = obj.description,
+            //               width = 70,
+            //               height = 160;
+            //           obj.actualHeight  = height;
+            //           obj.actualWidth = width;
+            //           setTimeout(function () {
+            //             $scope.$apply(function () {
+            //               kk =kk.concat(obj);
+            //               $scope.pp='';
+            //                 });
+            //         }, 200);
+            //           console.log(obj);
+            //       });
+            //     }
+            //      $scope.pics.filter=0;
 
 
-             });
-             $scope.refresh = function(){
-                 angularGridInstance.gallery.refresh();
-             }
+            //  });
+            //  $scope.refresh = function(){
+            //      angularGridInstance.gallery.refresh();
+            //  }
           }
 
           else   if (x==-1) {
             $scope.pics['all']=true;
-            imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+            // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
-              if (data.data.length==0) {
-                  $scope.moreDataCanBeLoaded=false;
-              }
-              else {
-                data.data.forEach(function(obj){
-                    var desc = obj.description,
-                        width = 70,
-                        height = 160;
-                    obj.actualHeight  = height;
-                    obj.actualWidth = width;
-                    setTimeout(function () {
-                      $scope.$apply(function () {
-                        kk =kk.concat(obj);
-                        $scope.pp='';
-                          });
-                  }, 200);
-                    console.log(obj);
-                });
-              }
-                 $scope.pics.filter=0;
+            //   if (data.data.length==0) {
+            //       $scope.moreDataCanBeLoaded=false;
+            //   }
+            //   else {
+            //     data.data.forEach(function(obj){
+            //         var desc = obj.description,
+            //             width = 70,
+            //             height = 160;
+            //         obj.actualHeight  = height;
+            //         obj.actualWidth = width;
+            //         setTimeout(function () {
+            //           $scope.$apply(function () {
+            //             kk =kk.concat(obj);
+            //             $scope.pp='';
+            //               });
+            //       }, 200);
+            //         console.log(obj);
+            //     });
+            //   }
+            //      $scope.pics.filter=0;
 
 
-             });
-             $scope.refresh = function(){
-                 angularGridInstance.gallery.refresh();
-             }
+            //  });
+            //  $scope.refresh = function(){
+            //      angularGridInstance.gallery.refresh();
+            //  }
             }
           else {
           $scope.pics['e']=true;
-          imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
+          // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
 
-            if (data.data.length==0) {
-                $scope.moreDataCanBeLoaded=false;
-            }
-            else {
-              data.data.forEach(function(obj){
-                  var desc = obj.description,
-                      width = 70,
-                      height = 160;
-                  obj.actualHeight  = height;
-                  obj.actualWidth = width;
-                  setTimeout(function () {
-                    $scope.$apply(function () {
-                      kk =kk.concat(obj);
-                      $scope.pp='';
-                        });
-                }, 200);
-                  console.log(obj);
-              });
-            }
-              // angularGridInstance.gallery.refresh();
+          //   if (data.data.length==0) {
+          //       $scope.moreDataCanBeLoaded=false;
+          //   }
+          //   else {
+          //     data.data.forEach(function(obj){
+          //         var desc = obj.description,
+          //             width = 70,
+          //             height = 160;
+          //         obj.actualHeight  = height;
+          //         obj.actualWidth = width;
+          //         setTimeout(function () {
+          //           $scope.$apply(function () {
+          //             kk =kk.concat(obj);
+          //             $scope.pp='';
+          //               });
+          //       }, 200);
+          //         console.log(obj);
+          //     });
+          //   }
+          //     // angularGridInstance.gallery.refresh();
 
-               $scope.pics.filter=0;
+          //      $scope.pics.filter=0;
 
 
-           });
-           $scope.refresh = function(){
-               angularGridInstance.gallery.refresh();
-           }
+          //  });
+          //  $scope.refresh = function(){
+          //      angularGridInstance.gallery.refresh();
+          //  }
           }
         //  $scope.check.chek1=false;
           setTimeout(function () {

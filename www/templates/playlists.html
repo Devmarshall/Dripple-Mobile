@@ -12,9 +12,15 @@
     float:right;
   }
 </style>
- <div class="fabhous" ng-click="switch()">
-                   <i class="icon" ng-class="(false==check.chek) ? 'ion-map' : 'ion-ios-list-outline'"></i>
-      </div>
+
+      <!-- <div class="fabhous" ng-click="switch()">
+                
+
+                         the button for switching to list from map
+               <i class="icon" ng-class="(false==check.chek) ? 'ion-map' : 'ion-ios-list-outline'"></i>
+      </div> 
+      -->
+
 <ion-view    cache-view="false" >
   <div class="bar bar-header bar-light mydiv">
     <h1 class="title">Dripple</h1>
@@ -27,7 +33,8 @@
       </label>
     </div>
     <i ng-click='toggle_()' class="icon ion-grid filter"></i>
-    <button ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">8</span></button>
+   
+    <button ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">!</span></button>
     <ul ng-if='toggle' style="       white-space: nowrap;
  display: inline-flex;
  width: 100vw;
@@ -71,13 +78,12 @@
    </ng-map> -->
 
    <!-- 0 means items-->
-   <smap ng-if="check.chek" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>
-    <div  ng-if="check.chek1" class="">
-        <ul     angular-grid="pp" grid-width="300" refresh-on-img-load="false" ag-id="gallery"  >
-
-         <li ng-click='next(pic)'  data-ng-repeat="pic in pp track by $index"  class="grid" ng-click="item()">
+  <!--<smap ng-if="check.chek1" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>-->
+    <div   class="">
+  <ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+             <li ng-click='next(pic)'  data-ng-repeat="pic in pics track by $index"  class="grid" >
           <div class="griitm">
-            <img src="img/ben.png" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
             <div class="griitm2">
               <h6>{{pic.name}}</h6>
               <p>{{pic.shopname}}</p>
@@ -90,12 +96,18 @@
             </div>
           </div>
          </li>
-               </ul>
-      <ion-infinite-scroll style="color:green" on-infinite="loadmore()" distance="30%" ng-if="moreDataCanBeLoaded" icon="ion-ios-football" ></ion-infinite-scroll>
+        </ul>
+       
+      <ion-infinite-scroll
+  ng-if="more"
+  icon="ion-loading-c"
+  on-infinite="loadMoreData()"
+  distance="1%">
+</ion-infinite-scroll>
     </div>
 
 
-   <div  ng-click="nxtpag()" id="ov" class="non">   </div>
+   <!-- <div  ng-click="nxtpag()" id="ov" class="non">   </div>
      <div angular-ripple id="pop" class="fat_ trans" >
       <div ng-if="check.chek" class="pop_ ">
         <i ng-click="close()" class="icon ion-ios-close-outline"></i>
@@ -133,7 +145,7 @@
 
         </section>
       </div>
-    </div>
+    </div> -->
     </ion-content>
 
 </ion-view>

@@ -9,27 +9,28 @@
             <!-- <img class='itemimg' src="img/ben.png" alt=""> -->
             <ion-slides class='itemsly'  options="options" slider="data.slider">
                <ion-slide-page>
-                <img class='itemimg' src="img/perry.png" alt="">
+                <img class='itemimg' src="{{data.image[0].url}}" alt="">
                </ion-slide-page>
                <ion-slide-page>
-                <img class='itemimg' src="img/ben.png" alt="">
+                <img class='itemimg' src="{{data.image[1].url}}" alt="">
                </ion-slide-page>
                <ion-slide-page>
-                <img class='itemimg' src="img/adam.jpg" alt="">
+                <img class='itemimg' src="{{data.image[2].url}}" alt="">
                </ion-slide-page>
              </ion-slides>
 
               <div class="arrow_box">
             <div class="ap">
               <h4>{{data.name}}</h4>
-
+               <p>{{data.uname}}</p>
               <a href="#/chat/{{data.usertoken}}"  class="stuffa button button-icon icon ion-android-textsms" ></a>
 
-              <span><h4>N{{data.price}}</h4> <p style="padding-top: 5%;">19 minutes from you</p>
+              <span><h4>₦ {{data.price}}</h4> 
+              <!--<p style="padding-top: 5%;">19 minutes from you</p>-->
             </div>
-            <div class="colordetails">
+           <!--  <div class="colordetails">
               <div class="co"> <h5>XL</h5> </div><div class="dt"></div>
-            </div>
+            </div> -->
             <div class="local">
 
               <a class="item item-icon-left" href="#">
@@ -59,7 +60,7 @@
               <div ng-if='user()' class="bar  item-input-inset">
                 <a id="stuffa" class="button button-icon icon ion-android-camera" ng-click="sendim()"></a>
 
-                <label class="item-input-wrapper " id="stuff">
+                <label style="margin-left:30px" class="item-input-wrapper " id="stuff">
                   <input style="padding-left:0" type="text" id="message" name="message" ng-model="m.message" placeholder="Type message">
                 </label>
 
@@ -71,8 +72,8 @@
            </div>
          </div>
             <div class="">
-              <button class=" icon-left ion-ios-location-outline localbutton">  old aba road</button>
-
+           <!--   <button class=" icon-left ion-ios-location-outline localbutton">  old aba road</button>
+-->
               <!-- <selector></selector> -->
             </div>
         </div>

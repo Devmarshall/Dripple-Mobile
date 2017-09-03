@@ -118,6 +118,13 @@ else {
           controller:'chat'
         })
 
+
+     .state('bidding', {
+      url: '/bidding',
+      abstract:true,
+      templateUrl: 'templates/bidding.html'
+    })
+
       .state('postitem', {
           url: '/postitem',
           templateUrl: 'templates/post.html',
@@ -140,12 +147,47 @@ else {
       }
     })
 
+
+ .state('bidding.product', {
+      url: '/product',
+      views: {
+        'bidding_product': {
+          templateUrl: 'templates/productbid.html',
+          controller: 'auction'
+        }
+      }
+    })
+
+
+
+ .state('bidding.room', {
+      url: '/room',
+      views: {
+        'bidding_room': {
+          templateUrl: 'templates/productroom.html',
+          controller: 'bidding'
+        }
+      }
+    })
+
+
+
+ .state('bidding.similar', {
+      url: '/similar',
+      views: {
+        'bidding_similar': {
+          templateUrl: 'templates/productsimilar.html',
+          controller: 'bidding'
+        }
+      }
+    })
+
   .state('main.trade', {
       url: '/trade',
       views: {
         'main_trade': {
           templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          controller: 'demo'
         }
       }
     })
@@ -154,7 +196,7 @@ else {
       views: {
         'main_hot': {
           templateUrl: 'templates/bid.html',
-          controller: 'load'
+          controller: 'bid'
         }
       }
     })

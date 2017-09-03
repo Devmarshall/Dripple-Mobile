@@ -29,11 +29,10 @@ module.directive('smap', ['stater', function(stater) {
                   }
         navigator.geolocation.getCurrentPosition(showPosition);
 
-
-        function showPosition(xox){
+       function showPosition(xox){
           function initmark(){
             var myLatlng = new google.maps.LatLng(xox.coords.latitude,xox.coords.longitude);
-
+              ////place marker on current location
              /////pass the image value to the image here
            overlay = new CustomMarker(myLatlng,	map,
              {
@@ -55,7 +54,7 @@ module.directive('smap', ['stater', function(stater) {
             console.log(element);
 
               var myOptions = {
-                zoom: 18,
+                zoom: 13,
                 center: new google.maps.LatLng( xox.coords.latitude,  xox.coords.longitude),
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
@@ -66,7 +65,7 @@ module.directive('smap', ['stater', function(stater) {
 
            map = new google.maps.Map(document.getElementById(attrs.id), myOptions);
             map.setOptions({styles: stylejson()});
-            initmark();
+            //initmark();
             //  google.maps.event.addListener(map, 'click', function(e) {
             //    scope.$apply(function() {
               //      addMarker({
@@ -115,7 +114,7 @@ module.directive('smap', ['stater', function(stater) {
         }
 
         else {
-           clearMap();
+           clearMap();//////items on the map 
            clearkini();
         setTimeout(function(){functionName(); }, 1000);
         console.log('users');
@@ -156,7 +155,6 @@ module.directive('smap', ['stater', function(stater) {
           function functionName() {
             ////for sellers
             for (var i = 0; i < value.length; i++) {
-              value[i]
               addMarker({
               lat: value[i].lat,
               lng:  value[i].lng
