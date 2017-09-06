@@ -553,10 +553,21 @@
 
 
             .controller('dms',function($ionicScrollDelegate,$http,$scope,$localStorage,$location){
+
+              $scope.messages=[]
               $scope.$on('$ionicView.enter', function() {
-                console.log($localStorage);
-                $scope.load=false
-              $scope.search__={fun_:function(){
+                    if (true) {
+                         $http.get("https://dripplemain.herokuapp.com/routes/message/"+$localStorage.token).success(handleSuccess3);
+                          }
+
+                          function handleSuccess3(x){
+                            $scope.messages=x
+                          }
+
+
+                            console.log($localStorage);
+                            $scope.load=false
+                          $scope.search__={fun_:function(){
                                 if ($scope.search__.text.length>3) {
                                   if (true) {
                                     $http.get("https://dripplemain.herokuapp.com/routes/usersearch/"+$scope.search__.text).success(handleSuccess2);
@@ -566,6 +577,7 @@
                                   $scope.search__.lists=[]
                                 }
                                 },
+
                                   text:'',
                                   lists:[],
                                   history:$localStorage.historyvi

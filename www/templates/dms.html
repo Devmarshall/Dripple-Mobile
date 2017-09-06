@@ -11,11 +11,12 @@
         </ul>
     </div>
     <ul>
-      <a href="#/chat/{{d.id}}" ng-repeat='d in search__.history' class="item"><div class="messanger_">
-        <img src="img/ben.png" alt="">
+      <a href="#/chat/{{d.id}}/{{d.name}}" ng-repeat='d in messages' class="item"><div class="messanger_">
+        <img class="r" src="img/user.png" alt="" style="background:cadetblue;width: 40px;
+    height: 40px;">
         <div class="">
           <h4>{{d.name}}</h4>
-          <p>{{d.id}}</p>
+          <p>{{d.last}}</p>
         </div>
       </div></a>
     </ul>
