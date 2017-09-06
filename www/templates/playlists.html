@@ -34,7 +34,7 @@
     </div>
     <i ng-click='toggle_()' class="icon ion-grid filter"></i>
    
-    <button ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">!</span></button>
+    <button ng-if='messagecap()' ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">!</span></button>
     <ul ng-if='toggle' style="       white-space: nowrap;
  display: inline-flex;
  width: 100vw;
@@ -81,7 +81,7 @@
   <!--<smap ng-if="check.chek1" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>-->
     <div   class="">
   <ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-             <li ng-click='next(pic)'  data-ng-repeat="pic in pics track by $index"  class="grid" >
+             <li data-ng-repeat="pic in pics track by $index"  class="grid" >
           <div class="griitm">
             <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
             <div class="griitm2">
@@ -91,7 +91,7 @@
                <h5>
                 {{pic.price}}
                </h5>
-               <a>find</a>
+               <a  ng-click='next(pic)' >view</a>
              </div>
             </div>
           </div>
@@ -99,9 +99,9 @@
         </ul>
        
       <ion-infinite-scroll
-  ng-if="more"
+  ng-if="moreDataCanBeLoaded"
   icon="ion-loading-c"
-  on-infinite="loadMoreData()"
+  on-infinite="loadMore()"
   distance="1%">
 </ion-infinite-scroll>
     </div>

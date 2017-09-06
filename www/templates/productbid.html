@@ -19,36 +19,21 @@
              		<h4 style="float:right;    color: green;">{{auctionProduct.highestBid}}</h4>
              </span>
              <span class="show">
-             	<p style="float:left">{{auctionProduct.short_Description}}</p>
+             	<p style="float:left">{{auctionProduct.product_ShortDescription}}</p>
              	<p style="float:right">last bid</p>
              </span>
              </div>
              <div class="summaryandcomments">
              	<h3>Summary</h3>
              	<span>
-             		<h5>{{auctionProduct.brandName}}</h5>
+             		<h5>{{auctionProduct.brand}}</h5>
              		<p>
              			{{auctionProduct.product_Description}}
              		</p>
 
              		<h3>Comments</h3>
              				<ul>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
-             					<li><p>sweet</p></li>
+             					<li ng-repeat='comment in auctionProduct.product_Comments'><p>{{comment.comment}}</p></li>
              				</ul>
              	</span>
              </div>

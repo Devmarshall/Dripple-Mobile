@@ -1,5 +1,5 @@
 
-<ion-view view-title='{{data.name}}'  cache-view="false">
+<ion-view view-title='{{uname}}'  cache-view="false">
   <ion-nav-bar class="bar-positive">
 
     <ion-nav-back-button>
@@ -11,18 +11,20 @@
     padding: 12px;
   }
 </style>
-     <ion-content class='has-header has-footer' >
-       <ul lr-infinite-scroll="loadOlder"  class="chat">
-          <div ng-repeat="d in m.messages track  by $index"  ng-if="d.message.length>0">
+         <h5 class="has-header loaded" ng-hide='loaded' >{{message}}</h5>
+
+     <ion-content ng-if='loaded' class='has-header has-footer'  >
+       <ol lr-infinite-scroll="loadOlder"  class="chat">
+          <ol ng-repeat="d in m.messages track  by $index"  ng-if="d.message.length>0">
             <li class="other"   ng-if="!contains(d.message) &&!me(d.tokken)" ng-click="profilmov(d)">
-                <div class="avatar"><img ng-src="img/ben.png" draggable="false"/></div>
+                <div class="avatar"><img class="r" ng-src="user/ben.png" draggable="false"/></div>
               <div class="msg">
                 <p>{{d.message}}</p>
               <time am-time-ago="d.time"></time>
               </div>
             </li>
              <li class="self" ng-if="!contains(d.message) && me(d.tokken)" ng-click="profilmov(d)">
-                <div class="avatar"><img ng-src="img/ben.png" draggable="false"/></div>
+                <div class="avatar"><img class="r" ng-src="img/user.png" draggable="false"/></div>
               <div class="msg">
                 <p> {{d.message}}</p>
                     <time am-time-ago="d.time"></time>
@@ -46,9 +48,9 @@
                 <time am-time-ago="d.time"></time>
               </div>
             </li>
-          </div>
+          </ol>
 
-      </ul>
+      </ol>
 
      </ion-content>
      <footer class="bar bar-footer item-input-inset">

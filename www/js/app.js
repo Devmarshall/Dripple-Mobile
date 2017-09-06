@@ -113,7 +113,7 @@ else {
         })
 
       .state('chat', {
-          url: '/chat/:tokken',
+          url: '/chat/:tokken/:uname',
           templateUrl: 'templates/chat.html',
           controller:'chat'
         })

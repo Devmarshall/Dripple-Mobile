@@ -3,16 +3,16 @@
    <ion-content  ng-click='closeModal()'>
     
 
-           
+            
 
 
    </ion-content>
 
     <footer class="bar bar-footer item-input-inset  modal__">
              <section>
-                  <p>your bid must be 200 more </p>
+                  <p>your bid must be more than <span style="color:red">{{pricelowes}}</span>  </p>
               <input ng-model="bid.bidPrice" type="number" name="">
-              <button ng-click='placebid()'>SUBMIT BID</button>
+              <button ng-click='placeBid()'>SUBMIT BID</button>
              </section>
          </footer>
  </ion-modal-view>

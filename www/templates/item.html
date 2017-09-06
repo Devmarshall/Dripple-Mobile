@@ -1,10 +1,11 @@
-   <ion-view  ng-controller="PlaylistCtrl"  cache-view="false">
+   <ion-view    cache-view="false">
 
       <div class="itema">
         <div class="bar bar-header bar-light mydiv">
           <h1 class="title">Dripple</h1>
         </div>
-        <ion-content class='has-header' >
+         <h5 class="has-header loaded" ng-hide='loaded' >{{message}}</h5>
+        <ion-content class='has-header' ng-if='loaded' >
 
             <!-- <img class='itemimg' src="img/ben.png" alt=""> -->
             <ion-slides class='itemsly'  options="options" slider="data.slider">
@@ -23,7 +24,7 @@
             <div class="ap">
               <h4>{{data.name}}</h4>
                <p>{{data.uname}}</p>
-              <a href="#/chat/{{data.usertoken}}"  class="stuffa button button-icon icon ion-android-textsms" ></a>
+              <a ng-if='messagecap()' href="#/chat/{{data.usertoken}}/{{data.uname}}"  class="stuffa button button-icon icon ion-android-textsms" ></a>
 
               <span><h4>₦ {{data.price}}</h4> 
               <!--<p style="padding-top: 5%;">19 minutes from you</p>-->
@@ -51,8 +52,8 @@
           <div ng-show='view.comments' class="">
             <div class=""  >
               <a ng-repeat="comment in comments" class="item item-avatar" href="#">
-                <img src="IMG/BEN.PNG">
-                <h2>Venkman</h2>
+                <img class="r" src="IMG/user.PNG">
+                <h2>{{comment.name}}</h2>
                 <p>{{comment.message}}</p>
               </a>
 
@@ -79,4 +80,5 @@
         </div>
           </div>
         </ion-content>
+       
     </ion-view>
