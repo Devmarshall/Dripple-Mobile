@@ -856,8 +856,8 @@
           }
 
           $scope.send = function(){
-            $http.get('https://dripplemain.herokuapp.com/routes/comment/'+id+'/'+$localStorage.token+'/'+$scope.m.message).success(function(data,stat){
-            $scope.comments.push({message:$scope.m.message})
+            $http.get('https://dripplemain.herokuapp.com/routes/comment/'+id+'/'+$localStorage.token+'/'+$scope.m.message+'/'+$localStorage.name).success(function(data,stat){
+            $scope.comments.push({message:$scope.m.message,name:$localStorage.name})
             })
           }
 
@@ -1631,8 +1631,10 @@
                     else {
                   $state.go('main.trade')
                   console.log(data[0].tokken);
+                  alert('welcome  '+data[0].name)
                   if(data[0].tokken.length==40){
                   $localStorage.token=data[0].tokken;
+                  $localStorage.name=data[0].name
                   console.log($localStorage.token);
                  }
                     }
@@ -1661,7 +1663,9 @@ console.log(data);
         if (data.status==1) {
           if (data.tokken) {
             $localStorage.token=data.tokken;
+            $localStorage.name=data.name
             $window.location.reload(true);
+            alert('welcome  '+$localStorage.name)
             $state.go('main.trade');
           }
 

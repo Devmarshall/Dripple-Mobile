@@ -2,7 +2,9 @@
 
       .r{
         padding: 5px;
-        background: #FF5252
+        background: black;
+        width: 100px;
+        height: 100px
       }
 
 
@@ -1226,7 +1228,7 @@ margin-left: 80vw;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
-    background-color: rgba(255,255,255,0.9);
+    background-color: mediumpurple;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
