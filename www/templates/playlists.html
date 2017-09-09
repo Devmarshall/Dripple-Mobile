@@ -1,19 +1,18 @@
-
-
-
 <style media="screen">
-  .header-badge{
-    top:-7px !important;
-    left:-11px !important;
+
+
+  .header-badge {
+    top: -7px !important;
+    left: -11px !important;
   }
 
-  .button-icon{
+  .button-icon {
     font-size: xx-large;
-    float:right;
+    float: right;
   }
 </style>
 
-      <!-- <div class="fabhous" ng-click="switch()">
+<!-- <div class="fabhous" ng-click="switch()">
                 
 
                          the button for switching to list from map
@@ -21,47 +20,69 @@
       </div> 
       -->
 
-<ion-view    cache-view="false" >
+<ion-view cache-view="false">
   <div class="bar bar-header bar-light mydiv">
     <h1 class="title">Dripple</h1>
   </div>
-    <ion-content class="has-header">
-      <div class="list list-inset">
+  <ion-content class="has-header">
+    <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" ng-model='pics.text' placeholder="Search">
       </label>
     </div>
     <i ng-click='toggle_()' class="icon ion-grid filter"></i>
-   
+
     <button ng-if='messagecap()' ng-click='tog_()' class="button button-icon ion-android-textsms"><span class="badge badge-assertive header-badge">{{count}}</span></button>
     <ul ng-if='toggle' style="       white-space: nowrap;
  display: inline-flex;
  width: 100vw;
  overflow: auto;">
 
- <li  style="display:inline;"><ion-checkbox ng-model="pics.all" ng-init='initialize()' ng-click='init("-1")'> all</ion-checkbox></li>
- <li  style="display:inline;"><ion-checkbox ng-model="pics.e" ng-click='init("0")'> Enterpreniurs</ion-checkbox></li>
-<li  style="display:inline;"><ion-checkbox ng-model="pics.i" ng-click='init("1")'>Items</ion-checkbox></li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="pics.all" ng-init='initialize()' ng-click='init("-1")'> all</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="pics.e" ng-click='init("0")'> Enterpreneurs</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="pics.i" ng-click='init("1")'>Items</ion-checkbox>
+      </li>
 
-</ul>
+    </ul>
 
-<ul ng-if='toggle' style="       white-space: nowrap;
+    <ul ng-if='toggle' style="       white-space: nowrap;
     display: inline-flex;
     width: 100vw;
     overflow: auto;">
-                        <li style="display:inline;"><ion-checkbox ng-model="choice.mclothing" ng-click='find("mclothing")'>Male clothing</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.fclothing" ng-click='find("fclothing")'>Female clothing</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Accesories" ng-click='find("Accesories")'>Accesories</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gadgets" ng-click='find("Gadgets")'>Gadgets</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Food" ng-click='find("Food")'>Food</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gaccessory" ng-click='find("Gaccessory")'>Gadget Accesory</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.HomeI" ng-click='find("HomeI")'>Home items</ion-checkbox></li>
-           <li  style="display:inline;"><ion-checkbox ng-model="choice.others" ng-click='find("others")'>others</ion-checkbox></li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.mclothing" ng-click='find("mclothing")'>Male clothing</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.fclothing" ng-click='find("fclothing")'>Female clothing</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.Accesories" ng-click='find("Accesories")'>Accesories</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.Gadgets" ng-click='find("Gadgets")'>Gadgets</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.Food" ng-click='find("Food")'>Food</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.Gaccessory" ng-click='find("Gaccessory")'>Gadget Accesory</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.HomeI" ng-click='find("HomeI")'>Home items</ion-checkbox>
+      </li>
+      <li style="display:inline;">
+        <ion-checkbox ng-model="choice.others" ng-click='find("others")'>others</ion-checkbox>
+      </li>
 
-</ul>
+    </ul>
 
-      <!-- <ng-map zoom="10" center="-33.9, 151.2">
+    <!-- <ng-map zoom="10" center="-33.9, 151.2">
         <info-window ng-repeat="d in data2" class"marker" id="1" position="{{d.lat}},{{d.lng}}" visible="true">
          <div  style="padding-left:10px"  ng-non-bindable class="m">
            <img  ng-repeat="d in d.images" style="height: 35px;
@@ -77,37 +98,34 @@
        </info-window>
    </ng-map> -->
 
-   <!-- 0 means items-->
-  <!--<smap ng-if="check.chek1" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>-->
-    <div   class="">
-  <ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-             <li data-ng-repeat="pic in pics track by $index"  class="grid" >
+    <!-- 0 means items-->
+    <!--<smap ng-if="check.chek1" tokken="f" filter='pics.filter' id="map_canvas" datapoint='pp'   ></smap>-->
+    <div class="">
+      <ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false">
+        <li data-ng-repeat="pic in pics track by $index" class="grid">
           <div class="griitm">
-            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width="{{pic.actualWidth}}" data-actual-height="{{pic.actualHeight}}"
+            />
             <div class="griitm2">
               <h6>{{pic.name}}</h6>
               <p>{{pic.shopname}}</p>
-             <div class="">
-               <h5>
-                {{pic.price}}
-               </h5>
-               <a  ng-click='next(pic)' >view</a>
-             </div>
+              <div class="">
+                <h5 ng-if="pic.price">
+                  ₦ {{pic.price}}
+                </h5>
+                <a ng-click='next(pic)'>view</a>
+              </div>
             </div>
           </div>
-         </li>
-        </ul>
-       
-      <ion-infinite-scroll
-  ng-if="moreDataCanBeLoaded"
-  icon="ion-loading-c"
-  on-infinite="loadMore()"
-  distance="1%">
-</ion-infinite-scroll>
+        </li>
+      </ul>
+
+      <ion-infinite-scroll ng-if="moreDataCanBeLoaded" icon="ion-loading-c" on-infinite="loadMore()" distance="1%">
+      </ion-infinite-scroll>
     </div>
 
 
-   <!-- <div  ng-click="nxtpag()" id="ov" class="non">   </div>
+    <!-- <div  ng-click="nxtpag()" id="ov" class="non">   </div>
      <div angular-ripple id="pop" class="fat_ trans" >
       <div ng-if="check.chek" class="pop_ ">
         <i ng-click="close()" class="icon ion-ios-close-outline"></i>
@@ -146,6 +164,6 @@
         </section>
       </div>
     </div> -->
-    </ion-content>
+  </ion-content>
 
 </ion-view>

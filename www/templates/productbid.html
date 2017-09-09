@@ -1,31 +1,29 @@
-
-
-	<ion-view >
-		<ion-content class='has-footer'>
-			  <ion-slides class='itemsly'  options="options" slider="data.slider">
-               <ion-slide-page>
-                <img class='itemimg' src="img/ben.png" alt="">
-               </ion-slide-page>
-               <ion-slide-page>
-                <img class='itemimg' src="{{data.image[1].url}}" alt="">
-               </ion-slide-page>
-               <ion-slide-page>
-                <img class='itemimg' src="{{data.image[2].url}}" alt="">
-               </ion-slide-page>
-             </ion-slides>
-             <div style="padding: 11px 16px;border-bottom:1px solid lightgray">
-             <span class="show">
+<ion-view>
+	<ion-content class='has-footer'>
+		<ion-slides class='itemsly' options="options" slider="data.slider">
+			<ion-slide-page>
+				<img class='itemimg' src="img/ben.png" alt="">
+			</ion-slide-page>
+			<ion-slide-page>
+				<img class='itemimg' src="{{data.image[1].url}}" alt="">
+			</ion-slide-page>
+			<ion-slide-page>
+				<img class='itemimg' src="{{data.image[2].url}}" alt="">
+			</ion-slide-page>
+		</ion-slides>
+		<div style="padding: 11px 16px;border-bottom:1px solid lightgray">
+			<span class="show">
              		<h3 style="float:left;color:gray">{{auctionProduct.product_Name}}</h3>
-             		<h4 style="float:right;    color: green;">{{auctionProduct.highestBid}}</h4>
+             		<h4 style="float:right;    color: green;">₦{{auctionProduct.highestBid}}</h4>
              </span>
-             <span class="show">
+			<span class="show">
              	<p style="float:left">{{auctionProduct.product_ShortDescription}}</p>
              	<p style="float:right">last bid</p>
              </span>
-             </div>
-             <div class="summaryandcomments">
-             	<h3>Summary</h3>
-             	<span>
+		</div>
+		<div class="summaryandcomments">
+			<h3>Summary</h3>
+			<span>
              		<h5>{{auctionProduct.brand}}</h5>
              		<p>
              			{{auctionProduct.product_Description}}
@@ -36,18 +34,17 @@
              					<li ng-repeat='comment in auctionProduct.product_Comments'><p>{{comment.comment}}</p></li>
              				</ul>
              	</span>
-             </div>
-   
-		</ion-content>
+		</div>
 
-	  <footer class="bar bar-footer item-input-inset sunny">
-      			<span class="eta">
-			<p>18:00</p>
+	</ion-content>
+
+	<footer class="bar bar-footer item-input-inset sunny">
+		<span class="eta">
+			<p>{{timeRemaining}}</p>
 		</span>
-			<div>
-				<button ng-click='openModal()'>MAKE A BID</button>
-			</div>
-       </footer>
+		<div>
+			<button ng-click='openModal()'>MAKE A BID</button>
+		</div>
+	</footer>
 
-	</ion-view>
-	
+</ion-view>

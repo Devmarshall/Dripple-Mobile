@@ -150,9 +150,10 @@
 
       #status{
          color: white;
-        font-weight: 400;
+        font-weight: 100;
         font-size: 20px;
-        background: orange;
+        color: orange;
+        float: right;
         padding: 5px;
         text-transform: capitalize;
       }

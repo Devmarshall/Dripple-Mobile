@@ -1,65 +1,60 @@
+<ion-view ng-controller="profilepageseller">
 
-
-
-        <ion-view ng-controller="profilepageseller">
-
-         <div class="bar bar-header">
-  <h1 class="title">Dripple</h1>
-  <button ng-click="change()" style="position: fixed;
+  <div class="bar bar-header">
+    <h1 class="title">Dripple</h1>
+    <button ng-click="change()" style="position: fixed;
     background: white ;
     border: 0;" class="icon ion-person"></button>
 
-    
-</div>
-          <ion-content ng-init="checker()">
+
+  </div>
+  <ion-content ng-init="checker()">
 
 
-            <ion-refresher
-                    pulling-text="Refreshing..."
-                    on-refresh="checker()">
-                  </ion-refresher>
+    <ion-refresher pulling-text="Refreshing..." on-refresh="checker()">
+    </ion-refresher>
 
-                  <div class="start" ng-show="show.sell">
-                    <p>Sorry your not an enterprenur now so you got a  simple profile</br>wanna become one now</p>
-                    <button ng-click="sell()" class="button button-block button-assertive">start</button>
-                  </div>
+    <div class="start" ng-show="show.sell">
+      <p>Sorry your not an enterprenur now so you got a simple profile</br>wanna become one now</p>
+      <button ng-click="sell()" class="button button-block button-assertive">start</button>
+    </div>
 
 
-                <p ng-bind="gPlace.place"></p>
-                  <div  ng-show="show.spinner" class="load"  style="text-align: center;
+    <p ng-bind="gPlace.place"></p>
+    <div ng-show="show.spinner" class="load" style="text-align: center;
     font-size: x-large;
     margin-top: 139px;">
-                        <ion-spinner icon="ios-small"></ion-spinner>
-                    <p>loading</p>
-                  </div>
+      <ion-spinner icon="ios-small"></ion-spinner>
+      <p>loading</p>
+    </div>
 
 
-                  <div style="text-align:center;margin-top:25%" ng-show="show.nopage">
+    <div style="text-align:center;margin-top:25%" ng-show="show.nopage">
 
-                       <i class="icon ion-bug"></i>
-                       <p style="color:#cdcdcd;">Sorry had an issue connecting to the internet</p>
-                </div>
+      <i class="icon ion-bug"></i>
+      <p style="color:#cdcdcd;">Sorry had an issue connecting to the internet</p>
+    </div>
 
-            <div class="" ng-show="show.profile">
-              <div class="back" ></div>
-            <div class="protop2" >
-              <div class="_protop">
-                <div class="proptop2div">
-                  <img style="    background: pink;
+    <div class="" ng-show="show.profile">
+      <div class="back"></div>
+      <div class="protop2">
+        <div class="_protop">
+          <div class="proptop2div">
+            <img style="    background: pink;
     border-radius: 50%;
     padding: 10px;" src="img/user.png" alt="" />
-                  <section class="">
-                    <h5>
-                      {{data.shopname}}
-                    </h5>
-                    <h6>{{data.name}}</h6>
-                    <p>
-                      {{data.description}}
-                      <!-- {{data.bio}} -->
-                    </p>
-                  </section>
-                </div>
-<!--                 <div id="likers">
+            <section class="">
+              <h5>
+                {{data.shopname}}
+              </h5>
+              <h6>{{data.name}}</h6>
+              <p>
+                {{data.description}}
+                <!-- {{data.bio}} -->
+              </p>
+            </section>
+          </div>
+          <!--                 <div id="likers">
                   <img id="likersimg" src="img/ben.png" alt="" />
                   <img id="likersimg" src="img/ben.png" alt="" />
                   <img id="likersimg" src="img/ben.png" alt="" />
@@ -71,37 +66,39 @@
                       <i class="ion-android-favorite sid-lik"></i>
                   </div>
                 </div>
- -->                <p>
-                  Top
-                </p>
-               <!-- <div class="image_">
+ -->
+          <p>
+            Top
+          </p>
+          <!-- <div class="image_">
                   <img src="img/ben.png" alt="" />
                       <img src="img/ben.png" alt="" />
                           <img src="img/ben.png" alt="" />
                               <img src="img/ben.png" alt="" />
                                   <img src="img/ben.png" alt="" />
                                 </div> -->
-              </div>
-            </div>
-            <ul    class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-                  <li ng-click='next(pic)'  data-ng-repeat="pic in pics track by $index"  class="grid" ng-click="item()">
+        </div>
+      </div>
+      <ul class="dynamic-grid" angular-grid="pics" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false">
+        <li ng-click='next(pic)' data-ng-repeat="pic in pics track by $index" class="grid" ng-click="item()">
           <div class="griitm">
-            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width = "{{pic.actualWidth}}"  data-actual-height="{{pic.actualHeight}}" />
+            <img src="{{pic.image[0].url}}" class="grid-img" data-actual-width="{{pic.actualWidth}}" data-actual-height="{{pic.actualHeight}}"
+            />
             <div class="griitm2">
               <h6>{{pic.name}}</h6>
               <p>{{pic.shopname}}</p>
-             <div class="">
-               <h5>
-                {{pic.price}}
-               </h5>
-              <!-- <a>view</a> -->
-             </div>
+              <div class="">
+                <h5>
+                  ₦ {{pic.price}}
+                </h5>
+                <!-- <a>view</a> -->
+              </div>
             </div>
           </div>
-         </li>
-             </ul>
-            </div>
+        </li>
+      </ul>
+    </div>
 
-          </ion-content>
+  </ion-content>
 
-        </ion-view>
+</ion-view>
