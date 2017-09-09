@@ -33,8 +33,8 @@
 
             .factory('socket', ['$rootScope', function($rootScope) {
             //  var url = "https://warm-plateau-82871.herokuapp.com/";
-          //  var url="http://localhost:3200";
-            var url="https://dripplechatserver.herokuapp.com/";
+            var url="http://localhost:3200";
+               var url="https://dripplechatserver.herokuapp.com/";
                var socket = io.connect(url);
                console.log("connecting");
                return {
@@ -85,15 +85,20 @@
                         return $http.get(x);
                     };
                 }])
-                .controller('demo',function ($scope,im,angularGridInstance,$localStorage,$location,$state) {
+                .controller('demo',function ($scope,im,angularGridInstance,$localStorage,$location,$state,$http) {
               var kk=[{},{},{}];
               $scope.pics = [];  
               var searchvar='';
               $scope.toggle=false;
               var pos=0
+              $scope.count=''
               $scope.more=true;
               $scope.pics.text=''
               var view_=''
+
+                    $http.get('https://dripplemain.herokuapp.com/routes/num/'+$localStorage.token).success(function(data,stat){
+                        $scope.count=data.result_
+                    })
 
           $scope.next =function(x){
             if (x.price) {
@@ -272,6 +277,10 @@
       
         }, 20);
         }
+
+
+
+
 
                 })
 
@@ -744,6 +753,12 @@
         tokken=$stateParams.tokken;
         $scope.$on('$ionicView.enter', function() {
 
+
+
+           $http.get('https://dripplemain.herokuapp.com/routes/turntoseen/'+$localStorage.token+'/'+tokken).success(function(exist__){
+              
+          });
+
            $http.get('https://dripplemain.herokuapp.com/routes/exist/'+$localStorage.token+'/'+tokken).success(function(exist__){
                 exist=exist__
                 console.log(exist)
@@ -791,6 +806,7 @@
                     //    name:$localStorage.user.name,
                         exist:exist,
                         name:$scope.uname,
+                        uname:$localStorage.name,
                         time:Date.now(),
                         tokken:$localStorage.token,
                         to:tokken});
