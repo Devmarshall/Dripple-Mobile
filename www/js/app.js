@@ -165,7 +165,7 @@ else {
       views: {
         'bidding_room': {
           templateUrl: 'templates/productroom.html',
-          controller: 'bidding'
+          controller: 'bidhistory'
         }
       }
     })

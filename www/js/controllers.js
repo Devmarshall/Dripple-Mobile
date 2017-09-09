@@ -85,6 +85,11 @@ angular.module('starter.controllers', [])
       return $http.get(x);
     };
   }])
+
+  .controller('bidhistory', function ($scope, saver) {
+    $scope.history = saver.getbidid().bids
+    console.log($scope.history)
+  })
   .controller('demo', function ($scope, im, angularGridInstance, $localStorage, $location, $state, $http) {
     var kk = [{}, {}, {}];
     $scope.pics = [];
@@ -371,13 +376,14 @@ angular.module('starter.controllers', [])
       else {
 
         $scope.bid.userId = $localStorage.tokken;
+        $scope.bid.userName = $localStorage.name;
         $scope.bid.productId = saver.getbidid()._id;
         console.log($scope.bid);
 
         sock.emit('newBid', $scope.bid);
 
         $http.post('http://localhost:3002/api/products/auction/placebid', $scope.bid).then(function (response) {
-          console.log('bid sucess');
+          console.log('bid success');
 
         }, function (err) {
           console.log(err);
@@ -385,8 +391,6 @@ angular.module('starter.controllers', [])
       }
     }
   })
-
-
 
 
   .controller('bid', function ($interval, $http, $scope, saver, $location) {
@@ -404,7 +408,6 @@ angular.module('starter.controllers', [])
 
     function dhand(x) {
       $scope.products = x;
-
 
       $interval(function () {
         var now = new Date().getTime();
@@ -446,8 +449,40 @@ angular.module('starter.controllers', [])
 
   .controller('auction', function ($scope, $location, $http, saver, $interval, $ionicModal, sock) {
 
-    //  alert(saver.getbidid())
+    $interval(function () {
 
+      var currentProduct = saver.getbidid();
+      var now = new Date().getTime();
+      var temp_endDate_Time = new Date(currentProduct.endDate).getTime();
+      var diff = temp_endDate_Time - now;
+
+      if (diff < 0) {
+        $scope.timeRemaining = 'EXPIRED';
+      } else {
+        var endDate_Days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        if (endDate_Days < 10) {
+          endDate_Days = '0' + endDate_Days;
+        }
+        var endDate_Hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        if (endDate_Hours < 10) {
+          endDate_Hours = '0' + endDate_Hours;
+        }
+        var endDate_Minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        if (endDate_Minutes < 10) {
+          endDate_Minutes = '0' + endDate_Minutes;
+        }
+        var endDate_Seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        if (endDate_Seconds < 10) {
+          endDate_Seconds = '0' + endDate_Seconds;
+        }
+        $scope.timeRemaining = endDate_Days + ':' + endDate_Hours + ':' + endDate_Minutes + ':' + endDate_Seconds;
+      }
+
+    }, 10);
+
+
+
+    //  alert(saver.getbidid())
 
     $scope.$on('$ionicView.enter', function () {
       getBids();
