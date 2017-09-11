@@ -484,12 +484,12 @@ angular.module('starter.controllers', [])
 
     //  alert(saver.getbidid())
 
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.enter',  ()=> {
       getBids();
     })
 
 
-    $scope.$on('BOOM!2', function (events, args) {
+    $scope.$on('BOOM!2',  (events, args) => {
       $scope.auctionProduct.highestBid = args
     })
 
