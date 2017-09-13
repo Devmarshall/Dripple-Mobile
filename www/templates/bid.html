@@ -8,10 +8,10 @@
         <div class="list">
 
             <a ng-repeat="product in products" class="item item-avatar" ng-click="move_(product)">
-			      <img src="venkman.jpg">
+			      <img src="{{product.src}}">
 			      <h2>{{product.product_Name}}</h2>
                   <p style="display:initial">{{product.bids.length}} bids so far </p>
-                  <p id="status"> winning </p>      
+                  <!-- <p id="status"> winning </p>       -->
 			      <div id="bidtab">
 			      	<p id="price">₦{{product.highestBid}}</p>
 			      	<p id="timing">{{product.timeRemaining}}</p>

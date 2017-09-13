@@ -14,6 +14,10 @@
          <h5 class="has-header loaded" ng-hide='loaded' >{{message}}</h5>
 
      <ion-content class='has-header has-footer'  >
+       
+        <ion-refresher pulling-text="loading..." on-refresh="refresh()">
+          </ion-refresher>
+      
        <ol lr-infinite-scroll="loadOlder"  class="chat">
           <ol ng-repeat="d in m.messages track  by $index"  ng-if="d.message.length>0">
             <li class="other"   ng-if="!contains(d.message) &&!me(d.tokken)" ng-click="profilmov(d)">

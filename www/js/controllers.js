@@ -708,6 +708,18 @@ angular.module('starter.controllers', [])
       }
     }
 
+    $scope.refresh = function () {
+       console.log(55)
+      $http.get('https://dripplemain.herokuapp.com/routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
+        console.log(x);
+        x.forEach(function (obj) {
+          $scope.m.messages.push({ message: obj.message, tokken: obj.tokken, time: obj.time })
+        })
+        $scope.loaded = true
+        $ionicScrollDelegate.scrollBottom();
+      });
+    }
+
 
     $scope.$on('$ionicView.enter', function () {
       if ($localStorage.token) {
