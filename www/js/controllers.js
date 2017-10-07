@@ -1,7 +1,4 @@
-
-
 angular.module('starter.controllers', [])
-
 
   .service('saver', function () {
     var bidid = ''
@@ -484,12 +481,12 @@ angular.module('starter.controllers', [])
 
     //  alert(saver.getbidid())
 
-    $scope.$on('$ionicView.enter',  ()=> {
+    $scope.$on('$ionicView.enter', () => {
       getBids();
     })
 
 
-    $scope.$on('BOOM!2',  (events, args) => {
+    $scope.$on('BOOM!2', (events, args) => {
       $scope.auctionProduct.highestBid = args
     })
 
@@ -709,7 +706,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.refresh = function () {
-       console.log(55)
+      console.log(55)
       $http.get('https://dripplemain.herokuapp.com/routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
         console.log(x);
         x.forEach(function (obj) {

@@ -2,13 +2,13 @@
 	<ion-content class='has-footer'>
 		<ion-slides class='itemsly' options="options" slider="data.slider">
 			<ion-slide-page>
-				<img class='itemimg' src="{{data.image[0].url}}" alt="">
+				<img class='itemimg' src="{{auctionProduct.img_1}}" alt="">
 			</ion-slide-page>
 			<ion-slide-page>
-				<img class='itemimg' src="{{data.image[1].url}}" alt="">
+				<img class='itemimg' src="{{auctionProduct.img_2}}" alt="">
 			</ion-slide-page>
 			<ion-slide-page>
-				<img class='itemimg' src="{{data.image[2].url}}" alt="">
+				<img class='itemimg' src="{{auctionProduct..img_3}}" alt="">
 			</ion-slide-page>
 		</ion-slides>
 		<div style="padding: 11px 16px;border-bottom:1px solid lightgray">
@@ -34,14 +34,14 @@
              					<li ng-repeat='comment in auctionProduct.product_Comments'><p>{{comment.comment}}</p></li>
              				</ul>
              	</span>
-		</div>   
+		</div>
 
 	</ion-content>
 
 	<footer class="bar bar-footer item-input-inset sunny">
 		<span class="eta">
 			<p>{{timeRemaining}}</p>
-		</span>	
+		</span>
 		<div>
 			<button ng-click='openModal()'>MAKE A BID</button>
 		</div>
