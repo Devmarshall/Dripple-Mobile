@@ -1,83 +1,99 @@
-<ion-view class="modal">
+<div ng-controller="post">
   <div class="bar bar-header bar-light mydiv">
     <h1 class="title">Dripple</h1>
   </div>
-   <ion-content class='has-header' ng-show="log.post">
+  <div class='has-header' ng-show="log.post">
 
-     <div class="modal_" style="text-align: -webkit-center;
+    <div class="modal_" style="text-align: -webkit-center;
                                   font-size: 45px">
 
 
-                                  <style media="screen">
-                                    .swiper-pagination-bullet {
-                                      background: pink
-                                    }
-                                  </style>
+      <style media="screen">
+        .swiper-pagination-bullet {
+          background: pink
+        }
+      </style>
 
-                                    <ion-slides id="itemswipe" class='itemsly'  options="options" slider="data.slider" style="height:50vh">
-                                       <ion-slide-page>
-                                        <img ng-src="{{img.d1}}" class='itemimg'  alt=""  ng-click="imgup('1')">
-                                       </ion-slide-page>
-                                       <ion-slide-page>
-                                        <img class='itemimg' ng-src="{{img.d2}}" alt=""    ng-click="imgup('2')">
-                                       </ion-slide-page>
-                                       <ion-slide-page>
-                                        <img class='itemimg' ng-src="{{img.d3}}" alt=""      ng-click="imgup('3')">
-                                       </ion-slide-page>
-                                     </ion-slides>
-
-                                     
-       <label class="item item-input item-floating-label">
-         <span class="input-label">name</span>
-         <input style="color:black"class="in" type="text" placeholder="name" ng-model="data.name">
-       </label>
+      <ion-slides id="itemswipe" class='itemsly' options="options" slider="data.slider" style="height:50vh">
+        <ion-slide-page>
+          <img ng-src="{{img.d1}}" class='itemimg' alt="" ng-click="imgup('1')">
+        </ion-slide-page>
+        <ion-slide-page>
+          <img class='itemimg' ng-src="{{img.d2}}" alt="" ng-click="imgup('2')">
+        </ion-slide-page>
+        <ion-slide-page>
+          <img class='itemimg' ng-src="{{img.d3}}" alt="" ng-click="imgup('3')">
+        </ion-slide-page>
+      </ion-slides>
 
 
-       <label class="item item-input item-floating-label">
-         <span class="input-label">price</span>
-         <input style="color:black"class="in" type="number" placeholder="price" ng-model="data.price">
-       </label>
-       <p style="font-size: initial;">
-         {{data.description}}
-       </p>
-       <label class="item item-input item-floating-label">
-               <span class="input-label">Description</span>
-         <input style="color: black;" type="text" placeholder="Description"   ng-model="data.description">
-       </label>
+      <label class="item item-input item-floating-label x__">
+        <span class="input-label">name</span>
+        <input style="color:black" class="in" type="text" placeholder="name" ng-model="data.name">
+      </label>
 
 
-       <ul style="       white-space: nowrap;
+      <label class="item item-input item-floating-label  x__">
+        <span class="input-label">price</span>
+        <input style="color:black" class="in" type="number" placeholder="price" ng-model="data.price">
+      </label>
+      <p style="font-size: initial;">
+        {{data.description}}
+      </p>
+      <label class="item item-input item-floating-label  x__">
+        <span class="input-label">Description</span>
+        <input style="color: black;" type="text" placeholder="Description" ng-model="data.description">
+      </label>
+
+
+      <ul style="       white-space: nowrap;
     display: inline-flex;
     width: 100vw;
     overflow: auto;">
 
-                        <li style="display:inline;"><ion-checkbox ng-model="choice.mclothing" ng-click='selectcat("mclothing")'>Male clothing</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.fclothing" ng-click='selectcat("fclothing")'>Female clothing</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Accesories" ng-click='selectcat("Accesories")'>Accesories</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gadgets" ng-click='selectcat("Gadgets")'>Gadgets</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Food" ng-click='selectcat("Food")'>Food</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.Gaccessory" ng-click='selectcat("Gaccessory")'>Gadget Accesory</ion-checkbox></li>
-                   <li  style="display:inline;"><ion-checkbox ng-model="choice.HomeI" ng-click='selectcat("HomeI")'>Home items</ion-checkbox></li>
-           <li  style="display:inline;"><ion-checkbox ng-model="choice.others" ng-click='selectcat("others")'>others</ion-checkbox></li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.mclothing" ng-click='selectcat("mclothing")'>Male clothing</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.fclothing" ng-click='selectcat("fclothing")'>Female clothing</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.Accesories" ng-click='selectcat("Accesories")'>Accesories</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.Gadgets" ng-click='selectcat("Gadgets")'>Gadgets</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.Food" ng-click='selectcat("Food")'>Food</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.Gaccessory" ng-click='selectcat("Gaccessory")'>Gadget Accesory</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.HomeI" ng-click='selectcat("HomeI")'>Home items</ion-checkbox>
+        </li>
+        <li style="display:inline;">
+          <ion-checkbox ng-model="choice.others" ng-click='selectcat("others")'>others</ion-checkbox>
+        </li>
 
-</ul>
+      </ul>
 
-       <button style='background:#FF5252' ng-click="post()" class="button   button-full button-balanced curves ">Post</button>
-
-    
-     </div>
+      <button style='background:#FF5252' ng-click="post()" class="button   button-full button-balanced curves ">Post</button>
 
 
-
-   </ion-content>
+    </div>
 
 
 
-   <div class="post_no_login"  class='has-header'  ng-show="log.login">
-     <p>Wanna use our services ,</br> Login first</p>
-     <button style='background:#FF5252' ng-click="login()" class="button button-assertive">
-  Login
-</button>
-   </div>
+  </div>
 
- </ion-view
+
+
+  <div class="post_no_login" class='has-header' ng-show="log.login">
+    <p>Wanna use our services ,</br> Login first</p>
+    <button style='background:#FF5252' ng-click="login()" class="button button-assertive">
+      Login
+    </button>
+  </div>
+
+</div>

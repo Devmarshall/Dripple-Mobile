@@ -1538,3 +1538,42 @@ padding: 10px;
     padding: 8px;
     color: black
 }
+
+
+
+.ofs_{
+  padding: 0;
+  height: 53px;
+}
+
+
+.ofs_ button{
+  height: 100%;
+  width: 49%;
+  float: left;
+  background-color:#E91E63;
+  border: none;
+  color: #ffffff;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+  /* height: 100%;
+  width: 49%;
+  float: left;
+  border: none;
+  color: #e91e63;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;  */
+}
+
+
+.x__  input{
+  padding: 3px;
+  border: 1px solid lightblue
+}

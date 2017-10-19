@@ -53,9 +53,9 @@ angular.module('starter.controllers', [])
 
 
   .factory('sock', ['$rootScope', function ($rootScope) {
-    //  var url = "https://warm-plateau-82871.herokuapp.com/";
+    var url = 'https://dripplebid.herokuapp.com/';
     // var url="http://localhost:3200";
-    var socket = io.connect('http://localhost:3002');
+    var socket = io.connect(url);
     console.log("connecting");
     return {
       url: function () {
@@ -349,8 +349,6 @@ angular.module('starter.controllers', [])
         angularGridInstance.gallery.refresh();
       }
     }
-
-
   })
 
 
@@ -360,7 +358,7 @@ angular.module('starter.controllers', [])
     minBidPrice = Math.floor((104 / 100) * minBidPrice);
 
     sock.on('alertnewbid', function (x) {
-      stater.alert('sucess', 'bid has been posted')
+      stater.alert('YOUR BID HAS BEEN PLACED', 'bid has been posted')
       $rootScope.$broadcast('BOOM!2', $scope.bid.bidPrice)
     })
 
@@ -368,7 +366,7 @@ angular.module('starter.controllers', [])
     $scope.placeBid = function () {
       //    alert(saver.getbidid().lowestBid_pos)
       if (minBidPrice >= $scope.bid.bidPrice) {
-        stater.alert('error', 'bid is too low increase it ')
+        stater.alert('Increase your Bid', 'bid is too low increase it ')
       }
       else {
 
@@ -379,7 +377,7 @@ angular.module('starter.controllers', [])
 
         sock.emit('newBid', $scope.bid);
 
-        $http.post('http://localhost:3002/api/products/auction/placebid', $scope.bid).then(function (response) {
+        $http.post('https://dripplebid.herokuapp.com/api/products/auction/placebid', $scope.bid).then(function (response) {
           console.log('bid success');
 
         }, function (err) {
@@ -401,7 +399,7 @@ angular.module('starter.controllers', [])
       $location.path('/bidding/product')
     }
 
-    $http.get('http://localhost:3002/api/products/getproducts').success(dhand);
+    $http.get('https://dripplebid.herokuapp.com/api/products/getproducts').success(dhand);
 
     function dhand(x) {
       $scope.products = x;
@@ -521,7 +519,7 @@ angular.module('starter.controllers', [])
 
 
     function getBids() {
-      $http.get('http://localhost:3002/api/products/auction/getproduct/' + saver.getbidid()._id).then(function (response) {
+      $http.get('https://dripplebid.herokuapp.com/api/products/auction/getproduct/' + saver.getbidid()._id).then(function (response) {
         $scope.auctionProduct = response.data;
         $scope.auctionEndDate = response.data.endDate;
 
@@ -1246,6 +1244,10 @@ angular.module('starter.controllers', [])
       'd3': 'img/upload-picture.png'
     }
 
+
+    $scope.newAuctionItem = function () {
+      window.open('https://dripplebid.herokuapp.com/#!/newproduct', '_system', 'location=yes');
+    }
 
     //   $scope.$on('img',function(data){
     // $scope.img=data.targetScope.img;

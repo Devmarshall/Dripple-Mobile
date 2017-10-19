@@ -2,14 +2,26 @@
   <div class="bar bar-header bar-light mydiv">
     <h1 class="title">Dripple</h1>
   </div>
-   <ion-content ng-show="log.post"  class='has-header'>
+  <ion-content ng-show="log.post" class='has-header has-footer'>
 
-  <ol class="postol" >
-    <li><a href="#/postitem">post item</a></li>
-    <!-- <li><a href="#/postservice">post service</a></li> -->
-    <!-- <li><a href="#">post bid</a></li> -->
-  </ol>
+    <ol class="postol">
+      <li>
+        <a href="#/postitem">post item</a>
+      </li>
+      <!-- <li><a href="#/postservice">post service</a></li> -->
+      <!-- <li><a href="#">post bid</a></li> -->
+    </ol>
+    <div ng-include="'templates/post.html'"></div>
+    <div ng-include="'templates/myFile.html'"></div>
+    
 
-
-   </ion-content>
- </ion-view
+  </ion-content>
+  <div class="ofs_  bar bar-footer">
+    <button ng-click="item()">
+      STORE ITEM
+    </button>
+    <button ng-click="newAuctionItem()" ng-controller="post">
+      AUCTION ITEM
+    </button>
+  </div>
+  </ion-view
