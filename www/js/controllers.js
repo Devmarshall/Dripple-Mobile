@@ -1,3 +1,13 @@
+// var url = 'http://localhost:3000/';
+// var bidUrl = 'http://localhost:3002/'
+
+
+var bidUrl = 'https://dripplebid.herokuapp.com/';
+var url = 'https://dripplemain.herokuapp.com/';
+var chaturl = 'https://dripplechatserver.herokuapp.com/';
+
+// var url="http://localhost:3200/";
+
 angular.module('starter.controllers', [])
 
   .service('saver', function () {
@@ -29,10 +39,7 @@ angular.module('starter.controllers', [])
   })
 
   .factory('socket', ['$rootScope', function ($rootScope) {
-    //  var url = "https://warm-plateau-82871.herokuapp.com/";
-    var url = "http://localhost:3200";
-    var url = "https://dripplechatserver.herokuapp.com/";
-    var socket = io.connect(url);
+    var socket = io.connect(chaturl);
     console.log("connecting");
     return {
       url: function () {
@@ -53,13 +60,12 @@ angular.module('starter.controllers', [])
 
 
   .factory('sock', ['$rootScope', function ($rootScope) {
-    var url = 'https://dripplebid.herokuapp.com/';
-    // var url="http://localhost:3200";
-    var socket = io.connect(url);
+
+    var socket = io.connect(bidUrl);
     console.log("connecting");
     return {
       url: function () {
-        return url;
+        return bidUrl;
       },
       on: function (eventName, callback) {
         socket.on(eventName, callback);
@@ -98,7 +104,7 @@ angular.module('starter.controllers', [])
     $scope.pics.text = ''
     var view_ = ''
 
-    $http.get('https://dripplemain.herokuapp.com/routes/num/' + $localStorage.token).success(function (data, stat) {
+    $http.get(url + 'routes/num/' + $localStorage.token).success(function (data, stat) {
       $scope.count = data.result_
     })
 
@@ -138,7 +144,6 @@ angular.module('starter.controllers', [])
       $state.go('dms');
     }
 
-
     $scope.searchtoggle = 1;
 
     //  $scope.pp=[];
@@ -154,7 +159,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.moreDataCanBeLoaded = true;
-    load('https://dripplemain.herokuapp.com/routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
+    load(url + 'routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
 
 
     $scope.toggle_ = function () {
@@ -180,26 +185,26 @@ angular.module('starter.controllers', [])
         others: false
       }
       $scope.choice[x] = true;
-      load("https://dripplemain.herokuapp.com/routes/oop/" + x + '/' + $localStorage.token + '/' + $scope.pics.length)
+      load(url + 'routes/oop/' + x + '/' + $localStorage.token + '/' + $scope.pics.length)
       pos = 3
       view_ = x
     }
 
     $scope.loadMore = function () {
       if (pos == 0) {
-        load('https://dripplemain.herokuapp.com/routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
+        load(url + 'routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
       }
 
       else if (pos == 1) {
-        load('https://dripplemain.herokuapp.com/routes/searchitems/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
+        load(url + 'routes/searchitems/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
       }
 
       else if (pos == 2) {
-        load('https://dripplemain.herokuapp.com/routes/searchusers/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
+        load(url + 'routes/searchusers/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
       }
 
       else if (pos == 3) {
-        load("https://dripplemain.herokuapp.com/routes/oop/" + view_ + '/' + $localStorage.token + '/' + $scope.pics.length)
+        load(url + 'routes/oop/' + view_ + ' / ' + $localStorage.token + ' / ' + $scope.pics.length)
       }
     }
 
@@ -259,30 +264,24 @@ angular.module('starter.controllers', [])
       if (x == 1) {
         $scope.pics['i'] = true;
         // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchitems/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
-        load('https://dripplemain.herokuapp.com/routes/searchitems/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
+        load(url + 'routes/searchitems/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
         pos = 1
       }
 
       else if (x == -1) {
         $scope.pics['all'] = true;
-        load('https://dripplemain.herokuapp.com/routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
+        load(url + 'routes/searchall/' + $localStorage.token + '/' + $scope.pics.length)
         pos = 0
       }
       else {
         $scope.pics['e'] = true;
         // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchusers/'+$localStorage.token+'/'+$scope.pics.text+'/'+kk.length).then(function(data){
-        load('https://dripplemain.herokuapp.com/routes/searchusers/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
+        load(url + 'routes/searchusers/' + $localStorage.token + '/' + text + '/' + $scope.pics.length)
         pos = 2
       }
       setTimeout(function () {
-
-
       }, 20);
     }
-
-
-
-
 
   })
 
@@ -340,7 +339,7 @@ angular.module('starter.controllers', [])
     function loadata() {
       // imageService.loadImages('https://dripplemain.herokuapp.com/routes/searchall/'+$localStorage.token+'/'+0).then(function(data){
 
-      $http.get('https://dripplemain.herokuapp.com/routes/searchall/' + $localStorage.token + '/' + 0).success(dhand);
+      $http.get(url + 'routes/searchall/' + $localStorage.token + '/' + 0).success(dhand);
 
       function dhand(x) {
         $scope.pp = x;
@@ -377,7 +376,7 @@ angular.module('starter.controllers', [])
 
         sock.emit('newBid', $scope.bid);
 
-        $http.post('https://dripplebid.herokuapp.com/api/products/auction/placebid', $scope.bid).then(function (response) {
+        $http.post(bidUrl + 'api/products/auction/placebid', $scope.bid).then(function (response) {
           console.log('bid success');
 
         }, function (err) {
@@ -399,7 +398,7 @@ angular.module('starter.controllers', [])
       $location.path('/bidding/product')
     }
 
-    $http.get('https://dripplebid.herokuapp.com/api/products/getproducts').success(dhand);
+    $http.get(bidUrl + 'api/products/getproducts').success(dhand);
 
     function dhand(x) {
       $scope.products = x;
@@ -519,7 +518,7 @@ angular.module('starter.controllers', [])
 
 
     function getBids() {
-      $http.get('https://dripplebid.herokuapp.com/api/products/auction/getproduct/' + saver.getbidid()._id).then(function (response) {
+      $http.get(bidUrl + 'api/products/auction/getproduct/' + saver.getbidid()._id).then(function (response) {
         $scope.auctionProduct = response.data;
         $scope.auctionEndDate = response.data.endDate;
 
@@ -595,7 +594,7 @@ angular.module('starter.controllers', [])
     $scope.messages = []
     $scope.$on('$ionicView.enter', function () {
       if (true) {
-        $http.get("https://dripplemain.herokuapp.com/routes/message/" + $localStorage.token).success(handleSuccess3);
+        $http.get(url + 'routes/message/' + $localStorage.token).success(handleSuccess3);
       }
 
       function handleSuccess3(x) {
@@ -609,7 +608,7 @@ angular.module('starter.controllers', [])
         fun_: function () {
           if ($scope.search__.text.length > 3) {
             if (true) {
-              $http.get("https://dripplemain.herokuapp.com/routes/usersearch/" + $scope.search__.text).success(handleSuccess2);
+              $http.get(url + 'routes/usersearch/' + $scope.search__.text).success(handleSuccess2);
             }
           }
           else {
@@ -705,7 +704,7 @@ angular.module('starter.controllers', [])
 
     $scope.refresh = function () {
       console.log(55)
-      $http.get('https://dripplemain.herokuapp.com/routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
+      $http.get(url + 'routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
         console.log(x);
         x.forEach(function (obj) {
           $scope.m.messages.push({ message: obj.message, tokken: obj.tokken, time: obj.time })
@@ -797,14 +796,14 @@ angular.module('starter.controllers', [])
 
 
 
-      $http.get('https://dripplemain.herokuapp.com/routes/turntoseen/' + $localStorage.token + '/' + tokken).success(function (exist__) {
+      $http.get(url + 'routes/turntoseen/' + $localStorage.token + '/' + tokken).success(function (exist__) {
 
       });
 
-      $http.get('https://dripplemain.herokuapp.com/routes/exist/' + $localStorage.token + '/' + tokken).success(function (exist__) {
+      $http.get(url + 'routes/exist/' + $localStorage.token + '/' + tokken).success(function (exist__) {
         exist = exist__
         console.log(exist)
-        $http.get('https://dripplemain.herokuapp.com/routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
+        $http.get(url + 'routes/conversations/' + tokken + '/' + $localStorage.token + '/' + $scope.m.messages.length).success(function (x) {
           console.log(x);
           x.forEach(function (obj) {
             $scope.m.messages.push({ message: obj.message, tokken: obj.tokken, time: obj.time })
@@ -908,12 +907,12 @@ angular.module('starter.controllers', [])
       $scope.message = '.......loading'
       id = $stateParams._id;
       $scope.loaded = false
-      $http.get('https://dripplemain.herokuapp.com/routes/item/' + id + '/' + $localStorage.token).success(function (data, stat) {
+      $http.get(url + 'routes/item/' + id + '/' + $localStorage.token).success(function (data, stat) {
         console.log(data);
         $scope.loaded = true
         $scope.data = data;
       })
-      $http.get('https://dripplemain.herokuapp.com/routes/getcomments/' + id + '/' + $localStorage.token).success(function (data, stat) {
+      $http.get(url + 'routes/getcomments/' + id + '/' + $localStorage.token).success(function (data, stat) {
         console.log(data);
         $scope.comments = data;
       })
@@ -928,7 +927,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.send = function () {
-      $http.get('https://dripplemain.herokuapp.com/routes/comment/' + id + '/' + $localStorage.token + '/' + $scope.m.message + '/' + $localStorage.name).success(function (data, stat) {
+      $http.get(url + 'routes/comment/' + id + '/' + $localStorage.token + '/' + $scope.m.message + '/' + $localStorage.name).success(function (data, stat) {
         $scope.comments.push({ message: $scope.m.message, name: $localStorage.name })
       })
     }
@@ -1121,10 +1120,10 @@ angular.module('starter.controllers', [])
     function showPosition(position) {
       console.log(position.coords.latitude);
       console.log(position.coords.longitude);
-      $http.post('https://dripplemain.herokuapp.com/routes/updateuser/' + $localStorage.token + '/latitude/' + position.coords.latitude).success(function (data, status) {
+      $http.post(url + 'routes/updateuser/' + $localStorage.token + '/latitude/' + position.coords.latitude).success(function (data, status) {
       })
 
-      $http.post('https://dripplemain.herokuapp.com/routes/updateuser/' + $localStorage.token + '/longitude/' + position.coords.longitude).success(function (data, status) {
+      $http.post(url + 'routes/updateuser/' + $localStorage.token + '/longitude/' + position.coords.longitude).success(function (data, status) {
       })
 
       // x.innerHTML = "Latitude: " + position.coords.latitude +
@@ -1146,7 +1145,7 @@ angular.module('starter.controllers', [])
         alert('passwords dont match');
       }
       else {
-        $http.post('https://dripplemain.herokuapp.com/routes/updateuser/' + $localStorage.token + '/password/' + $scope.pass.one).success(function (data, status) {
+        $http.post(url + 'routes/updateuser/' + $localStorage.token + '/password/' + $scope.pass.one).success(function (data, status) {
 
 
         })
@@ -1203,7 +1202,7 @@ angular.module('starter.controllers', [])
       // $http.get("https://dripplemain.herokuapp.com/routes/pullall/"+x ).success(function(data, status) {
 
       // $scope.data=data;
-      imageService.loadImages("https://dripplemain.herokuapp.com/routes/oop/" + x + '/' + $localStorage.token + '/' + $scope.pics.length).then(function (data) {
+      imageService.loadImages(url + 'routes/oop/' + x + '/' + $localStorage.token + '/' + $scope.pics.length).then(function (data) {
         console.log(data.data);
         data.data.forEach(function (obj) {
           var desc = obj.description,
@@ -1244,10 +1243,10 @@ angular.module('starter.controllers', [])
       'd3': 'img/upload-picture.png'
     }
 
-
     $scope.newAuctionItem = function () {
-      window.open('https://dripplebid.herokuapp.com/#!/newproduct', '_system', 'location=yes');
+      window.open('http://localhost:3002/#!/');
     }
+    //Change to bddingapi cdn
 
     //   $scope.$on('img',function(data){
     // $scope.img=data.targetScope.img;
@@ -1298,9 +1297,9 @@ angular.module('starter.controllers', [])
 
     var moveon = function (data, link) {
       console.log(data)
-      console.log("https://dripplemain.herokuapp.com/routes/post/" + link)
+      console.log(url + 'routes/post/' + link)
       $http({
-        url: "https://dripplemain.herokuapp.com/routes/post/" + link,
+        url: url + 'routes/post/' + link,
         method: "POST",
         data: $httpParamSerializer(data),
         headers: {
@@ -1527,7 +1526,7 @@ angular.module('starter.controllers', [])
         $scope.shop.description = $scope.shop.description.replace('/', '');
         lat = lat.toString().replace('-', '*')
         ///means where good to go
-        $http.get('https://dripplemain.herokuapp.com/routes/sellerinit/' + $localStorage.token + '/' + $scope.shop.shopname + '/' + $scope.shop.chosenPlace + '/' + lat + '/' + lng + '/' + $scope.shop.description).success(function (data, status) {
+        $http.get(url + 'routes/sellerinit/' + $localStorage.token + '/' + $scope.shop.shopname + '/' + $scope.shop.chosenPlace + '/' + lat + '/' + lng + '/' + $scope.shop.description).success(function (data, status) {
 
           alert('success');
           $state.go('main.trade');
@@ -1578,7 +1577,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.checker = function () {
-      $http.get("https://dripplemain.herokuapp.com/routes/getalluserdatauser/" + $localStorage.token + "").success(function (data, status) {
+      $http.get(url + 'routes/getalluserdatauser/' + $localStorage.token + "").success(function (data, status) {
         console.log(data)
         console.log()
         if (data.data == 'kill') {
@@ -1626,7 +1625,7 @@ angular.module('starter.controllers', [])
     //     })
     // console.log($localStorage.token);
     //       $scope.data="";
-    $http.get("https://dripplemain.herokuapp.com/routes/useritems/" + $localStorage.token).success(function (data, status) {
+    $http.get(url + 'routes/useritems/' + $localStorage.token).success(function (data, status) {
       console.log(data)
       $scope.pics = data;
     })
@@ -1678,29 +1677,30 @@ angular.module('starter.controllers', [])
       password: "",
       password1: ""
     }
+
     $scope.signup = function () {
 
       if ($scope.user.password.length < 1 || $scope.user.email.length < 1 || $scope.user.name.length < 1) {
-        alert("field empty");
+        alert("All fields must be filled before sign-up");
       }
       else if ($scope.user.password.length < 6 && $scope.user.password.length > 1) {
-        alert("password too short");
+        alert("Please enter a longer password");
       }
 
       else if ($scope.user.password != $scope.user.password1) {
-        alert("password dont match");
+        alert("Please enter matching passwords");
       }
 
       else if ($scope.user.name.length < 6) {
-        alert("name too short");
+        alert("Please enter a longer name");
       }
 
       else if (1 != 1) {
-        ////eamail validation
+        // Email validation
       }
 
       else {
-        $http.post("https://dripplemain.herokuapp.com/routes/signup/" + $scope.user.name + "/" + $scope.user.password + "/" + $scope.user.email + "", { params: { name: 'somto' } }).success(function (data, status) {
+        $http.post(url + 'routes/signup/' + $scope.user.name + "/" + $scope.user.password + "/" + $scope.user.email + "", { params: { name: 'somto' } }).success(function (data, status) {
           if (data.error) {
             alert(data.message);
           }
@@ -1734,7 +1734,9 @@ angular.module('starter.controllers', [])
       //            title : $scope.title,
       //              body : $scope.body
 
-      $http.get("https://dripplemain.herokuapp.com/routes/login/" + $scope.data.name + "/" + $scope.data.password + "").success(function (data, status) {
+
+
+      $http.get(url + 'routes/login/' + $scope.data.name + "/" + $scope.data.password + "").success(function (data, status) {
         console.log(data);
 
         if (data.status == 1) {

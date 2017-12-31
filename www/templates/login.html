@@ -8,23 +8,26 @@
   <ion-content style="
     padding-left: 5vw;
     padding-right: 5vw;">
-    <form >
+    <form>
       <div class="list" id="login_">
-       <label class="item item-input item-floating-label">
-    <span class="input-label">Username</span>
-    <input type="text" placeholder="Username" ng-model="data.name">
-  </label>
-  <label class="item item-input item-floating-label">
-    <span class="input-label">password</span>
-    <input type="password" placeholder="password" ng-model="data.password">
-  </label>
-
-   <label class="item">
-          <button ng-click="login()"class="button button-block button-assertive" type="submit">Log in</button>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="Username" ng-model="data.name">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">password</span>
+          <input type="password" placeholder="password" ng-model="data.password">
         </label>
 
-        <a ng-click="forgot()">forgoten? password</a></br>
-        <span>dont have an account <a ng-click="signupm()">Sign up</a></span>
+        <label class="item">
+          <button ng-click="login()" class="button button-block button-assertive" type="submit">Log in</button>
+        </label>
+
+        <a ng-click="forgot()">forgoten? password</a>
+        </br>
+        <span>dont have an account
+          <a ng-click="signupm()">Sign up</a>
+        </span>
       </div>
     </form>
   </ion-content>

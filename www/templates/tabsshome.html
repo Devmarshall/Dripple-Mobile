@@ -4,33 +4,28 @@ Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
 
-
-<ion-tabs class="tabs-icon-top tabs-color-active-balanced has-header"   style="background:#9C27B0">
-
-
-          <ion-tab title="Trends" icon-off="ion-ios-list-outline" icon-on="ion-ios-list" href="#/main/trends">
-            <ion-nav-view name="main_trends"></ion-nav-view>
-          </ion-tab>
+<ion-tabs class="tabs-icon-top tabs-color-active-balanced has-header" style="background:#9C27B0">
 
 
-            <ion-tab title="Trade" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart"
-             href="#/main/trade">
-              <ion-nav-view name="main_trade"></ion-nav-view>
-            </ion-tab>
+  <ion-tab title="Trends" icon-off="ion-ios-list-outline" icon-on="ion-ios-list" href="#/main/trends">
+    <ion-nav-view name="main_trends"></ion-nav-view>
+  </ion-tab>
 
-            	 <ion-tab title="post" icon-off="ion-ios-upload-outline" icon-on="ion-ios-upload"
-             href="#/main/post">
-              <ion-nav-view name="main_post"></ion-nav-view>
-            </ion-tab>
 
-             <ion-tab title="secret" icon-off="ion-ios-flame-outline" icon-on="ion-ios-flame"
-             href="#/main/hot">
-              <ion-nav-view name="main_hot"></ion-nav-view>
-            </ion-tab>
+  <ion-tab title="Trade" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart" href="#/main/trade">
+    <ion-nav-view name="main_trade"></ion-nav-view>
+  </ion-tab>
 
-             <ion-tab title="profile" icon-off="ion-ios-person-outline" icon-on="ion-ios-person"
-             href="#/main/profile">
-              <ion-nav-view name="main_profile"></ion-nav-view>
-            </ion-tab>
+  <ion-tab title="Post" icon-off="ion-ios-upload-outline" icon-on="ion-ios-upload" href="#/main/post">
+    <ion-nav-view name="main_post"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Auctions" icon-off="ion-ios-flame-outline" icon-on="ion-ios-flame" href="#/main/hot">
+    <ion-nav-view name="main_hot"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="Profile" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" href="#/main/profile">
+    <ion-nav-view name="main_profile"></ion-nav-view>
+  </ion-tab>
 
 </ion-tabs>

@@ -12,6 +12,7 @@ angular.module('starter', ['ionic', 'angularMoment', 'ngStorage', 'ngMaterial', 
       apiKey: "AIzaSyAUJMG0nXuxPQVo9MCvLiiB70VamKHfoYk",
       authDomain: "dripple-82679.firebaseapp.com",
       databaseURL: "https://dripple-82679.firebaseio.com",
+      // databaseURL: 'mongodb://localhost:27017/Dripple',
       projectId: "dripple-82679",
       storageBucket: "dripple-82679.appspot.com",
       messagingSenderId: "359156677593"
@@ -240,9 +241,6 @@ angular.module('starter', ['ionic', 'angularMoment', 'ngStorage', 'ngMaterial', 
         }
       })
 
-
-
-
       .state('app', {
         url: '/app',
         abstract: true,
@@ -296,8 +294,6 @@ angular.module('starter', ['ionic', 'angularMoment', 'ngStorage', 'ngMaterial', 
           }
         }
       })
-
-
 
       .state('app.browse', {
         url: '/browse',
